@@ -1,12 +1,11 @@
 /* eslint-disable class-methods-use-this */
 
 import PropTypes from "prop-types";
-
 import React from "react";
 import MediaQuery from "react-responsive";
+import SkillsTitle from "./SkillsTitle";
 
 import downArrow from "./V-Small-Triangle.svg";
-
 import "./Skills.scss";
 
 class Skills extends React.Component {
@@ -29,7 +28,15 @@ class Skills extends React.Component {
   render() {
     const { expand } = this.state;
     // eslint-disable-next-line react/prop-types
-    const { headerTextHighlightRef } = this.props;
+    const { headerTextHighlightRef, refInView } = this.props;
+
+    if (refInView === "skills") {
+      const bouncyTitle = document.querySelector(".skillsPage--title");
+      bouncyTitle.classList.add("bouncing");
+      bouncyTitle.addEventListener("animationend", () => {
+        bouncyTitle.classList.remove("bouncing");
+      });
+    }
 
     const devOpsSkills = (
       <div
@@ -152,9 +159,9 @@ class Skills extends React.Component {
             <div>
               <div className="two-columns">
                 <div className="first-column">
-                  <div className="skillsPage--title">
-                    <h3 ref={headerTextHighlightRef}>Skills</h3>
-                  </div>
+                  <SkillsTitle
+                    headerTextHighlightRef={headerTextHighlightRef}
+                  />
                   <div className="skillsPage--skills-items">
                     <button
                       type="button"
@@ -236,5 +243,6 @@ Skills.propTypes = {
   headerTextHighlightRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-  ]).isRequired
+  ]).isRequired,
+  refInView: PropTypes.string.isRequired
 };

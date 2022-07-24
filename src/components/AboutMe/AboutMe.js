@@ -1,13 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import MediaQuery from "react-responsive";
+import AboutMeTitle from "./AboutMeTitle";
 
 import ATriangle from "./A-Triangle.svg";
 import "./AboutMe.scss";
 
 export default function AboutMe(props) {
-  const { headerTextHighlightRef } = props;
+  const { headerTextHighlightRef, refInView } = props;
+
+  if (refInView === "aboutMe") {
+    const bouncyTitle = document.querySelector(".aboutMe--title");
+    bouncyTitle.classList.add("bouncing");
+    bouncyTitle.addEventListener("animationend", () => {
+      bouncyTitle.classList.remove("bouncing");
+    });
+  }
+
   return (
     <div className="aboutMe" id="about">
       <section className="aboutMe--center-flex">
@@ -53,16 +62,7 @@ export default function AboutMe(props) {
         <MediaQuery minWidth={913}>
           <div className="two-columns">
             <div className="first-column">
-              <div className="aboutMe--title">
-                <h1 ref={headerTextHighlightRef}>
-                  <img
-                    className="aboutMe--ATriangle"
-                    src={ATriangle}
-                    alt="A triangle"
-                  />
-                  bout me
-                </h1>
-              </div>
+              <AboutMeTitle headerTextHighlightRef={headerTextHighlightRef} />
               <div className="aboutMe--description-row">
                 <div className="aboutMe--description-item">
                   <h3 className="aboutMe--description-item-years">4+</h3>
@@ -113,5 +113,6 @@ AboutMe.propTypes = {
   headerTextHighlightRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-  ]).isRequired
+  ]).isRequired,
+  refInView: PropTypes.string.isRequired
 };

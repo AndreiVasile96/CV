@@ -15,7 +15,7 @@ import linkedinLogo from "./LinkedinLogo.svg";
 import "./Header.scss";
 
 export default function Header(props) {
-  const { scroll, whatToHighlight } = props;
+  const { scroll, refInView } = props;
   const [menuState, setMenuState] = useState(false);
 
   return (
@@ -168,7 +168,7 @@ export default function Header(props) {
               <button
                 type="button"
                 className={`invisible--buton header--group-item-text " ${
-                  whatToHighlight === "aboutMe" ? "cyan-text" : null
+                  refInView === "aboutMe" ? "cyan-text" : null
                 }`}
                 onClick={() => scroll("#about")}
               >
@@ -179,7 +179,7 @@ export default function Header(props) {
               <button
                 type="button"
                 className={`invisible--buton header--group-item-text " ${
-                  whatToHighlight === "skills" ? "cyan-text" : null
+                  refInView === "skills" ? "cyan-text" : null
                 }`}
                 onClick={() => scroll("#skills")}
               >
@@ -190,7 +190,7 @@ export default function Header(props) {
               <button
                 type="button"
                 className={`invisible--buton header--group-item-text " ${
-                  whatToHighlight === "experience" ? "cyan-text" : null
+                  refInView === "experience" ? "cyan-text" : null
                 }`}
                 onClick={() => scroll("#experience")}
               >
@@ -201,7 +201,7 @@ export default function Header(props) {
               <button
                 type="button"
                 className={`invisible--buton header--group-item-text " ${
-                  whatToHighlight === "contactMe" ? "cyan-text" : null
+                  refInView === "contactMe" ? "cyan-text" : null
                 }`}
                 onClick={() => scroll("#contact")}
               >
@@ -227,5 +227,5 @@ export default function Header(props) {
 
 Header.propTypes = {
   scroll: PropTypes.func.isRequired,
-  whatToHighlight: PropTypes.string.isRequired
+  refInView: PropTypes.string.isRequired
 };

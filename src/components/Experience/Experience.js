@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import MediaQuery from "react-responsive";
+import ExperienceTitle from "./ExperienceTitle";
 
 import "./Experience.scss";
 
@@ -21,7 +21,15 @@ class Experience extends React.Component {
 
   render() {
     const { selectedTab } = this.state;
-    const { headerTextHighlightRef } = this.props;
+    const { headerTextHighlightRef, refInView } = this.props;
+
+    if (refInView === "experience") {
+      const bouncyTitle = document.querySelector(".experience--title");
+      bouncyTitle.classList.add("bouncing");
+      bouncyTitle.addEventListener("animationend", () => {
+        bouncyTitle.classList.remove("bouncing");
+      });
+    }
 
     const workItems = [
       <div key={0} className="experience--item-general-box">
@@ -139,9 +147,9 @@ class Experience extends React.Component {
           <MediaQuery minWidth={913}>
             <div className="two-rows">
               <div className="first-row">
-                <div className="experience--title">
-                  <h1 ref={headerTextHighlightRef}>Experience</h1>
-                </div>
+                <ExperienceTitle
+                  headerTextHighlightRef={headerTextHighlightRef}
+                />
               </div>
               <div className="second-row">
                 <div className="experience--btn-group">
@@ -203,5 +211,6 @@ Experience.propTypes = {
   headerTextHighlightRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-  ]).isRequired
+  ]).isRequired,
+  refInView: PropTypes.string.isRequired
 };

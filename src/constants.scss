@@ -4,23 +4,6 @@ $red: #fe004e;
 $bg-black: #1e1e1e;
 $gray: #3c3c3c;
 
-@mixin page-layout {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  overflow-y: hidden;
-}
-
-@mixin center-flex {
-  min-height: 660px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
 .cyan-btn-selected {
   transition: 0.5s;
   background-color: rgba($color: $cyan, $alpha: 0.1) !important;
@@ -77,6 +60,32 @@ $gray: #3c3c3c;
   }
 }
 
+.bouncing {
+  animation: rubberband 600ms alternate ease-out;
+  color: rgba($color: $cyan, $alpha: 1);
+}
+
+/////////////////////////////
+// HELPERS
+/////////////////////////////
+
+@mixin page-layout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  overflow-y: hidden;
+}
+
+@mixin center-flex {
+  min-height: 660px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 @mixin first-column {
   display: flex;
   max-width: 50vw;
@@ -95,6 +104,10 @@ $gray: #3c3c3c;
   text-align: left;
   margin: 1rem;
 }
+
+/////////////////////////////
+// ANIMATIONS
+/////////////////////////////
 
 @keyframes fadein {
   from {
@@ -123,5 +136,29 @@ $gray: #3c3c3c;
   }
   100% {
     transform: translateY(0);
+  }
+}
+
+@keyframes rubberband {
+  0% {
+    transform: scaleX(1);
+  }
+  40% {
+    transform: scaleX(1.12) scaleY(0.75);
+  }
+  55% {
+    transform: scaleX(0.85) scaleY(1);
+  }
+  65% {
+    transform: scaleX(1.09) scaleY(0.85);
+  }
+  75% {
+    transform: scaleX(0.9) scaleY(1);
+  }
+  90% {
+    transform: scaleX(1.05) scaleY(0.95);
+  }
+  100% {
+    transform: scaleX(1) scaleY(1);
   }
 }

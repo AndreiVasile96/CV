@@ -4,12 +4,11 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-
 import emailjs from "emailjs-com";
 import { ToastContainer, toast } from "react-toastify";
+import ContactMeTitle from "./ContactMeTitle";
 
 import linkedinLogo from "./LinkedinLogo.svg";
-
 import "./ContactMe.scss";
 
 const inputTresHold = 5;
@@ -41,31 +40,52 @@ class ContactMe extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
+    const { fullName, email, message } = this.state;
 
-    const emailResponseApi = await this.sendEmail(event);
-    if (emailResponseApi) {
-      toast.success("Message sent 🙌", {
-        className: "toast-general",
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined
-      });
+    if (
+      fullName.length > 0 &&
+      this.checkValidation("fullName") &&
+      email.length > 0 &&
+      this.checkValidation("email") &&
+      message.length > 0 &&
+      this.checkValidation("message")
+    ) {
+      const emailResponseApi = await this.sendEmail(event);
+      if (emailResponseApi) {
+        toast.success("Message sent 🙌", {
+          className: "toast-general",
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined
+        });
 
-      this.setState({
-        fullName: "",
-        email: "",
-        message: ""
-      });
+        this.setState({
+          fullName: "",
+          email: "",
+          message: ""
+        });
+      } else {
+        toast.error("Failed to send. Please use andreisvasile@gmail.com", {
+          className: "toast-general",
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined
+        });
+      }
     } else {
-      toast.success("Failed to send ❌", {
+      toast.error("Please complete all fields!", {
         className: "toast-general",
-        position: "top-right",
+        position: "bottom-right",
         autoClose: 5000,
-        hideProgressBar: false,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
@@ -75,12 +95,8 @@ class ContactMe extends React.Component {
   }
 
   sendEmail(event) {
-    const REACT_APP_TEMPLATE_ID = "template_i2onlaf";
-    const REACT_APP_SERVICE_ID = "service_dvgtg3m";
-    const REACT_APP_USER_ID = "BTmRlBP5An9ebTjlH";
-
-    // const { REACT_APP_TEMPLATE_ID, REACT_APP_SERVICE_ID, REACT_APP_USER_ID } =
-    //   process.env;
+    const { REACT_APP_TEMPLATE_ID, REACT_APP_SERVICE_ID, REACT_APP_USER_ID } =
+      process.env;
     if (!REACT_APP_TEMPLATE_ID || !REACT_APP_SERVICE_ID || !REACT_APP_USER_ID) {
       return false;
     }
@@ -109,10 +125,10 @@ class ContactMe extends React.Component {
   checkValidation(target) {
     let checkBool = true;
     const { fullName, email, message } = this.state;
-    if (target === "fullName" || target === "all") {
+    if (target === "fullName") {
       if (fullName.length && fullName.length < inputTresHold) checkBool = false;
     }
-    if (target === "email" || target === "all") {
+    if (target === "email") {
       if (
         (email.length && email.length < inputTresHold) ||
         (email.length && !/.+@.+\.[A-Za-z]+$/.test(email))
@@ -120,28 +136,29 @@ class ContactMe extends React.Component {
         checkBool = false;
       }
     }
-    if (target === "message" || target === "all") {
+    if (target === "message") {
       if (message.length && message.length < inputTresHold) checkBool = false;
     }
 
-    if (target === "all") {
-      if (!fullName.length || !email.length || !message.length) {
-        checkBool = false;
-      }
-    }
     return checkBool;
   }
 
   render() {
     const { fullName, email, message } = this.state;
-    const { headerTextHighlightRef } = this.props;
+    const { headerTextHighlightRef, refInView } = this.props;
+
+    if (refInView === "contactMe") {
+      const bouncyTitle = document.querySelector(".contactMe--title");
+      bouncyTitle.classList.add("bouncing");
+      bouncyTitle.addEventListener("animationend", () => {
+        bouncyTitle.classList.remove("bouncing");
+      });
+    }
 
     return (
       <div className="contactMe" id="contact">
         <section className="contactMe--center-flex">
-          <div className="contactMe--title">
-            <h1 ref={headerTextHighlightRef}>Contact me</h1>
-          </div>
+          <ContactMeTitle headerTextHighlightRef={headerTextHighlightRef} />
           <div className="contactMe--description">
             <p>
               Don&apos;t hesitate to contact me for job opprtunities, questions
@@ -197,7 +214,6 @@ class ContactMe extends React.Component {
                 className="main-btn-style contactMe--submit-btn"
                 type="submit"
                 value="Send message!"
-                disabled={!this.checkValidation("all")}
               />
               <a href="https://www.linkedin.com/in/andrei-vasile/">
                 <img
@@ -232,5 +248,6 @@ ContactMe.propTypes = {
   headerTextHighlightRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-  ]).isRequired
+  ]).isRequired,
+  refInView: PropTypes.string.isRequired
 };

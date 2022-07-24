@@ -11,16 +11,16 @@
   height: 100vh;
 }
 
+.landingPage--ATriangle {
+  height: 0.75em;
+}
+
 .landingPage--title {
   margin-top: 4rem;
   color: white;
   line-height: 0;
   text-align: center;
   font-size: 2em;
-}
-
-.landingPage--ATriangle {
-  height: 0.75em;
 }
 
 .landingPage--description {
@@ -50,4 +50,11 @@
   background-color: transparent;
   border: 0;
   cursor: pointer;
+}
+
+// Title
+
+.landingPageBouncy {
+  display: inline-block;
+  transition: 0.5s;
 }

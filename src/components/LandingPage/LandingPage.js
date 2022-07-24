@@ -2,8 +2,9 @@ import PropTypes from "prop-types";
 
 import React from "react";
 
-import ATriangle from "./A-Triangle.svg";
 import ScrollTriangles from "./ScrollTriangles.svg";
+import LandingPageTitle from "./LandingPageTitle";
+
 import "./LandingPage.scss";
 
 export default function LandingPage(props) {
@@ -11,17 +12,7 @@ export default function LandingPage(props) {
   return (
     <div className="landingPage" id="landingPage">
       <section className="landingPage--center-flex">
-        <div className="landingPage--title">
-          <h1 ref={headerTextHighlightRef}>Hi, my name is</h1>
-          <h1>
-            <img
-              className="landingPage--ATriangle"
-              src={ATriangle}
-              alt="A triangle"
-            />
-            ndrei
-          </h1>
-        </div>
+        <LandingPageTitle headerTextHighlightRef={headerTextHighlightRef} />
         <div className="landingPage--description">
           <p>DevOps / Cloud / Full-Stack Developer</p>
         </div>
