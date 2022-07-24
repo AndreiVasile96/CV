@@ -1,0 +1,53 @@
+@import "./../../constants.scss";
+
+.landingPage {
+  @include page-layout;
+}
+
+.landingPage--center-flex {
+  @include center-flex;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.landingPage--title {
+  margin-top: 4rem;
+  color: white;
+  line-height: 0;
+  text-align: center;
+  font-size: 2em;
+}
+
+.landingPage--ATriangle {
+  height: 0.75em;
+}
+
+.landingPage--description {
+  color: white;
+  font-size: 1rem;
+}
+
+.landingPage--scroll {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: 2rem;
+  margin-bottom: 2rem;
+  animation: point-down 2s infinite;
+  align-self: center;
+  margin-top: 4rem;
+}
+
+.landingPage--scroll-text {
+  color: white;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 0.5;
+}
+
+.landingPage--scroll-btn {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}

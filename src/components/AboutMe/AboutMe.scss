@@ -1,0 +1,77 @@
+@import "./../../constants.scss";
+
+.aboutMe {
+  @include page-layout;
+}
+
+.aboutMe--center-flex {
+  @include center-flex;
+
+  height: 100vh;
+  width: 100vw;
+}
+
+.aboutMe--title {
+  line-height: 0;
+  font-size: 2em;
+  color: $cyan;
+}
+
+.aboutMe--ATriangle {
+  height: 0.75em;
+}
+
+.aboutMe--description {
+  font-size: 1rem;
+
+  padding-left: 2rem;
+  padding-right: 2rem;
+
+  color: white;
+}
+
+.aboutMe--description-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100vw;
+
+  font-size: 1rem;
+  text-align: center;
+  color: white;
+}
+
+.aboutMe--description-item {
+  margin: 0 0.5rem;
+}
+
+.aboutMe--description-item-years {
+  color: $cyan;
+  margin: 0;
+  font-size: 1.1em;
+}
+
+.aboutMe--description-item-title {
+  margin: 0;
+  font-weight: 100;
+  font-size: 1em;
+}
+
+// DESKTOP
+.first-column {
+  @include first-column;
+
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.second-column {
+  @include second-column;
+}
+
+.aboutMe--description-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}

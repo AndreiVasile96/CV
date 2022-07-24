@@ -1,0 +1,127 @@
+// Colours
+$cyan: #00f6ef;
+$red: #fe004e;
+$bg-black: #1e1e1e;
+$gray: #3c3c3c;
+
+@mixin page-layout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  overflow-y: hidden;
+}
+
+@mixin center-flex {
+  min-height: 660px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.cyan-btn-selected {
+  transition: 0.5s;
+  background-color: rgba($color: $cyan, $alpha: 0.1) !important;
+  color: white !important;
+}
+
+.main-btn-style {
+  background-color: transparent;
+  border: 0.1em solid $cyan;
+
+  font-size: 1.1em;
+  font-weight: 600;
+  color: $cyan;
+
+  height: 3em;
+  width: 12em;
+  cursor: pointer;
+
+  &:hover {
+    transition: 0.2s;
+    border: 0.1em solid rgba($color: $cyan, $alpha: 0.5);
+  }
+}
+
+.invisible--buton {
+  margin: 0;
+  border: 0;
+  background-color: transparent !important;
+  cursor: pointer;
+  &:hover {
+    transition: 0.5s;
+    color: $cyan !important;
+  }
+}
+
+.cyan-text {
+  transition: 0.5s;
+  color: $cyan !important;
+}
+
+.two-columns {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+  flex-direction: row;
+
+  margin-left: 2rem;
+  margin-right: 2rem;
+
+  width: 100vw;
+
+  p {
+    margin: 2rem;
+  }
+}
+
+@mixin first-column {
+  display: flex;
+  max-width: 50vw;
+  width: 100vw;
+  margin: 1rem;
+
+  font-size: 1rem;
+  text-align: center;
+  color: white;
+}
+
+@mixin second-column {
+  width: 100vw;
+  font-size: 1rem;
+  color: white;
+  text-align: left;
+  margin: 1rem;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes point-down {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

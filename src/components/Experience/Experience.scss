@@ -1,0 +1,150 @@
+@import "./../../constants.scss";
+
+.experience {
+  @include page-layout;
+}
+
+.experience--center-flex {
+  @include center-flex;
+
+  height: 100vh;
+  width: 100vw;
+}
+
+.experience--title {
+  color: white;
+  line-height: 0;
+  font-size: 2em;
+  color: $cyan;
+  margin-bottom: 1rem;
+}
+
+.experience--btn-group {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 1rem;
+  width: 90%;
+}
+
+.experience--btn-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1rem !important;
+}
+
+.experience--btn-item {
+  height: 3rem;
+  border: 0.1rem solid $cyan;
+  border-radius: 1rem;
+}
+
+.experience--btn {
+  cursor: pointer;
+  width: 40vw;
+  height: 100%;
+  border: 0;
+  color: white;
+  background-color: transparent;
+}
+
+.experience--item-description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100vw;
+  color: white;
+}
+
+.experience--item-general-box {
+  background-color: $gray;
+  margin-top: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 1rem;
+  width: 90%;
+  color: white;
+}
+
+.experience--item-general-box-title {
+  font-size: 1.1rem;
+  margin: 0 0 0 0.5rem;
+  font-weight: 400;
+}
+
+.experience--item-general-box-date {
+  font-size: 1rem;
+  margin: 0 0 0 0.5rem;
+  color: $cyan;
+  font-size: 1rem;
+  font-weight: 100;
+}
+
+.experience--item-general-box-description {
+  font-size: 1rem;
+  margin: 0.5rem 0.5rem 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 100;
+}
+
+// DESKTOP
+
+.two-rows {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+  flex-direction: row;
+
+  margin-left: 2rem;
+  margin-right: 2rem;
+
+  width: 100vw;
+}
+
+.first-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-left: 4rem;
+  margin-right: 2rem;
+
+  width: 100vw;
+}
+
+.second-row {
+  margin-left: 2rem;
+  margin-right: 2rem;
+
+  width: 100vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.experience--info-box-group {
+  display: flex;
+  align-self: flex-start;
+}
+
+.experience--item-grid-desktop {
+  margin-left: 2rem;
+  margin-right: 2rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.experience--item-description-desktop {
+  max-width: 30%;
+  font-size: 1rem;
+  margin: 0.5rem 0.5rem 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 100;
+
+  background-color: $gray;
+  color: white;
+}

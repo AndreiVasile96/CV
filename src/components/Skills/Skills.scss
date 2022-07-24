@@ -1,0 +1,180 @@
+@import "./../../constants.scss";
+
+.skillsPage {
+  @include page-layout;
+}
+
+.skillsPage--center-flex {
+  @include center-flex;
+
+  height: 100vh;
+  width: 100vw;
+
+  overflow-x: hidden !important;
+}
+
+.skillsPage--title {
+  color: white;
+  line-height: 0;
+  font-size: 2em;
+  color: $cyan;
+}
+
+.skillsPage--description {
+  font-size: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+
+  color: white;
+}
+
+.skillsPage--skills-items {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.skillsPage--skill {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 3rem;
+  border: 0.1em solid $cyan;
+  border-radius: 1em;
+
+  &:hover {
+    transition: 0.2s;
+    border: 0.1em solid rgba($color: $cyan, $alpha: 0.5);
+  }
+}
+
+.remove-btn-style {
+  margin: 0;
+  background-color: transparent;
+
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.skillsPage-skill-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  color: white;
+  background-color: transparent;
+}
+
+.skillsPage--skill-name {
+  font-size: 1rem;
+  margin: 0 !important;
+  align-self: center;
+}
+
+.skillsPage--skill-img {
+  padding-right: 1rem;
+  cursor: pointer;
+}
+
+.skillsPage-skill-illustration {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  margin-left: 2rem;
+  margin-right: 2rem;
+
+  padding-bottom: 1rem;
+}
+
+.skillsPage-skill-illustration-title {
+  font-size: 1rem;
+  margin: 1rem 0 0.2rem 0.2rem;
+  color: white;
+}
+
+.skillsPage-skill-illustration-bar-cyan {
+  margin-left: 0.2rem;
+  padding: 0.2rem;
+  background: linear-gradient(to right, $cyan 85%, $gray 15%) bottom;
+  background-size: 100% 10px;
+}
+.skillsPage-skill-illustration-bar-red {
+  margin-left: 0.2rem;
+  padding: 0.2rem;
+  background: linear-gradient(to right, $red 85%, $gray 15%) bottom;
+  background-size: 100% 10px;
+}
+
+.rotate-img {
+  animation: flip-and-invisible 0.5s;
+  -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+  -moz-animation-fill-mode: forwards; /* FF 5+ */
+  -o-animation-fill-mode: forwards; /* Not implemented yet */
+  -ms-animation-fill-mode: forwards; /* IE 10+ */
+  animation-fill-mode: forwards;
+}
+
+.appear-text {
+  animation: pop-from-above 0.5s;
+  -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+  -moz-animation-fill-mode: forwards; /* FF 5+ */
+  -o-animation-fill-mode: forwards; /* Not implemented yet */
+  -ms-animation-fill-mode: forwards; /* IE 10+ */
+  animation-fill-mode: forwards;
+}
+
+.disappear-text {
+  display: none;
+}
+
+@keyframes flip-and-invisible {
+  0% {
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: scaleY(-1);
+    opacity: 1;
+  }
+}
+
+@keyframes pop-from-above {
+  0% {
+    display: none;
+    opacity: 0;
+    -webkit-transform: translateY(-2rem);
+  }
+  100% {
+    display: inherit;
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+  }
+}
+
+@keyframes pop-to-above {
+  0% {
+    height: inherit;
+  }
+  100% {
+    position: absolute;
+    visibility: hidden;
+  }
+}
+
+// DESKTOP
+
+.skillsPage--desktop-skill-illustration {
+  margin-left: 2rem;
+  margin-right: 2rem;
+
+  width: 100vw;
+}

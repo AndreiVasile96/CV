@@ -1,0 +1,117 @@
+@import "./../../constants.scss";
+
+.contactMe {
+  @include page-layout;
+}
+
+.contactMe--center-flex {
+  @include center-flex;
+
+  height: 100vh;
+  width: 100vw;
+}
+
+.contactMe--title {
+  color: white;
+  line-height: 0;
+  font-size: 2em;
+  color: $cyan;
+}
+
+.contactMe--description {
+  font-size: 1rem;
+
+  padding-left: 2rem;
+  padding-right: 2rem;
+
+  color: white;
+}
+
+.contactMe--form {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.input-form-started {
+  border-bottom: 1px solid $red !important;
+  background-color: rgba($color: $red, $alpha: 0.25) !important;
+}
+
+.input-form-finished {
+  border-bottom: 1px solid $cyan !important;
+  background-color: rgba($color: $cyan, $alpha: 0.1) !important;
+}
+
+.contactMe--input-error {
+  margin: 0;
+  color: rgba($color: $red, $alpha: 075) !important;
+}
+
+.contactMe--input {
+  background-color: $gray;
+  color: white;
+  border: 0;
+  width: 100%;
+
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  font-size: 1rem;
+
+  &::placeholder {
+    padding-left: 0.5rem;
+    font-size: 1rem;
+    color: white;
+  }
+  &:-ms-input-placeholder {
+    font-size: 1rem;
+    color: white;
+  }
+  &::-ms-input-placeholder {
+    font-size: 1rem;
+    color: white;
+  }
+
+  &:focus::placeholder {
+    color: transparent !important;
+  }
+}
+
+.contactMe--textarea {
+  height: 6rem;
+}
+
+.contactMe--submit-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1em;
+  width: 100%;
+}
+
+.contactMe--submit-btn {
+  &:disabled {
+    color: $gray;
+    cursor: not-allowed;
+  }
+}
+
+.contactMe--lkdn-logo {
+  height: 3rem;
+  width: 3rem;
+  cursor: pointer;
+}
+
+.toast-general {
+  font-family: "Bitter, sans" !important;
+  font-size: 1.1rem;
+  color: white !important;
+
+  background-color: $bg-black !important;
+  border-radius: 1rem solid !important;
+  margin: 1px solid $cyan !important;
+}
