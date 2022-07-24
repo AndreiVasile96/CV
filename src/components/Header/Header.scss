@@ -1,0 +1,123 @@
+@import "./../../constants.scss";
+
+.header--body {
+  position: fixed;
+  z-index: 10;
+  height: 4em;
+  width: 100vw;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.header--burger-menu-btn {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.header--modal-body {
+  transition: 0.5s;
+  animation: fadein 0.5s;
+
+  position: fixed;
+
+  z-index: 5;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: $bg-black;
+  transition: 0.5s;
+}
+
+.header--center-flex {
+  @include center-flex;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.header--modal-title {
+  color: white;
+  line-height: 0;
+  font-size: 2em;
+
+  margin-bottom: 2em;
+}
+
+.header--triangle {
+  height: 0.75em;
+}
+
+.header--modal-menu {
+  @include center-flex;
+  margin-top: 2rem;
+}
+
+.header--modal-bar {
+  width: 80vw;
+  border-bottom: 0.15em solid $gray;
+}
+
+.header--modal-item {
+  cursor: pointer;
+  color: white;
+  font-size: 1.1em;
+}
+
+.header--modal-ldkn-logo {
+  margin-top: 4em;
+  cursor: pointer;
+}
+
+// DESKTOP
+
+.header--body--desktop {
+  background-color: $bg-black;
+  position: fixed;
+  display: flex;
+  z-index: 10;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 3.5em;
+  width: 100vw;
+}
+
+.header--name-logo {
+  margin-left: 1em;
+  color: white !important;
+  font-size: 2.25em;
+  &:hover {
+    transition: 0.5s;
+    color: $cyan !important;
+  }
+}
+
+.header--triangle-element {
+  height: 0.8em;
+}
+
+.header--links-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header--group-item {
+  margin-right: 1em;
+}
+
+.header--group-item-logo {
+  height: 2.5em;
+}
+
+.header--group-item-text {
+  color: white !important;
+  font-size: 1.1em;
+  font-weight: 600;
+}
