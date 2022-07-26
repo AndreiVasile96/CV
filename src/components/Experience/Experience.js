@@ -9,44 +9,66 @@ class Experience extends React.Component {
   constructor() {
     super();
     this.state = {
-      selectedTab: "work"
+      selectedTab: "work",
+
+      renderAnimation: false,
+      comeFromBelow: "",
+      comeFromBelowDelayed: "",
+
+      renderGridAnimation: "",
+      visible: "invisible"
     };
 
     this.selectTab = this.selectTab.bind(this);
   }
 
+  componentDidUpdate() {
+    const { refinview } = this.props;
+    const { renderAnimation } = this.state;
+
+    if (refinview === "experience" && !renderAnimation) {
+      this.setState({
+        comeFromBelow: "come-from-below",
+        comeFromBelowDelayed: "come-from-below-delayed",
+        renderAnimation: true,
+        visible: "visible"
+      });
+    }
+  }
+
   selectTab(target) {
-    this.setState({ selectedTab: target });
+    this.setState({
+      selectedTab: target,
+      renderGridAnimation: "come-from-below-fast"
+    });
   }
 
   render() {
-    const { selectedTab } = this.state;
-    const { headerTextHighlightRef, refInView } = this.props;
-
-    if (refInView === "experience") {
-      const bouncyTitle = document.querySelector(".experience--title");
-      bouncyTitle.classList.add("bouncing");
-      bouncyTitle.addEventListener("animationend", () => {
-        bouncyTitle.classList.remove("bouncing");
-      });
-    }
+    const {
+      selectedTab,
+      comeFromBelow,
+      comeFromBelowDelayed,
+      renderGridAnimation,
+      visible
+    } = this.state;
+    const { headerTextHighlightRef, refinview } = this.props;
 
     const workItems = [
       <div key={0} className="experience--item-general-box">
-        <h3 className="experience--item-general-box-title">IBM UK</h3>
-        <h3 className="experience--item-general-box-date">
+        <p className="experience--item-general-box-title">IBM UK</p>
+        <p className="experience--item-general-box-date">
           (Nov 2012 - Oct 2013)
-        </h3>
+        </p>
         <p className="experience--item-general-box-description">
           DevOps developer, with extensive knowledge and years of experience,
           working with full stack technologies, delivering quality work.
         </p>
       </div>,
       <div key={1} className="experience--item-general-box">
-        <h3 className="experience--item-general-box-title">IBM UK</h3>
-        <h3 className="experience--item-general-box-date">
+        <p className="experience--item-general-box-title">IBM UK</p>
+        <p className="experience--item-general-box-date">
           (Nov 2013 - Oct 2014)
-        </h3>
+        </p>
         <p className="experience--item-general-box-description">
           DevOps developer, with extensive knowledge and years of experience,
           working with full stack technologies, delivering quality work.
@@ -56,40 +78,40 @@ class Experience extends React.Component {
 
     const educationItems = [
       <div key={2} className="experience--item-general-box">
-        <h3 className="experience--item-general-box-title">IBM UK</h3>
-        <h3 className="experience--item-general-box-date">
+        <p className="experience--item-general-box-title">IBM UK</p>
+        <p className="experience--item-general-box-date">
           (Nov 2020 - Oct 2014)
-        </h3>
+        </p>
         <p className="experience--item-general-box-description">
           DevOps developer, with extensive knowledge and years of experience,
           working with full stack technologies, delivering quality work.
         </p>
       </div>,
       <div key={3} className="experience--item-general-box">
-        <h3 className="experience--item-general-box-title">IBM UK</h3>
-        <h3 className="experience--item-general-box-date">
+        <p className="experience--item-general-box-title">IBM UK</p>
+        <p className="experience--item-general-box-date">
           (Nov 2020 - Oct 2014)
-        </h3>
+        </p>
         <p className="experience--item-general-box-description">
           DevOps developer, with extensive knowledge and years of experience,
           working with full stack technologies, delivering quality work.
         </p>
       </div>,
       <div key={4} className="experience--item-general-box">
-        <h3 className="experience--item-general-box-title">IBM UK</h3>
-        <h3 className="experience--item-general-box-date">
+        <p className="experience--item-general-box-title">IBM UK</p>
+        <p className="experience--item-general-box-date">
           (Nov 2020 - Oct 2014)
-        </h3>
+        </p>
         <p className="experience--item-general-box-description">
           DevOps developer, with extensive knowledge and years of experience,
           working with full stack technologies, delivering quality work.
         </p>
       </div>,
       <div key={5} className="experience--item-general-box">
-        <h3 className="experience--item-general-box-title">IBM UK</h3>
-        <h3 className="experience--item-general-box-date">
+        <p className="experience--item-general-box-title">IBM UK</p>
+        <p className="experience--item-general-box-date">
           (Nov 2020 - Oct 2014)
-        </h3>
+        </p>
         <p className="experience--item-general-box-description">
           DevOps developer, with extensive knowledge and years of experience,
           working with full stack technologies, delivering quality work.
@@ -98,14 +120,20 @@ class Experience extends React.Component {
     ];
 
     return (
-      <div className="experience" id="experience">
+      <div
+        className={`experience ${visible}`}
+        id="experience"
+        refinview={refinview}
+      >
         <section className="experience--center-flex">
           <MediaQuery maxWidth={912}>
-            <div className="experience--title">
-              <h1 ref={headerTextHighlightRef}>Experience</h1>
-            </div>
+            <ExperienceTitle
+              mode="mobile"
+              headerTextHighlightRef={headerTextHighlightRef}
+              refinview={refinview}
+            />
             <div className="experience--description" />
-            <div className="experience--btn-group">
+            <div className={`experience--btn-group ${comeFromBelow} `}>
               <button
                 className={`main-btn-style experience--btn-tab ${
                   selectedTab === "work" ? "cyan-btn-selected" : null
@@ -113,7 +141,7 @@ class Experience extends React.Component {
                 type="button"
                 onClick={() => this.selectTab("work")}
               >
-                <h3>Work</h3>
+                <p>Work</p>
               </button>
 
               <button
@@ -123,13 +151,18 @@ class Experience extends React.Component {
                 type="button"
                 onClick={() => this.selectTab("education")}
               >
-                <h3>Education</h3>
+                <p>Education</p>
               </button>
             </div>
             {selectedTab === "work" ? (
               <div className="experience--item-description">
                 {workItems.map((item) => (
-                  <div key={item.key} className="experience--item-description">
+                  <div
+                    key={item.key}
+                    className={`experience--item-description ${
+                      renderGridAnimation || comeFromBelowDelayed
+                    } `}
+                  >
                     {item}
                   </div>
                 ))}
@@ -137,7 +170,12 @@ class Experience extends React.Component {
             ) : (
               <div className="experience--item-description">
                 {educationItems.map((item) => (
-                  <div key={item.key} className="experience--item-description">
+                  <div
+                    key={item.key}
+                    className={`experience--item-description ${
+                      renderGridAnimation || comeFromBelowDelayed
+                    } `}
+                  >
                     {item}
                   </div>
                 ))}
@@ -148,10 +186,12 @@ class Experience extends React.Component {
             <div className="two-rows">
               <div className="first-row">
                 <ExperienceTitle
+                  mode="desktop"
                   headerTextHighlightRef={headerTextHighlightRef}
+                  refinview={refinview}
                 />
               </div>
-              <div className="second-row">
+              <div className={`second-row ${comeFromBelow}`}>
                 <div className="experience--btn-group">
                   <button
                     className={`main-btn-style experience--btn-tab ${
@@ -160,7 +200,7 @@ class Experience extends React.Component {
                     type="button"
                     onClick={() => this.selectTab("work")}
                   >
-                    <h3>Work</h3>
+                    <p>Work</p>
                   </button>
 
                   <button
@@ -170,7 +210,7 @@ class Experience extends React.Component {
                     type="button"
                     onClick={() => this.selectTab("education")}
                   >
-                    <h3>Education</h3>
+                    <p>Education</p>
                   </button>
                 </div>
               </div>
@@ -180,7 +220,9 @@ class Experience extends React.Component {
                 {workItems.map((item) => (
                   <div
                     key={item.key}
-                    className="experience--item-description-desktop"
+                    className={`experience--item-description-desktop ${
+                      renderGridAnimation || comeFromBelowDelayed
+                    }`}
                   >
                     {item}
                   </div>
@@ -191,7 +233,9 @@ class Experience extends React.Component {
                 {educationItems.map((item) => (
                   <div
                     key={item.key}
-                    className="experience--item-description-desktop"
+                    className={`experience--item-description-desktop ${
+                      renderGridAnimation || comeFromBelowDelayed
+                    }`}
                   >
                     {item}
                   </div>
@@ -212,5 +256,5 @@ Experience.propTypes = {
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
   ]).isRequired,
-  refInView: PropTypes.string.isRequired
+  refinview: PropTypes.string.isRequired
 };

@@ -18,17 +18,18 @@
 .landingPage--title {
   margin-top: 4rem;
   color: white;
-  line-height: 0;
+  line-height: 3rem;
   text-align: center;
-  font-size: 2em;
+  font-size: 3rem;
 }
 
 .landingPage--description {
-  color: white;
+  color: $white-gray;
   font-size: 1rem;
 }
 
 .landingPage--scroll {
+  z-index: 0;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -57,4 +58,17 @@
 .landingPageBouncy {
   display: inline-block;
   transition: 0.5s;
+}
+
+.landingPage--title .text-wrapper {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  align-self: center;
+}
+
+.landingPage--title .letter {
+  transform-origin: 50% 100%;
+  display: inline-block;
+  line-height: 1.5rem;
 }

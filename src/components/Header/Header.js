@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-return-assign */
 /* eslint-disable react/no-this-in-sfc */
 import React, { useState } from "react";
@@ -15,11 +17,11 @@ import linkedinLogo from "./LinkedinLogo.svg";
 import "./Header.scss";
 
 export default function Header(props) {
-  const { scroll, refInView } = props;
+  const { scroll, refinview } = props;
   const [menuState, setMenuState] = useState(false);
 
   return (
-    <div>
+    <div className="header landingPage--name-popin">
       <MediaQuery maxWidth={912}>
         <div className="header--body">
           <button
@@ -50,91 +52,89 @@ export default function Header(props) {
           </button>
         </div>
         {menuState ? (
-          <div id="menu" className="header--modal-body">
-            <section className="header--center-flex">
-              <div className="header--modal-menu">
-                <div className="header--modal-title">
-                  <h1>
-                    <img
-                      className="header--triangle"
-                      src={ATriangle}
-                      alt="A triangle"
-                    />
-                    ndrei
-                  </h1>
-                  <h1>
-                    <img
-                      className="header--triangle"
-                      src={VTriangle}
-                      alt="A triangle"
-                    />
-                    asile
-                  </h1>
-                </div>
-                <div className="header--modal-bar" />
-                <button
-                  type="button"
-                  className="header--burger-menu-btn"
-                  onClick={() => {
-                    scroll("#landingPage");
-                    setMenuState(!menuState);
-                  }}
-                >
-                  <h3 className="header--modal-item">Introduction</h3>
-                </button>
-                <div className="header--modal-bar" />
-                <button
-                  type="button"
-                  className="header--burger-menu-btn"
-                  onClick={() => {
-                    scroll("#about");
-                    setMenuState(!menuState);
-                  }}
-                >
-                  <h3 className="header--modal-item">About me</h3>
-                </button>
-                <div className="header--modal-bar" />
-                <button
-                  type="button"
-                  className="header--burger-menu-btn"
-                  onClick={() => {
-                    scroll("#skills");
-                    setMenuState(!menuState);
-                  }}
-                >
-                  <h3 className="header--modal-item">Skills</h3>
-                </button>
-                <div className="header--modal-bar" />
-                <button
-                  type="button"
-                  className="header--burger-menu-btn"
-                  onClick={() => {
-                    scroll("#experience");
-                    setMenuState(!menuState);
-                  }}
-                >
-                  <h3 className="header--modal-item">Experience</h3>
-                </button>
-                <div className="header--modal-bar" />
-                <button
-                  type="button"
-                  className="header--burger-menu-btn"
-                  onClick={() => {
-                    scroll("#contact");
-                    setMenuState(!menuState);
-                  }}
-                >
-                  <h3 className="header--modal-item">Contact me</h3>
-                </button>
-                <div className="header--modal-bar" />
-                <a href="https://www.linkedin.com/in/andrei-vasile/">
+          <div className="header--modal-body">
+            <section className="header--modal-menu">
+              <div className="header--modal-title">
+                <h1>
                   <img
-                    className="header--modal-ldkn-logo"
-                    src={linkedinLogo}
-                    alt="Linkedin Logo"
+                    className="header--triangle"
+                    src={ATriangle}
+                    alt="A triangle"
                   />
-                </a>
+                  ndrei
+                </h1>
+                <h1>
+                  <img
+                    className="header--triangle"
+                    src={VTriangle}
+                    alt="A triangle"
+                  />
+                  asile
+                </h1>
               </div>
+              <div className="header--modal-bar" />
+              <button
+                type="button"
+                className="header--burger-menu-btn"
+                onClick={() => {
+                  scroll("#landingPage");
+                  setMenuState(!menuState);
+                }}
+              >
+                <h3 className="header--modal-item">Introduction</h3>
+              </button>
+              <div className="header--modal-bar" />
+              <button
+                type="button"
+                className="header--burger-menu-btn"
+                onClick={() => {
+                  scroll("#about");
+                  setMenuState(!menuState);
+                }}
+              >
+                <h3 className="header--modal-item">About me</h3>
+              </button>
+              <div className="header--modal-bar" />
+              <button
+                type="button"
+                className="header--burger-menu-btn"
+                onClick={() => {
+                  scroll("#skills");
+                  setMenuState(!menuState);
+                }}
+              >
+                <h3 className="header--modal-item">Skills</h3>
+              </button>
+              <div className="header--modal-bar" />
+              <button
+                type="button"
+                className="header--burger-menu-btn"
+                onClick={() => {
+                  scroll("#experience");
+                  setMenuState(!menuState);
+                }}
+              >
+                <h3 className="header--modal-item">Experience</h3>
+              </button>
+              <div className="header--modal-bar" />
+              <button
+                type="button"
+                className="header--burger-menu-btn"
+                onClick={() => {
+                  scroll("#contact");
+                  setMenuState(!menuState);
+                }}
+              >
+                <h3 className="header--modal-item">Contact me</h3>
+              </button>
+              <div className="header--modal-bar" />
+              <a href="https://www.linkedin.com/in/andrei-vasile/">
+                <img
+                  className="header--modal-ldkn-logo"
+                  src={linkedinLogo}
+                  alt="Linkedin Logo"
+                />
+              </a>
             </section>
           </div>
         ) : null}
@@ -168,7 +168,7 @@ export default function Header(props) {
               <button
                 type="button"
                 className={`invisible--buton header--group-item-text " ${
-                  refInView === "aboutMe" ? "cyan-text" : null
+                  refinview === "aboutMe" ? "cyan-text" : null
                 }`}
                 onClick={() => scroll("#about")}
               >
@@ -179,7 +179,7 @@ export default function Header(props) {
               <button
                 type="button"
                 className={`invisible--buton header--group-item-text " ${
-                  refInView === "skills" ? "cyan-text" : null
+                  refinview === "skills" ? "cyan-text" : null
                 }`}
                 onClick={() => scroll("#skills")}
               >
@@ -190,7 +190,7 @@ export default function Header(props) {
               <button
                 type="button"
                 className={`invisible--buton header--group-item-text " ${
-                  refInView === "experience" ? "cyan-text" : null
+                  refinview === "experience" ? "cyan-text" : null
                 }`}
                 onClick={() => scroll("#experience")}
               >
@@ -201,7 +201,7 @@ export default function Header(props) {
               <button
                 type="button"
                 className={`invisible--buton header--group-item-text " ${
-                  refInView === "contactMe" ? "cyan-text" : null
+                  refinview === "contactMe" ? "cyan-text" : null
                 }`}
                 onClick={() => scroll("#contact")}
               >
@@ -227,5 +227,5 @@ export default function Header(props) {
 
 Header.propTypes = {
   scroll: PropTypes.func.isRequired,
-  refInView: PropTypes.string.isRequired
+  refinview: PropTypes.string.isRequired
 };

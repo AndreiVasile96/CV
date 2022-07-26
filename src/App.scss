@@ -9,21 +9,33 @@
   width: 100vw;
 }
 
-::-webkit-scrollbar {
-  width: 12px;
+@media only screen and (min-width: 913px) {
+  html {
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: $gray;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: $cyan;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: $red;
+    }
+  }
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: $gray;
+.app-body-visible {
+  visibility: inherit;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: $cyan;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: $red;
+.app-body-invisible {
+  visibility: inherit;
 }

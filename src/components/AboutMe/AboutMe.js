@@ -1,69 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import MediaQuery from "react-responsive";
 import AboutMeTitle from "./AboutMeTitle";
 
-import ATriangle from "./A-Triangle.svg";
 import "./AboutMe.scss";
 
 export default function AboutMe(props) {
-  const { headerTextHighlightRef, refInView } = props;
+  const { aboutMeRef, refinview } = props;
+  const [comeFromBelow, setComeFromBelow] = useState("");
+  const [comeFromBelowDelayed, setComeFromBelowDelayed] = useState("");
+  const [isTitleVisible, setTitleToViewd] = useState(false);
+  const [isFirstRender, setFirstRender] = useState(false);
 
-  if (refInView === "aboutMe") {
-    const bouncyTitle = document.querySelector(".aboutMe--title");
-    bouncyTitle.classList.add("bouncing");
-    bouncyTitle.addEventListener("animationend", () => {
-      bouncyTitle.classList.remove("bouncing");
-    });
+  if (refinview === "aboutMe" && !isTitleVisible) {
+    setComeFromBelow("come-from-below");
+    setComeFromBelowDelayed("come-from-below-delayed");
+    setTitleToViewd(true);
+  }
+
+  let visible = "invisible";
+  if (isFirstRender) visible = "visible";
+  else if (refinview === "aboutMe") {
+    visible = "visible";
+    setFirstRender(true);
   }
 
   return (
-    <div className="aboutMe" id="about">
+    <div className={`aboutMe ${visible}`} id="about" refinview={refinview}>
       <section className="aboutMe--center-flex">
         <MediaQuery maxWidth={912}>
-          <div className="aboutMe--title">
-            <h1 ref={headerTextHighlightRef}>
-              <img
-                className="aboutMe--ATriangle"
-                src={ATriangle}
-                alt="A triangle"
-              />
-              bout me
-            </h1>
-          </div>
-          <div className="aboutMe--description">
+          <AboutMeTitle
+            mode="mobile"
+            aboutMeRef={aboutMeRef}
+            refinview={refinview}
+          />
+          <div
+            className={`aboutMe--description come-from-below ${comeFromBelow} `}
+          >
             <p>
               DevOps developer, with extensive knowledge and years of
               experience, working with full stack technologies, delivering
               quality work.
             </p>
           </div>
-          <div className="aboutMe--description-flex">
+          <div className={`aboutMe--description-flex ${comeFromBelowDelayed} `}>
             <div className="aboutMe--description-item">
               <h3 className="aboutMe--description-item-years">4+</h3>
-              <h3 className="aboutMe--description-item-title">
+              <p className="aboutMe--description-item-title">
                 Years experience
-              </h3>
+              </p>
             </div>
             <div className="aboutMe--description-item">
               <h3 className="aboutMe--description-item-years">4+</h3>
-              <h3 className="aboutMe--description-item-title">
+              <p className="aboutMe--description-item-title">
                 Years experience
-              </h3>
+              </p>
             </div>
             <div className="aboutMe--description-item">
               <h3 className="aboutMe--description-item-years">4+</h3>
-              <h3 className="aboutMe--description-item-title">
+              <p className="aboutMe--description-item-title">
                 Years experience
-              </h3>
+              </p>
             </div>
           </div>
         </MediaQuery>
         <MediaQuery minWidth={913}>
           <div className="two-columns">
             <div className="first-column">
-              <AboutMeTitle headerTextHighlightRef={headerTextHighlightRef} />
-              <div className="aboutMe--description-row">
+              <AboutMeTitle
+                mode="desktop"
+                aboutMeRef={aboutMeRef}
+                refinview={refinview}
+              />
+              <div className={`aboutMe--description-row ${comeFromBelow}`}>
                 <div className="aboutMe--description-item">
                   <h3 className="aboutMe--description-item-years">4+</h3>
                   <h3 className="aboutMe--description-item-title">
@@ -84,7 +93,7 @@ export default function AboutMe(props) {
                 </div>
               </div>
             </div>
-            <div className="second-column">
+            <div className={`second-column ${comeFromBelowDelayed} `}>
               <p>
                 DevOps developer, with extensive knowledge and years of
                 experience, working with full stack technologies, delivering
@@ -110,9 +119,9 @@ export default function AboutMe(props) {
 }
 
 AboutMe.propTypes = {
-  headerTextHighlightRef: PropTypes.oneOfType([
+  aboutMeRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
   ]).isRequired,
-  refInView: PropTypes.string.isRequired
+  refinview: PropTypes.string.isRequired
 };

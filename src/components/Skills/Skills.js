@@ -12,10 +12,32 @@ class Skills extends React.Component {
   constructor() {
     super();
     this.state = {
-      expand: "devOps"
+      expand: "devOps",
+
+      comeFromBelow: "",
+      comeFromBelowDelayed: "",
+      comeFromBelowDelayedMore: "",
+
+      renderAnimation: false,
+      visible: "invisible"
     };
 
     this.expandSkills = this.expandSkills.bind(this);
+  }
+
+  componentDidUpdate() {
+    const { refinview } = this.props;
+    const { renderAnimation } = this.state;
+
+    if (refinview === "skills" && !renderAnimation) {
+      this.setState({
+        comeFromBelow: "come-from-below",
+        comeFromBelowDelayed: "come-from-below-delayed",
+        comeFromBelowDelayedMore: "come-from-below-delayed-more",
+        renderAnimation: true,
+        visible: "visible"
+      });
+    }
   }
 
   expandSkills(target) {
@@ -26,17 +48,14 @@ class Skills extends React.Component {
   }
 
   render() {
-    const { expand } = this.state;
-    // eslint-disable-next-line react/prop-types
-    const { headerTextHighlightRef, refInView } = this.props;
-
-    if (refInView === "skills") {
-      const bouncyTitle = document.querySelector(".skillsPage--title");
-      bouncyTitle.classList.add("bouncing");
-      bouncyTitle.addEventListener("animationend", () => {
-        bouncyTitle.classList.remove("bouncing");
-      });
-    }
+    const {
+      expand,
+      comeFromBelow,
+      comeFromBelowDelayed,
+      comeFromBelowDelayedMore,
+      visible
+    } = this.state;
+    const { headerTextHighlightRef, refinview } = this.props;
 
     const devOpsSkills = (
       <div
@@ -44,11 +63,11 @@ class Skills extends React.Component {
           expand === "devOps" ? "appear-text" : "disappear-text"
         }`}
       >
-        <h3 className="skillsPage-skill-illustration-title">DevOps</h3>
+        <p className="skillsPage-skill-illustration-title">DevOps</p>
         <div className="skillsPage-skill-illustration-bar-cyan" />
-        <h3 className="skillsPage-skill-illustration-title">DevOps</h3>
+        <p className="skillsPage-skill-illustration-title">DevOps</p>
         <div className="skillsPage-skill-illustration-bar-red" />
-        <h3 className="skillsPage-skill-illustration-title">DevOps</h3>
+        <p className="skillsPage-skill-illustration-title">DevOps</p>
         <div className="skillsPage-skill-illustration-bar-cyan" />
       </div>
     );
@@ -59,11 +78,11 @@ class Skills extends React.Component {
           expand === "cloud" ? "appear-text" : "disappear-text"
         }`}
       >
-        <h3 className="skillsPage-skill-illustration-title">Cloud</h3>
+        <p className="skillsPage-skill-illustration-title">Cloud</p>
         <div className="skillsPage-skill-illustration-bar-red" />
-        <h3 className="skillsPage-skill-illustration-title">Cloud</h3>
+        <p className="skillsPage-skill-illustration-title">Cloud</p>
         <div className="skillsPage-skill-illustration-bar-cyan" />
-        <h3 className="skillsPage-skill-illustration-title">Cloud</h3>
+        <p className="skillsPage-skill-illustration-title">Cloud</p>
         <div className="skillsPage-skill-illustration-bar-red" />
       </div>
     );
@@ -74,11 +93,11 @@ class Skills extends React.Component {
           expand === "fullStack" ? "appear-text" : "disappear-text"
         }`}
       >
-        <h3 className="skillsPage-skill-illustration-title">Full-stack</h3>
+        <p className="skillsPage-skill-illustration-title">Full-stack</p>
         <div className="skillsPage-skill-illustration-bar-cyan" />
-        <h3 className="skillsPage-skill-illustration-title">Full-stack</h3>
+        <p className="skillsPage-skill-illustration-title">Full-stack</p>
         <div className="skillsPage-skill-illustration-bar-red" />
-        <h3 className="skillsPage-skill-illustration-title">Full-stack</h3>
+        <p className="skillsPage-skill-illustration-title">Full-stack</p>
         <div className="skillsPage-skill-illustration-bar-cyan" />
       </div>
     );
@@ -100,20 +119,28 @@ class Skills extends React.Component {
     );
 
     return (
-      <div className="skillsPage" id="skills">
+      <div
+        className={`skillsPage ${visible}`}
+        id="skills"
+        refinview={refinview}
+      >
         <section className="skillsPage--center-flex">
           <MediaQuery maxWidth={912}>
-            <div className="skillsPage--title">
-              <h3 ref={headerTextHighlightRef}>Skills</h3>
-            </div>
-            <div className="skillsPage--description">
+            <SkillsTitle
+              mode="mobile"
+              headerTextHighlightRef={headerTextHighlightRef}
+              refinview={refinview}
+            />
+            <div className={`skillsPage--description ${comeFromBelow} `}>
               <p>
                 DevOps developer, with extensive knowledge and years of
                 experience, working with full stack technologies, delivering
                 quality work.
               </p>
             </div>
-            <div className="skillsPage--skills-items">
+            <div
+              className={`skillsPage--skills-items ${comeFromBelowDelayed} `}
+            >
               <button
                 type="button"
                 onClick={() => this.expandSkills("devOps")}
@@ -122,7 +149,7 @@ class Skills extends React.Component {
                 }`}
               >
                 <div className="skillsPage-skill-btn">
-                  <h3 className="skillsPage--skill-name">DevOps</h3>
+                  <p className="skillsPage--skill-name">Dev-Ops</p>
                 </div>
                 {expand === "devOps" ? downArrowDiv : upArrowDiv}
               </button>
@@ -135,7 +162,7 @@ class Skills extends React.Component {
                 }`}
               >
                 <div className="skillsPage-skill-btn">
-                  <h3 className="skillsPage--skill-name">Cloud</h3>
+                  <p className="skillsPage--skill-name">Cloud</p>
                 </div>
                 {expand === "cloud" ? downArrowDiv : upArrowDiv}
               </button>
@@ -148,7 +175,7 @@ class Skills extends React.Component {
                 }`}
               >
                 <div className="skillsPage-skill-btn">
-                  <h3 className="skillsPage--skill-name">Full-Stack</h3>
+                  <p className="skillsPage--skill-name">Full-Stack</p>
                 </div>
                 {expand === "fullStack" ? downArrowDiv : upArrowDiv}
               </button>
@@ -160,9 +187,11 @@ class Skills extends React.Component {
               <div className="two-columns">
                 <div className="first-column">
                   <SkillsTitle
+                    mode="desktop"
                     headerTextHighlightRef={headerTextHighlightRef}
+                    refinview={refinview}
                   />
-                  <div className="skillsPage--skills-items">
+                  <div className={`skillsPage--skills-items ${comeFromBelow}`}>
                     <button
                       type="button"
                       onClick={() => this.expandSkills("devOps")}
@@ -171,7 +200,7 @@ class Skills extends React.Component {
                       }`}
                     >
                       <div className="skillsPage-skill-btn">
-                        <h3 className="skillsPage--skill-name">DevOps</h3>
+                        <p className="skillsPage--skill-name">Dev-Ops</p>
                       </div>
                       {expand === "devOps" ? downArrowDiv : upArrowDiv}
                     </button>
@@ -183,7 +212,7 @@ class Skills extends React.Component {
                       }`}
                     >
                       <div className="skillsPage-skill-btn">
-                        <h3 className="skillsPage--skill-name">Cloud</h3>
+                        <p className="skillsPage--skill-name">Cloud</p>
                       </div>
                       {expand === "cloud" ? downArrowDiv : upArrowDiv}
                     </button>
@@ -195,13 +224,13 @@ class Skills extends React.Component {
                       }`}
                     >
                       <div className="skillsPage-skill-btn">
-                        <h3 className="skillsPage--skill-name">Full-Stack</h3>
+                        <p className="skillsPage--skill-name">Full-Stack</p>
                       </div>
                       {expand === "fullStack" ? downArrowDiv : upArrowDiv}
                     </button>
                   </div>
                 </div>
-                <div className="second-column">
+                <div className={`second-column ${comeFromBelowDelayed} `}>
                   <p>
                     DevOps developer, with extensive knowledge and years of
                     experience, working with full stack technologies, delivering
@@ -224,7 +253,9 @@ class Skills extends React.Component {
                   </p>
                 </div>
               </div>
-              <div className="skillsPage--desktop-skill-illustration">
+              <div
+                className={`skillsPage--desktop-skill-illustration ${comeFromBelowDelayedMore}`}
+              >
                 {devOpsSkills}
                 {cloudSkills}
                 {fullStackSkills}
@@ -244,5 +275,5 @@ Skills.propTypes = {
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
   ]).isRequired,
-  refInView: PropTypes.string.isRequired
+  refinview: PropTypes.string.isRequired
 };

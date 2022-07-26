@@ -2,19 +2,20 @@
 
 .contactMe {
   @include page-layout;
+  opacity: 1;
 }
 
 .contactMe--center-flex {
   @include center-flex;
 
-  height: 100vh;
   width: 100vw;
 }
 
 .contactMe--title {
   color: white;
   line-height: 0;
-  font-size: 2em;
+  margin-top: 0.5rem;
+  font-size: 2rem;
   color: $cyan;
 }
 
@@ -53,8 +54,7 @@
   border: 0;
   width: 100%;
 
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding: 0.5rem 0 0.5rem 0.5rem;
 
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -64,15 +64,15 @@
   &::placeholder {
     padding-left: 0.5rem;
     font-size: 1rem;
-    color: white;
+    color: $white-gray;
   }
   &:-ms-input-placeholder {
     font-size: 1rem;
-    color: white;
+    color: $white-gray;
   }
   &::-ms-input-placeholder {
     font-size: 1rem;
-    color: white;
+    color: $white-gray;
   }
 
   &:focus::placeholder {
@@ -121,4 +121,16 @@
 .contactMeBouncy {
   display: inline-block;
   transition: 0.5s;
+}
+
+.contactMe--title .text-wrapper {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.contactMe--title .letter {
+  transform-origin: 50% 100%;
+  display: inline-block;
+  line-height: 1em;
 }

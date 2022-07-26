@@ -2,19 +2,19 @@
 
 .experience {
   @include page-layout;
+  opacity: 1;
 }
 
 .experience--center-flex {
   @include center-flex;
 
-  height: 100vh;
   width: 100vw;
 }
 
 .experience--title {
   color: white;
   line-height: 0;
-  font-size: 2em;
+  font-size: 2rem;
   color: $cyan;
   margin-bottom: 1rem;
 }
@@ -31,13 +31,7 @@
   align-items: center;
   justify-content: center;
 
-  font-size: 1rem !important;
-}
-
-.experience--btn-item {
-  height: 3rem;
-  border: 0.1rem solid $cyan;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
 }
 
 .experience--btn {
@@ -71,7 +65,6 @@
 .experience--item-general-box-title {
   font-size: 1.1rem;
   margin: 0 0 0 0.5rem;
-  font-weight: 400;
 }
 
 .experience--item-general-box-date {
@@ -154,4 +147,16 @@
 .experienceBouncy {
   display: inline-block;
   transition: 0.5s;
+}
+
+.experience--title .text-wrapper {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.experience--title .letter {
+  transform-origin: 50% 100%;
+  display: inline-block;
+  line-height: 1em;
 }

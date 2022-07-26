@@ -25,28 +25,29 @@ export default function App() {
   const { ref: experienceRef, inView: isexperienceVisible } = useInView();
   const { ref: contactMeRef, inView: iscontactMeVisible } = useInView();
 
-  let refInView = "none";
-  if (isLandingVisible) refInView = "landingPage";
-  else if (isaboutMeVisible) refInView = "aboutMe";
-  else if (isskillsVisible) refInView = "skills";
-  else if (isexperienceVisible) refInView = "experience";
-  else if (iscontactMeVisible) refInView = "contactMe";
+  let refinview = "none";
+  if (isLandingVisible) refinview = "landingPage";
+  else if (isaboutMeVisible) refinview = "aboutMe";
+  else if (isskillsVisible) refinview = "skills";
+  else if (isexperienceVisible) refinview = "experience";
+  else if (iscontactMeVisible) refinview = "contactMe";
 
   return (
     <div className="appBody">
-      <Header scroll={scroll} refInView={refInView} />
+      <Header scroll={scroll} refinview={refinview} />
+
       <LandingPage
         scroll={scroll}
         headerTextHighlightRef={landingRef}
-        refInView={refInView}
+        refinview={refinview}
       />
-      <AboutMe headerTextHighlightRef={aboutMeRef} refInView={refInView} />
-      <Skills headerTextHighlightRef={skillsRef} refInView={refInView} />
+      <AboutMe aboutMeRef={aboutMeRef} refinview={refinview} />
+      <Skills headerTextHighlightRef={skillsRef} refinview={refinview} />
       <Experience
         headerTextHighlightRef={experienceRef}
-        refInView={refInView}
+        refinview={refinview}
       />
-      <ContactMe headerTextHighlightRef={contactMeRef} refInView={refInView} />
+      <ContactMe headerTextHighlightRef={contactMeRef} refinview={refinview} />
     </div>
   );
 }

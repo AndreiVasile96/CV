@@ -6,6 +6,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import emailjs from "emailjs-com";
 import { ToastContainer, toast } from "react-toastify";
+import MediaQuery from "react-responsive";
+
 import ContactMeTitle from "./ContactMeTitle";
 
 import linkedinLogo from "./LinkedinLogo.svg";
@@ -19,12 +21,34 @@ class ContactMe extends React.Component {
     this.state = {
       fullName: "",
       email: "",
-      message: ""
+      message: "",
+
+      comeFromBelow: "",
+      comeFromBelowDelayed: "",
+      comeFromBelowDelayedMore: "",
+
+      renderAnimation: false,
+      visible: "invisible"
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkValidation = this.checkValidation.bind(this);
     this.sendEmail = this.sendEmail.bind(this);
+  }
+
+  componentDidUpdate() {
+    const { refinview } = this.props;
+    const { renderAnimation } = this.state;
+
+    if (refinview === "contactMe" && !renderAnimation) {
+      this.setState({
+        comeFromBelow: "come-from-below",
+        comeFromBelowDelayed: "come-from-below-delayed",
+        comeFromBelowDelayedMore: "come-from-below-delayed-more",
+        renderAnimation: true,
+        visible: "visible"
+      });
+    }
   }
 
   handleChange(event) {
@@ -81,7 +105,7 @@ class ContactMe extends React.Component {
         });
       }
     } else {
-      toast.error("Please complete all fields!", {
+      toast.error("Please complete all fields", {
         className: "toast-general",
         position: "bottom-right",
         autoClose: 5000,
@@ -95,8 +119,12 @@ class ContactMe extends React.Component {
   }
 
   sendEmail(event) {
-    const { REACT_APP_TEMPLATE_ID, REACT_APP_SERVICE_ID, REACT_APP_USER_ID } =
-      process.env;
+    const REACT_APP_TEMPLATE_ID = "template_i2onlaf";
+    const REACT_APP_SERVICE_ID = "service_dvgtg3m";
+    const REACT_APP_USER_ID = "BTmRlBP5An9ebTjlH";
+
+    // const { REACT_APP_TEMPLATE_ID, REACT_APP_SERVICE_ID, REACT_APP_USER_ID } =
+    //   process.env;
     if (!REACT_APP_TEMPLATE_ID || !REACT_APP_SERVICE_ID || !REACT_APP_USER_ID) {
       return false;
     }
@@ -144,22 +172,39 @@ class ContactMe extends React.Component {
   }
 
   render() {
-    const { fullName, email, message } = this.state;
-    const { headerTextHighlightRef, refInView } = this.props;
-
-    if (refInView === "contactMe") {
-      const bouncyTitle = document.querySelector(".contactMe--title");
-      bouncyTitle.classList.add("bouncing");
-      bouncyTitle.addEventListener("animationend", () => {
-        bouncyTitle.classList.remove("bouncing");
-      });
-    }
+    const {
+      fullName,
+      email,
+      message,
+      comeFromBelow,
+      comeFromBelowDelayed,
+      comeFromBelowDelayedMore,
+      visible
+    } = this.state;
+    const { headerTextHighlightRef, refinview } = this.props;
 
     return (
-      <div className="contactMe" id="contact">
+      <div
+        className={`contactMe ${visible}`}
+        id="contact"
+        refinview={refinview}
+      >
         <section className="contactMe--center-flex">
-          <ContactMeTitle headerTextHighlightRef={headerTextHighlightRef} />
-          <div className="contactMe--description">
+          <MediaQuery maxWidth={912}>
+            <ContactMeTitle
+              mode="mobile"
+              headerTextHighlightRef={headerTextHighlightRef}
+              refinview={refinview}
+            />
+          </MediaQuery>
+          <MediaQuery minWidth={913}>
+            <ContactMeTitle
+              mode="desktop"
+              headerTextHighlightRef={headerTextHighlightRef}
+              refinview={refinview}
+            />
+          </MediaQuery>
+          <div className={`contactMe--description ${comeFromBelow} `}>
             <p>
               Don&apos;t hesitate to contact me for job opprtunities, questions
               or general enquiries
@@ -175,7 +220,7 @@ class ContactMe extends React.Component {
               type="text"
               placeholder="Name"
               value={fullName}
-              className={`contactMe--input ${
+              className={`contactMe--input ${comeFromBelowDelayed} ${
                 !this.checkValidation("fullName")
                   ? "input-form-started"
                   : "input-form-finished"
@@ -188,7 +233,7 @@ class ContactMe extends React.Component {
               type="email"
               placeholder="Email"
               value={email}
-              className={`contactMe--input ${
+              className={`contactMe--input ${comeFromBelowDelayed} ${
                 !this.checkValidation("email")
                   ? "input-form-started"
                   : "input-form-finished"
@@ -201,7 +246,7 @@ class ContactMe extends React.Component {
               type="textarea"
               placeholder="Message"
               value={message}
-              className={`contactMe--input contactMe--textarea ${
+              className={`contactMe--input ${comeFromBelowDelayed} contactMe--textarea ${
                 !this.checkValidation("message")
                   ? "input-form-started"
                   : "input-form-finished"
@@ -209,7 +254,9 @@ class ContactMe extends React.Component {
               onChange={this.handleChange}
             />
 
-            <div className="contactMe--submit-group">
+            <div
+              className={`contactMe--submit-group ${comeFromBelowDelayedMore} `}
+            >
               <input
                 className="main-btn-style contactMe--submit-btn"
                 type="submit"
@@ -249,5 +296,5 @@ ContactMe.propTypes = {
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
   ]).isRequired,
-  refInView: PropTypes.string.isRequired
+  refinview: PropTypes.string.isRequired
 };

@@ -2,7 +2,9 @@
 $cyan: #00f6ef;
 $red: #fe004e;
 $bg-black: #1e1e1e;
+$bg-black-transparent: rgba(#1e1e1e, 0.8);
 $gray: #3c3c3c;
+$white-gray: rgba(255, 255, 255, 0.5);
 
 .cyan-btn-selected {
   transition: 0.5s;
@@ -14,12 +16,13 @@ $gray: #3c3c3c;
   background-color: transparent;
   border: 0.1em solid $cyan;
 
-  font-size: 1.1em;
-  font-weight: 600;
+  font-size: 1.05em;
+  font-weight: 400;
   color: $cyan;
+  letter-spacing: 0.2em;
 
-  height: 3em;
-  width: 12em;
+  height: 2.8rem;
+  width: 12rem;
   cursor: pointer;
 
   &:hover {
@@ -65,6 +68,14 @@ $gray: #3c3c3c;
   color: rgba($color: $cyan, $alpha: 1);
 }
 
+.invisible {
+  visibility: hidden !important;
+}
+
+.visible {
+  visibility: initial !important;
+}
+
 /////////////////////////////
 // HELPERS
 /////////////////////////////
@@ -78,7 +89,7 @@ $gray: #3c3c3c;
 }
 
 @mixin center-flex {
-  min-height: 660px;
+  min-height: 100vh;
 
   display: flex;
   align-items: center;
@@ -118,11 +129,31 @@ $gray: #3c3c3c;
   }
 }
 
+@keyframes title-fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes fadeout {
   from {
     opacity: 0;
   }
   to {
+    opacity: 1;
+  }
+}
+
+@keyframes come-from-below {
+  from {
+    transform: translateY(5rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
     opacity: 1;
   }
 }
@@ -161,4 +192,85 @@ $gray: #3c3c3c;
   100% {
     transform: scaleX(1) scaleY(1);
   }
+}
+
+///////////////////////////////////
+// ANIMATIONS -- LANDINGPAGE --
+///////////////////////////////////
+
+.landingPage--name-popin {
+  opacity: 0;
+  animation-name: title-fadein;
+  animation-duration: 1.5s;
+  animation-delay: 0.6s;
+
+  -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+  -moz-animation-fill-mode: forwards; /* FF 5+ */
+  -o-animation-fill-mode: forwards; /* Not implemented yet */
+  -ms-animation-fill-mode: forwards; /* IE 10+ */
+  animation-fill-mode: forwards;
+}
+
+.landingPage--item-popin {
+  opacity: 0;
+  animation-name: title-fadein;
+  animation-duration: 1.5s;
+  animation-delay: 1.2s;
+
+  -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+  -moz-animation-fill-mode: forwards; /* FF 5+ */
+  -o-animation-fill-mode: forwards; /* Not implemented yet */
+  -ms-animation-fill-mode: forwards; /* IE 10+ */
+  animation-fill-mode: forwards;
+}
+
+.come-from-below-fast {
+  opacity: 0;
+  animation-name: come-from-below;
+  animation-duration: 1s;
+
+  -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+  -moz-animation-fill-mode: forwards; /* FF 5+ */
+  -o-animation-fill-mode: forwards; /* Not implemented yet */
+  -ms-animation-fill-mode: forwards; /* IE 10+ */
+  animation-fill-mode: forwards;
+}
+
+.come-from-below {
+  opacity: 0;
+  animation-name: come-from-below;
+  animation-duration: 1s;
+  animation-delay: 0.5s;
+
+  -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+  -moz-animation-fill-mode: forwards; /* FF 5+ */
+  -o-animation-fill-mode: forwards; /* Not implemented yet */
+  -ms-animation-fill-mode: forwards; /* IE 10+ */
+  animation-fill-mode: forwards;
+}
+
+.come-from-below-delayed {
+  opacity: 0;
+  animation-name: come-from-below;
+  animation-duration: 1s;
+  animation-delay: 1s;
+
+  -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+  -moz-animation-fill-mode: forwards; /* FF 5+ */
+  -o-animation-fill-mode: forwards; /* Not implemented yet */
+  -ms-animation-fill-mode: forwards; /* IE 10+ */
+  animation-fill-mode: forwards;
+}
+
+.come-from-below-delayed-more {
+  opacity: 0;
+  animation-name: come-from-below;
+  animation-duration: 1s;
+  animation-delay: 1.5s;
+
+  -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+  -moz-animation-fill-mode: forwards; /* FF 5+ */
+  -o-animation-fill-mode: forwards; /* Not implemented yet */
+  -ms-animation-fill-mode: forwards; /* IE 10+ */
+  animation-fill-mode: forwards;
 }

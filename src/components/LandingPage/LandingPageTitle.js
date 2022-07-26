@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
+/* eslint-disable react/jsx-one-expression-per-line */
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import anime from "animejs/lib/anime.es";
 
 import ATriangle from "./A-Triangle.svg";
 import "./LandingPage.scss";
@@ -14,11 +16,65 @@ function toggleRubberBand(id) {
 }
 
 export default function LandingPageTitle(props) {
+  const { headerTextHighlightRef, mode, refinview } = props;
+  const [isTitleVisible, setTitleToViewd] = useState(false);
+
   useEffect(() => {
     bouncyList = document.querySelectorAll(".landingPageBouncy");
   });
 
-  const { headerTextHighlightRef } = props;
+  if (mode === "mobile") {
+    if (refinview === "landingPage" && !isTitleVisible) {
+      const textWrapper = document.querySelector(
+        ".landingPage--title .letters"
+      );
+      if (textWrapper) {
+        textWrapper.innerHTML = textWrapper.textContent.replace(
+          /\S/g,
+          "<span class='letter'>$&</span>"
+        );
+        anime.timeline({ loop: false }).add({
+          targets: ".landingPage--title .letter",
+          scale: [0, 1],
+          duration: 1500,
+          elasticity: 600,
+          delay: (el, i) => 45 * (i + 1)
+        });
+        setTitleToViewd(true);
+      }
+    }
+  } else if (mode === "desktop") {
+    if (refinview === "landingPage" && !isTitleVisible) {
+      anime.timeline({ loop: false }).add({
+        targets: ".landingPageBouncy",
+        scale: [0, 1],
+        duration: 15,
+        elasticity: 600,
+        delay: (el, i) => 45 * (i + 1)
+      });
+      setTitleToViewd(true);
+    }
+  }
+
+  if (mode === "mobile") {
+    return (
+      <h1 ref={headerTextHighlightRef} className="landingPage--title">
+        <span className="text-wrapper">
+          <span className="letters">Hello, I am</span>
+          &nbsp;
+          <div className="landingPage--name-popin">
+            <img
+              className="landingPage--ATriangle"
+              src={ATriangle}
+              alt="A triangle"
+            />
+            ndrei
+          </div>
+        </span>
+      </h1>
+    );
+  }
+
   return (
     <div className="landingPage--title">
       <h1 ref={headerTextHighlightRef}>
@@ -134,8 +190,10 @@ export default function LandingPageTitle(props) {
 }
 
 LandingPageTitle.propTypes = {
+  mode: PropTypes.string.isRequired,
   headerTextHighlightRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-  ]).isRequired
+  ]).isRequired,
+  refinview: PropTypes.string.isRequired
 };
