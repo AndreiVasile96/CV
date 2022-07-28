@@ -119,12 +119,8 @@ class ContactMe extends React.Component {
   }
 
   sendEmail(event) {
-    const REACT_APP_TEMPLATE_ID = "template_i2onlaf";
-    const REACT_APP_SERVICE_ID = "service_dvgtg3m";
-    const REACT_APP_USER_ID = "BTmRlBP5An9ebTjlH";
-
-    // const { REACT_APP_TEMPLATE_ID, REACT_APP_SERVICE_ID, REACT_APP_USER_ID } =
-    //   process.env;
+    const { REACT_APP_TEMPLATE_ID, REACT_APP_SERVICE_ID, REACT_APP_USER_ID } =
+      process.env;
     if (!REACT_APP_TEMPLATE_ID || !REACT_APP_SERVICE_ID || !REACT_APP_USER_ID) {
       return false;
     }
