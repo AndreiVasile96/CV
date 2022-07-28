@@ -126,7 +126,6 @@ class ContactMe extends React.Component {
     }
 
     event.preventDefault();
-
     const apiSuccessful = emailjs
       .sendForm(
         REACT_APP_SERVICE_ID,
