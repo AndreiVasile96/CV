@@ -206,8 +206,8 @@ class ContactMe extends React.Component {
           </MediaQuery>
           <div className={`contactMe--description ${comeFromBelow} `}>
             <p>
-              Don&apos;t hesitate to contact me for job opprtunities, questions
-              or general enquiries
+              Feel free to contact me for any questions, job opportunities or
+              general questions by completing the following form.
             </p>
           </div>
           <form

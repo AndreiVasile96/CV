@@ -42,7 +42,11 @@ export default function App() {
         refinview={refinview}
       />
       <AboutMe aboutMeRef={aboutMeRef} refinview={refinview} />
-      <Skills headerTextHighlightRef={skillsRef} refinview={refinview} />
+      <Skills
+        headerTextHighlightRef={skillsRef}
+        refinview={refinview}
+        scroll={scroll}
+      />
       <Experience
         headerTextHighlightRef={experienceRef}
         refinview={refinview}

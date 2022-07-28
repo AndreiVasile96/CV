@@ -34,33 +34,26 @@ export default function AboutMe(props) {
             aboutMeRef={aboutMeRef}
             refinview={refinview}
           />
-          <div
-            className={`aboutMe--description come-from-below ${comeFromBelow} `}
-          >
-            <p>
-              DevOps developer, with extensive knowledge and years of
-              experience, working with full stack technologies, delivering
-              quality work.
+          <div className="aboutMe--description come-from-below align-text-center">
+            <p className={comeFromBelow}>
+              I am a passionate and experienced developer, proficient in
+              developing, operating, and improving software services. Proven
+              ability to collaborate with others, and deliver quality work. I
+              enjoy staying curious, researching and solving puzzles.
             </p>
           </div>
           <div className={`aboutMe--description-flex ${comeFromBelowDelayed} `}>
             <div className="aboutMe--description-item">
-              <h3 className="aboutMe--description-item-years">4+</h3>
-              <p className="aboutMe--description-item-title">
-                Years experience
-              </p>
+              <h3 className="aboutMe--description-item-years">Dev-Ops</h3>
+              <p className="aboutMe--description-item-title">+2 years</p>
             </div>
             <div className="aboutMe--description-item">
-              <h3 className="aboutMe--description-item-years">4+</h3>
-              <p className="aboutMe--description-item-title">
-                Years experience
-              </p>
+              <h3 className="aboutMe--description-item-years">Cloud</h3>
+              <p className="aboutMe--description-item-title">+2 years</p>
             </div>
             <div className="aboutMe--description-item">
-              <h3 className="aboutMe--description-item-years">4+</h3>
-              <p className="aboutMe--description-item-title">
-                Years experience
-              </p>
+              <h3 className="aboutMe--description-item-years">Full-Stack</h3>
+              <p className="aboutMe--description-item-title">+4 years</p>
             </div>
           </div>
         </MediaQuery>
@@ -74,41 +67,27 @@ export default function AboutMe(props) {
               />
               <div className={`aboutMe--description-row ${comeFromBelow}`}>
                 <div className="aboutMe--description-item">
-                  <h3 className="aboutMe--description-item-years">4+</h3>
-                  <h3 className="aboutMe--description-item-title">
-                    Years experience
-                  </h3>
+                  <h3 className="aboutMe--description-item-years">Dev-Ops</h3>
+                  <h3 className="aboutMe--description-item-title">2+ years</h3>
                 </div>
                 <div className="aboutMe--description-item">
-                  <h3 className="aboutMe--description-item-years">4+</h3>
-                  <h3 className="aboutMe--description-item-title">
-                    Years experience
-                  </h3>
+                  <h3 className="aboutMe--description-item-years">Cloud</h3>
+                  <h3 className="aboutMe--description-item-title">2+ years</h3>
                 </div>
                 <div className="aboutMe--description-item">
-                  <h3 className="aboutMe--description-item-years">4+</h3>
-                  <h3 className="aboutMe--description-item-title">
-                    Years experience
+                  <h3 className="aboutMe--description-item-years">
+                    Full-Stack
                   </h3>
+                  <h3 className="aboutMe--description-item-title">4+ years</h3>
                 </div>
               </div>
             </div>
             <div className={`second-column ${comeFromBelowDelayed} `}>
               <p>
-                DevOps developer, with extensive knowledge and years of
-                experience, working with full stack technologies, delivering
-                quality work. DevOps developer, with extensive knowledge and
-                years of experience, working with full stack technologies,
-                delivering quality work. DevOps developer, with extensive
-                knowledge and years of experience, working with full stack
-                technologies, delivering quality work. DevOps developer, with
-                extensive knowledge and years of experience, working with full
-                stack technologies, delivering quality work. quality work.
-                DevOps developer, with extensive knowledge and years of
-                experience, working with full stack technologies, delivering
-                quality work. DevOps developer, with extensive knowledge and
-                years of experience, working with full stack technologies,
-                delivering quality work.
+                Passioned and experienced developer, able to develop, operate,
+                and improve large-scale cloud architectures. Proven ability to
+                work within strict deadlines, collaborate, and deliver quality
+                work.
               </p>
             </div>
           </div>

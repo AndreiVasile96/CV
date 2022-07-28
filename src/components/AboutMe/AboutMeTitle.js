@@ -45,9 +45,9 @@ export default function AboutMe(props) {
       anime.timeline({ loop: false }).add({
         targets: ".aboutMeBouncy",
         scale: [0, 1],
-        duration: 15,
+        duration: 10,
         elasticity: 600,
-        delay: (el, i) => 150 * (i + 1)
+        delay: (el, i) => 200 * (i + 1)
       });
       setTitleToViewd(true);
     }
@@ -57,7 +57,7 @@ export default function AboutMe(props) {
     return (
       <h2 ref={aboutMeRef} className="aboutMe--title">
         <img
-          className="aboutMe--ATriangle aboutMe--ATriangle-mobile"
+          className="aboutMe--ATriangle aboutMe--ATriangle-mobile come-from-below"
           src={ATriangle}
           alt="A triangle"
         />

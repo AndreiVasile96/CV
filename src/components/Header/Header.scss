@@ -21,10 +21,16 @@
   background-color: $bg-black-transparent;
 }
 
+.header--logo {
+  height: 120%;
+  margin-top: -0.4em;
+}
+
 .header--burger-menu-btn {
   background: transparent;
   cursor: pointer;
   border: 0;
+  margin-right: 1em;
 }
 
 .header--modal-menu {
@@ -59,6 +65,7 @@
 
 .header--triangle {
   height: 0.75em;
+  margin-bottom: -0.1rem;
 }
 
 .header--modal-bar {

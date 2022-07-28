@@ -2,7 +2,6 @@
 
 .experience {
   @include page-layout;
-  opacity: 1;
 }
 
 .experience--center-flex {
@@ -20,6 +19,7 @@
 }
 
 .experience--btn-group {
+  margin: 1rem 0;
   display: flex;
   justify-content: space-evenly;
   gap: 1rem;
@@ -54,17 +54,23 @@
 }
 
 .experience--item-general-box {
-  background-color: $gray;
+  background-color: rgba($color: $cyan, $alpha: 0.1) !important;
   margin-top: 1em;
   padding-top: 0.5em;
-  padding-bottom: 1rem;
-  width: 90%;
+  border-radius: 1rem 1rem 0 0;
+  border-top: 0.1em solid $cyan;
+  border-left: 0.1em solid $cyan;
+  border-right: 0.1em solid $cyan;
+  border-bottom: 0.01em solid rgba($color: $cyan, $alpha: 0.2);
+
+  width: 90vw;
   color: white;
 }
 
 .experience--item-general-box-title {
   font-size: 1.1rem;
   margin: 0 0 0 0.5rem;
+  text-align: center;
 }
 
 .experience--item-general-box-date {
@@ -73,6 +79,7 @@
   color: $cyan;
   font-size: 1rem;
   font-weight: 100;
+  text-align: center;
 }
 
 .experience--item-general-box-description {
@@ -80,6 +87,36 @@
   margin: 0.5rem 0.5rem 0 0.5rem;
   font-size: 1rem;
   font-weight: 100;
+}
+
+.experience--item-box-see-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  background-color: transparent;
+  border: 0;
+  width: 100%;
+
+  cursor: pointer;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.experience--item-box-see-more-bar {
+  width: 100%;
+  padding: 0.01em;
+  background-color: $cyan;
+}
+
+.experience--item-box-see-more-text {
+  font-weight: 100;
+  color: $cyan;
+  font-size: 1rem;
+  &:hover {
+    color: $cyan-transparent !important;
+  }
 }
 
 // DESKTOP
@@ -129,16 +166,23 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+
+  width: 100vw;
 }
 
 .experience--item-description-desktop {
-  max-width: 30%;
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+
+  height: fit-content;
+  width: calc(50vw - 1.5rem);
   font-size: 1rem;
   margin: 0.5rem 0.5rem 0 0.5rem;
   font-size: 1rem;
   font-weight: 100;
+  border-radius: 1rem;
 
-  background-color: $gray;
   color: white;
 }
 

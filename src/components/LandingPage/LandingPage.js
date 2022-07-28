@@ -82,14 +82,14 @@ export default function LandingPage(props) {
           </button>
         </div>
         <div className="landingPage--scroll">
-          <p className="landingPage--scroll-text come-from-below-delayed-more">
-            Scroll
-          </p>
           <button
             onClick={() => scroll("#about", "bot")}
             className="landingPage--scroll-btn come-from-below-delayed-more"
             type="button"
           >
+            <p className="landingPage--scroll-text come-from-below-delayed-more">
+              Scroll
+            </p>
             <img src={ScrollTriangles} alt="Scroll Triangles" />
           </button>
         </div>

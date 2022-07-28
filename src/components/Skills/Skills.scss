@@ -2,7 +2,6 @@
 
 .skillsPage {
   @include page-layout;
-  opacity: 1;
 }
 
 .skillsPage--center-flex {
@@ -22,9 +21,7 @@
 
 .skillsPage--description {
   font-size: 1rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
-
+  padding: 0 2rem 2rem 2rem;
   color: white;
 }
 
@@ -46,7 +43,8 @@
 
   &:hover {
     transition: 0.2s;
-    border: 0.1em solid rgba($color: $cyan, $alpha: 0.5);
+    background-color: $cyan-transparent;
+    color: white;
   }
 }
 
@@ -63,6 +61,8 @@
   align-items: center;
   justify-content: center;
 
+  font-size: 1rem;
+
   cursor: pointer;
   width: 100%;
   height: 100%;
@@ -70,11 +70,11 @@
 
   letter-spacing: 0.2em;
   color: white;
-  background-color: transparent;
 }
 
 .skillsPage--skill-name {
-  font-size: 1.1rem;
+  font-family: "Roboto";
+  font-size: 1rem;
   margin: 0 !important;
   align-self: center;
 }
@@ -101,16 +101,63 @@
   color: white;
 }
 
-.skillsPage-skill-illustration-bar-cyan {
+// CYAN
+
+.skillsPage-skill-illustration-bar-cyan-95 {
+  margin-left: 0.2rem;
+  padding: 0.2rem;
+  background: linear-gradient(to right, $cyan 95%, $gray 5%) bottom;
+  background-size: 100% 10px;
+}
+
+.skillsPage-skill-illustration-bar-cyan-90 {
+  margin-left: 0.2rem;
+  padding: 0.2rem;
+  background: linear-gradient(to right, $cyan 90%, $gray 10%) bottom;
+  background-size: 100% 10px;
+}
+
+.skillsPage-skill-illustration-bar-cyan-85 {
   margin-left: 0.2rem;
   padding: 0.2rem;
   background: linear-gradient(to right, $cyan 85%, $gray 15%) bottom;
   background-size: 100% 10px;
 }
-.skillsPage-skill-illustration-bar-red {
+
+.skillsPage-skill-illustration-bar-cyan-80 {
+  margin-left: 0.2rem;
+  padding: 0.2rem;
+  background: linear-gradient(to right, $cyan 80%, $gray 20%) bottom;
+  background-size: 100% 10px;
+}
+
+// RED
+
+.skillsPage-skill-illustration-bar-red-95 {
+  margin-left: 0.2rem;
+  padding: 0.2rem;
+  background: linear-gradient(to right, $red 95%, $gray 5%) bottom;
+  background-size: 100% 10px;
+}
+
+.skillsPage-skill-illustration-bar-red-90 {
+  margin-left: 0.2rem;
+  padding: 0.2rem;
+  background: linear-gradient(to right, $red 90%, $gray 10%) bottom;
+  background-size: 100% 10px;
+}
+
+.skillsPage-skill-illustration-bar-red-85 {
   margin-left: 0.2rem;
   padding: 0.2rem;
   background: linear-gradient(to right, $red 85%, $gray 15%) bottom;
+  background-size: 100% 10px;
+}
+
+.skillsPage-skill-illustration-bar-red-80 {
+  margin-left: 0.2rem;
+  padding: 0.2rem;
+  background: linear-gradient(to right, $red 80%, $gray 20%) bottom;
   background-size: 100% 10px;
 }
 
@@ -179,6 +226,17 @@
   margin-right: 2rem;
 
   width: 100vw;
+}
+
+.skills--flex-end {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  bottom: 0;
+
+  p {
+    margin-bottom: 0 !important;
+  }
 }
 
 // Title animation

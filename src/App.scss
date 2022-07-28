@@ -9,6 +9,29 @@
   width: 100vw;
 }
 
+@media only screen and (max-width: 912px) {
+  html {
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: $gray;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: $cyan;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: $red;
+    }
+  }
+}
+
 @media only screen and (min-width: 913px) {
   html {
     ::-webkit-scrollbar {

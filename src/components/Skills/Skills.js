@@ -1,3 +1,7 @@
+/* eslint-disable jsx-a11y/interactive-supports-focus */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable operator-linebreak */
 /* eslint-disable class-methods-use-this */
 
 import PropTypes from "prop-types";
@@ -55,7 +59,7 @@ class Skills extends React.Component {
       comeFromBelowDelayedMore,
       visible
     } = this.state;
-    const { headerTextHighlightRef, refinview } = this.props;
+    const { headerTextHighlightRef, refinview, scroll } = this.props;
 
     const devOpsSkills = (
       <div
@@ -63,12 +67,25 @@ class Skills extends React.Component {
           expand === "devOps" ? "appear-text" : "disappear-text"
         }`}
       >
-        <p className="skillsPage-skill-illustration-title">DevOps</p>
-        <div className="skillsPage-skill-illustration-bar-cyan" />
-        <p className="skillsPage-skill-illustration-title">DevOps</p>
-        <div className="skillsPage-skill-illustration-bar-red" />
-        <p className="skillsPage-skill-illustration-title">DevOps</p>
-        <div className="skillsPage-skill-illustration-bar-cyan" />
+        <p className="skillsPage-skill-illustration-title">
+          Continous Integration and Delivery
+        </p>
+        <div className="skillsPage-skill-illustration-bar-cyan-95" />
+
+        <p className="skillsPage-skill-illustration-title">
+          Operations and Responsability
+        </p>
+        <div className="skillsPage-skill-illustration-bar-red-90" />
+
+        <p className="skillsPage-skill-illustration-title">
+          Monitoring and Automation
+        </p>
+        <div className="skillsPage-skill-illustration-bar-cyan-85" />
+
+        <p className="skillsPage-skill-illustration-title">
+          Agile and Communication
+        </p>
+        <div className="skillsPage-skill-illustration-bar-red-85" />
       </div>
     );
 
@@ -78,12 +95,20 @@ class Skills extends React.Component {
           expand === "cloud" ? "appear-text" : "disappear-text"
         }`}
       >
-        <p className="skillsPage-skill-illustration-title">Cloud</p>
-        <div className="skillsPage-skill-illustration-bar-red" />
-        <p className="skillsPage-skill-illustration-title">Cloud</p>
-        <div className="skillsPage-skill-illustration-bar-cyan" />
-        <p className="skillsPage-skill-illustration-title">Cloud</p>
-        <div className="skillsPage-skill-illustration-bar-red" />
+        <p className="skillsPage-skill-illustration-title">
+          Cloud Infrastructure (IBM, AWS)
+        </p>
+        <div className="skillsPage-skill-illustration-bar-red-90" />
+
+        <p className="skillsPage-skill-illustration-title">
+          Network, Migration and Microservices
+        </p>
+        <div className="skillsPage-skill-illustration-bar-cyan-85" />
+
+        <p className="skillsPage-skill-illustration-title">
+          Docker, Kubernetes and VMs
+        </p>
+        <div className="skillsPage-skill-illustration-bar-red-85" />
       </div>
     );
 
@@ -93,12 +118,20 @@ class Skills extends React.Component {
           expand === "fullStack" ? "appear-text" : "disappear-text"
         }`}
       >
-        <p className="skillsPage-skill-illustration-title">Full-stack</p>
-        <div className="skillsPage-skill-illustration-bar-cyan" />
-        <p className="skillsPage-skill-illustration-title">Full-stack</p>
-        <div className="skillsPage-skill-illustration-bar-red" />
-        <p className="skillsPage-skill-illustration-title">Full-stack</p>
-        <div className="skillsPage-skill-illustration-bar-cyan" />
+        <p className="skillsPage-skill-illustration-title">
+          JavaScript: Node, React and Database
+        </p>
+        <div className="skillsPage-skill-illustration-bar-cyan-95" />
+
+        <p className="skillsPage-skill-illustration-title">
+          Python 3, Golang, Bash and Linux
+        </p>
+        <div className="skillsPage-skill-illustration-bar-red-90" />
+
+        <p className="skillsPage-skill-illustration-title">
+          Architecture, Design and APIs
+        </p>
+        <div className="skillsPage-skill-illustration-bar-cyan-85" />
       </div>
     );
 
@@ -131,11 +164,21 @@ class Skills extends React.Component {
               headerTextHighlightRef={headerTextHighlightRef}
               refinview={refinview}
             />
-            <div className={`skillsPage--description ${comeFromBelow} `}>
-              <p>
-                DevOps developer, with extensive knowledge and years of
-                experience, working with full stack technologies, delivering
-                quality work.
+            <div
+              className={`skillsPage--description align-text-center ${comeFromBelow} `}
+            >
+              <p className="skill--description-text">
+                These are just a small sample of selected skills that I have
+                developed over the years, working with amazing people.
+                Interested in finding more? Please
+                <a
+                  role="button"
+                  className="cyan-text invisible--buton"
+                  onClick={() => scroll("#contact")}
+                >
+                  &nbsp;contact me
+                </a>
+                .
               </p>
             </div>
             <div
@@ -230,27 +273,22 @@ class Skills extends React.Component {
                     </button>
                   </div>
                 </div>
-                <div className={`second-column ${comeFromBelowDelayed} `}>
-                  <p>
-                    DevOps developer, with extensive knowledge and years of
-                    experience, working with full stack technologies, delivering
-                    quality work. DevOps developer, with extensive knowledge and
-                    years of experience, working with full stack technologies,
-                    delivering quality work. DevOps developer, with extensive
-                    knowledge and years of experience, working with full stack
-                    technologies, delivering quality work. DevOps developer,
-                    with extensive knowledge and years of experience, working
-                    with full stack technologies, delivering quality work. years
-                    of experience, working with full stack technologies,
-                    delivering quality work. DevOps developer, with extensive
-                    knowledge and years of experience, working with full stack
-                    technologies, delivering quality work. quality work. DevOps
-                    developer, with extensive knowledge and years of experience,
-                    working with full stack technologies, delivering quality
-                    work. DevOps developer, with extensive knowledge and years
-                    of experience, working with full stack technologies,
-                    delivering quality work.
-                  </p>
+                <div
+                  className={`second-column skills--flex-end ${comeFromBelowDelayed} `}
+                >
+                  <div>
+                    These are just a small sample of selected skills that I have
+                    developed over the years, working with amazing people.
+                    Interested in finding more? Please
+                    <a
+                      role="button"
+                      className="cyan-text invisible--buton"
+                      onClick={() => scroll("#contact")}
+                    >
+                      &nbsp;contact me
+                    </a>
+                    .
+                  </div>
                 </div>
               </div>
               <div
@@ -275,5 +313,6 @@ Skills.propTypes = {
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
   ]).isRequired,
-  refinview: PropTypes.string.isRequired
+  refinview: PropTypes.string.isRequired,
+  scroll: PropTypes.func.isRequired
 };

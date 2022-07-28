@@ -2,7 +2,6 @@
 
 .contactMe {
   @include page-layout;
-  opacity: 1;
 }
 
 .contactMe--center-flex {
@@ -20,15 +19,27 @@
 }
 
 .contactMe--description {
-  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  padding-left: 2rem;
-  padding-right: 2rem;
+  width: 80vw;
+  // padding-left: 2rem;
+  // padding-right: 2rem;
+  padding: 0rem 2rem 1rem 2rem;
 
   color: white;
+  text-align: center;
+  font-size: 1rem;
 }
 
 .contactMe--form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 80vw;
+
   padding-left: 2rem;
   padding-right: 2rem;
 }
@@ -54,6 +65,7 @@
   border: 0;
   width: 100%;
 
+  font-family: "Roboto";
   padding: 0.5rem 0 0.5rem 0.5rem;
 
   margin-top: 0.5rem;
@@ -65,6 +77,7 @@
     padding-left: 0.5rem;
     font-size: 1rem;
     color: $white-gray;
+    font-family: "Roboto";
   }
   &:-ms-input-placeholder {
     font-size: 1rem;

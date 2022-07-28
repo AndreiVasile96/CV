@@ -9,6 +9,7 @@ import "./LandingPage.scss";
 let bouncyList;
 
 function toggleRubberBand(id) {
+  console.log(id);
   bouncyList[id].classList.add("bouncing");
   bouncyList[id].addEventListener("animationend", () => {
     bouncyList[id].classList.remove("bouncing");
@@ -80,7 +81,7 @@ export default function LandingPageTitle(props) {
       <h1 ref={headerTextHighlightRef}>
         <span
           className="landingPageBouncy"
-          onMouseEnter={() => toggleRubberBand(0)}
+          onMouseEnter={() => console.log("test") && toggleRubberBand(0)}
         >
           H
         </span>

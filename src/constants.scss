@@ -1,20 +1,23 @@
 // Colours
 $cyan: #00f6ef;
+$cyan-transparent: rgba($cyan, 0.4);
+$cyan: #00f6ef;
 $red: #fe004e;
 $bg-black: #1e1e1e;
-$bg-black-transparent: rgba(#1e1e1e, 0.8);
+$bg-black-transparent: rgba(black, 0.8);
 $gray: #3c3c3c;
 $white-gray: rgba(255, 255, 255, 0.5);
 
 .cyan-btn-selected {
   transition: 0.5s;
-  background-color: rgba($color: $cyan, $alpha: 0.1) !important;
+  background-color: $cyan-transparent !important;
   color: white !important;
 }
 
 .main-btn-style {
   background-color: transparent;
   border: 0.1em solid $cyan;
+  transition: 0.5s;
 
   font-size: 1.05em;
   font-weight: 400;
@@ -26,8 +29,9 @@ $white-gray: rgba(255, 255, 255, 0.5);
   cursor: pointer;
 
   &:hover {
-    transition: 0.2s;
-    border: 0.1em solid rgba($color: $cyan, $alpha: 0.5);
+    transition: 0.5s;
+    background-color: $cyan-transparent;
+    color: white;
   }
 }
 
@@ -45,6 +49,10 @@ $white-gray: rgba(255, 255, 255, 0.5);
 .cyan-text {
   transition: 0.5s;
   color: $cyan !important;
+}
+
+.gray-text {
+  color: $white-gray;
 }
 
 .two-columns {
@@ -74,6 +82,14 @@ $white-gray: rgba(255, 255, 255, 0.5);
 
 .visible {
   visibility: initial !important;
+}
+
+.align-text-center {
+  text-align: center;
+}
+
+.letters {
+  line-height: 4rem;
 }
 
 /////////////////////////////

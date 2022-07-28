@@ -2,12 +2,12 @@
 
 .aboutMe {
   @include page-layout;
-  opacity: 1;
 }
 
 .aboutMe--center-flex {
   @include center-flex;
 
+  min-height: 60vh !important;
   width: 100vw;
 }
 
@@ -19,6 +19,7 @@
 
 .aboutMe--ATriangle-mobile {
   margin-bottom: 0.15em;
+  margin-bottom: 1.3rem;
 }
 
 .aboutMe--ATriangle {
@@ -28,8 +29,7 @@
 .aboutMe--description {
   font-size: 1rem;
 
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding: 0 2rem 2rem 2rem;
   font-weight: 500;
 
   color: white;
