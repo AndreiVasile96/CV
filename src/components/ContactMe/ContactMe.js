@@ -10,7 +10,7 @@ import MediaQuery from "react-responsive";
 
 import ContactMeTitle from "./ContactMeTitle";
 
-import linkedinLogo from "./LinkedinLogo.svg";
+import linkedinLogo from "../../images/LinkedinLogo.svg";
 import "./ContactMe.scss";
 
 const inputTresHold = 5;

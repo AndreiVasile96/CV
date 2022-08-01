@@ -97,13 +97,12 @@ class Experience extends React.Component {
           <br />- Side projects, developing new platforms, and patent filing
           {expandItem0 ? (
             <div className="experience--item-general-box-description">
-              As a returning developer, I immediately synchronised with the
-              team, and resumed work. I contributed to the integration to a new
-              cloud platform and deployment new services. Also, I had the
-              opportunity to discuss with current and potential clients and
-              operate the out-of-hours service maintenance. Additionally, I
-              attended several side-projects, developing new internal platforms.
-              I succesfully filed a patent.
+              As a returning developer, I immediately synchronised with the team 
+              and resumed work. I contributed to the integration of a new cloud 
+              platform and the deployment of new services. Also, I had the opportunity 
+              to discuss with current and potential clients and operate the out-of-hours 
+              service maintenance. Additionally, I attended several side projects, 
+              developing new internal platforms. I successfully filed a patent.
             </div>
           ) : null}
           <button
@@ -196,7 +195,7 @@ class Experience extends React.Component {
           BSc Computer Science
         </p>
         <p className="experience--item-general-box-date">
-          (Oct 2015 - Jun 2018)
+          (Oct 2015 - Jun 2019)
         </p>
         <div className="experience--item-general-box-description">
           - Data structures, algorithm and database architecture
@@ -231,7 +230,7 @@ class Experience extends React.Component {
           Science and Math
         </p>
         <p className="experience--item-general-box-date">
-          (Sept 2012 - Jun 2015)
+          (Sept 2011 - Jun 2015)
         </p>
         <div className="experience--item-general-box-description">
           - Increased passion and curiosity for technology

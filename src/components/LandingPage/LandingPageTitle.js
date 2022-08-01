@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import anime from "animejs/lib/anime.es";
 
-import ATriangle from "./A-Triangle.svg";
+import ATriangle from "../../images/A-Triangle.svg";
 import "./LandingPage.scss";
 
 let bouncyList;

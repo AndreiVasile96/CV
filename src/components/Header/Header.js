@@ -211,11 +211,13 @@ export default function Header(props) {
 
             <div className="header--group-item">
               <button type="button" className="invisible--buton">
-                <img
-                  src={linkedinLogo}
-                  alt="Linkeding logo"
-                  className="header--group-item-logo"
-                />
+                <a href="https://www.linkedin.com/in/andrei-vasile/">
+                  <img
+                    src={linkedinLogo}
+                    alt="Linkeding logo"
+                    className="header--group-item-logo"
+                  />
+                </a>
               </button>
             </div>
           </div>

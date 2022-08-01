@@ -9,7 +9,7 @@ import React from "react";
 import MediaQuery from "react-responsive";
 import SkillsTitle from "./SkillsTitle";
 
-import downArrow from "./V-Small-Triangle.svg";
+import downArrow from "../../images/V-Small-Triangle.svg";
 import "./Skills.scss";
 
 class Skills extends React.Component {
