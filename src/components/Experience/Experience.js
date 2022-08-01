@@ -97,11 +97,11 @@ class Experience extends React.Component {
           <br />- Side projects, developing new platforms, and patent filing
           {expandItem0 ? (
             <div className="experience--item-general-box-description">
-              As a returning developer, I immediately synchronised with the team 
-              and resumed work. I contributed to the integration of a new cloud 
-              platform and the deployment of new services. Also, I had the opportunity 
-              to discuss with current and potential clients and operate the out-of-hours 
-              service maintenance. Additionally, I attended several side projects, 
+              As a returning developer, I immediately synchronised with the team
+              and resumed work. I contributed to the integration of a new cloud
+              platform and the deployment of new services. Also, I had the opportunity
+              to discuss with current and potential clients and operate the out-of-hours
+              service maintenance. Additionally, I attended several side projects,
               developing new internal platforms. I successfully filed a patent.
             </div>
           ) : null}
