@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import React, { useEffect } from "react";
 import MediaQuery from "react-responsive";
 
-import ScrollTriangles from "./ScrollTriangles.svg";
+import ScrollTriangles from "../../images/ScrollTriangles.svg";
 import LandingPageTitle from "./LandingPageTitle";
 
 import "./LandingPage.scss";
@@ -25,7 +25,7 @@ export default function LandingPage(props) {
   });
 
   return (
-    <div className="landingPage visible" id="landingPage" refinview={refinview}>
+    <div className="landingPage visible" id="landingPage">
       <section className="landingPage--center-flex">
         <MediaQuery maxWidth={912}>
           <LandingPageTitle

@@ -26,7 +26,7 @@ export default function AboutMe(props) {
   }
 
   return (
-    <div className={`aboutMe ${visible}`} id="about" refinview={refinview}>
+    <div className={`aboutMe ${visible}`} id="about">
       <section className="aboutMe--center-flex">
         <MediaQuery maxWidth={912}>
           <AboutMeTitle
@@ -37,8 +37,8 @@ export default function AboutMe(props) {
           <div className="aboutMe--description come-from-below align-text-center">
             <p className={comeFromBelow}>
               I am a passionate and experienced developer, proficient in
-              developing, operating, and improving software services. Proven
-              ability to collaborate with others, and deliver quality work. I
+              developing, operating, and improving software services. Proven ability to
+              work within strict deadlines, collaborate and deliver quality work. I
               enjoy staying curious, researching and solving puzzles.
             </p>
           </div>
@@ -84,10 +84,10 @@ export default function AboutMe(props) {
             </div>
             <div className={`second-column ${comeFromBelowDelayed} `}>
               <p>
-                Passioned and experienced developer, able to develop, operate,
-                and improve large-scale cloud architectures. Proven ability to
-                work within strict deadlines, collaborate, and deliver quality
-                work.
+                I am a passionate and experienced developer, proficient in
+                developing, operating, and improving software services. Proven ability to
+                work within strict deadlines, collaborate and deliver quality work. I
+                enjoy staying curious, researching and solving puzzles.
               </p>
             </div>
           </div>

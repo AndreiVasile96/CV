@@ -9,7 +9,7 @@ import React from "react";
 import MediaQuery from "react-responsive";
 import SkillsTitle from "./SkillsTitle";
 
-import downArrow from "./V-Small-Triangle.svg";
+import downArrow from "../../images/V-Small-Triangle.svg";
 import "./Skills.scss";
 
 class Skills extends React.Component {
@@ -152,11 +152,7 @@ class Skills extends React.Component {
     );
 
     return (
-      <div
-        className={`skillsPage ${visible}`}
-        id="skills"
-        refinview={refinview}
-      >
+      <div className={`skillsPage ${visible}`} id="skills">
         <section className="skillsPage--center-flex">
           <MediaQuery maxWidth={912}>
             <SkillsTitle
@@ -169,8 +165,9 @@ class Skills extends React.Component {
             >
               <p className="skill--description-text">
                 These are just a small sample of selected skills that I have
-                developed over the years, working with amazing people.
-                Interested in finding more? Please
+                developed over the years, by working with amazing people. I am
+                interested in data, mathematics, and design, besides my inclination
+                towards computer sciences. Eager in finding more? Please
                 <a
                   role="button"
                   className="cyan-text invisible--buton"
@@ -278,8 +275,9 @@ class Skills extends React.Component {
                 >
                   <div>
                     These are just a small sample of selected skills that I have
-                    developed over the years, working with amazing people.
-                    Interested in finding more? Please
+                    developed over the years, by working with amazing people. I am
+                    interested in data, mathematics, and design, besides my inclination
+                    towards computer sciences. Eager in finding more? Please
                     <a
                       role="button"
                       className="cyan-text invisible--buton"

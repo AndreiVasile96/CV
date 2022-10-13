@@ -10,7 +10,7 @@ import MediaQuery from "react-responsive";
 
 import ContactMeTitle from "./ContactMeTitle";
 
-import linkedinLogo from "./LinkedinLogo.svg";
+import linkedinLogo from "../../images/LinkedinLogo.svg";
 import "./ContactMe.scss";
 
 const inputTresHold = 5;
@@ -182,7 +182,6 @@ class ContactMe extends React.Component {
       <div
         className={`contactMe ${visible}`}
         id="contact"
-        refinview={refinview}
       >
         <section className="contactMe--center-flex">
           <MediaQuery maxWidth={912}>

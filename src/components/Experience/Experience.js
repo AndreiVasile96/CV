@@ -89,17 +89,18 @@ class Experience extends React.Component {
           (Jul 2019 - Sept 2020)
         </p>
         <div className="experience--item-general-box-description">
-          - Returning intern, resumed work as usual
+          - Golang - Angular service, and pipeline integration (Jenkins, Travis)
           <br />
-          - Cloud integration and deployment
+          - Cloud integration, migration, and deployment: VMs, Docker, K8s, Helm
           <br />
-          - Client interactions and out-of-hours service maintenance
-          <br />- Side projects, developing new platforms, and patent filing
+          - Client interaction, out-of-hours maintenance, and design thinking
+          <br />
+          - Side projects: JavaScript, new platforms (ReactJS), and patent filing
           {expandItem0 ? (
             <div className="experience--item-general-box-description">
               As a returning developer, I immediately synchronised with the
               team, and resumed work. I contributed to the integration to a new
-              cloud platform and deployment new services. Also, I had the
+              cloud platform and deployment of new services. Also, I had the
               opportunity to discuss with current and potential clients and
               operate the out-of-hours service maintenance. Additionally, I
               attended several side-projects, developing new internal platforms.
@@ -126,16 +127,17 @@ class Experience extends React.Component {
           (Sept 2020 - Present)
         </p>
         <div className="experience--item-general-box-description">
-          - Architectural understanding and implementation
+          - Software architectural improvement, implementation and microservices
           <br />
-          - Continous testing, integration and deployment
-          <br />- Communication, presentation and flexibility
+          - TDD, continuous integration, delivery, deployment (Heroku, Firebase)
+          <br />
+          - Communication, presentations and high flexibility to clients
           {expandItem1 ? (
             <div className="experience--item-general-box-description">
               During this time, I developed full-stack web applications,
               implementing testing, continuous integration, and deployment into
               the cloud. Moreover, I further developed excellent communication
-              skills, by collaborating with new clients.
+              skills, by collaborating and staying in close contact with clients.
             </div>
           ) : null}
           <button
@@ -160,10 +162,11 @@ class Experience extends React.Component {
           (Jul 2017 - Aug 2018)
         </p>
         <div className="experience--item-general-box-description">
-          - Adapting to a team of professionals
+          - Quickly adapting to team of professionals, learning APIs, pipelines
           <br />
-          - Automation, documentation and monitoring
-          <br />- Extension of internship and invitation to return
+          - Automation, documentation and monitoring: Golang, Bash scripting
+          <br />
+          - Extension of internship and invitation to return as graduate
           {expandItem2 ? (
             <div className="experience--item-general-box-description">
               As an intern, I was introduced to working with a team of
@@ -196,13 +199,14 @@ class Experience extends React.Component {
           BSc Computer Science
         </p>
         <p className="experience--item-general-box-date">
-          (Oct 2015 - Jun 2018)
+          (Oct 2015 - Jun 2019)
         </p>
         <div className="experience--item-general-box-description">
           - Data structures, algorithm and database architecture
           <br />
-          - First full-stack web applications developed
-          <br />- Final year project working with big data
+          - First full-stack web applications developed (Node, React, SQL)
+          <br />
+          - Final year project working with big data (Python3, NoSQL)
           {expandItem3 ? (
             <div className="experience--item-general-box-description">
               As a student, I significantly developed my programming skills,
@@ -231,13 +235,14 @@ class Experience extends React.Component {
           Science and Math
         </p>
         <p className="experience--item-general-box-date">
-          (Sept 2012 - Jun 2015)
+          (Sept 2011 - Jun 2015)
         </p>
         <div className="experience--item-general-box-description">
           - Increased passion and curiosity for technology
           <br />
-          - Practical problem-solving
-          <br />- Communication, presenting and volunteering
+          - Practical problem-solving and engineering mindset
+          <br />
+          - Communication, presenting and volunteering
           {expandItem4 ? (
             <div className="experience--item-general-box-description">
               My passion and curiosity for technology were greatly nourished
@@ -266,7 +271,6 @@ class Experience extends React.Component {
       <div
         className={`experience ${visible}`}
         id="experience"
-        refinview={refinview}
       >
         <section className="experience--center-flex">
           <MediaQuery maxWidth={912}>
