@@ -1,137 +1,126 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import anime from "animejs/lib/anime.es";
+import anime from "animejs";
 
 import "./ContactMe.scss";
 
-let bouncyList;
+class ContactMeTitle extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      renderAnimation: false,
+      comeFromBelow: "",
+      visible: "invisible",
+      isTitleVisible: false
+    };
+    this.bouncyList = null;
+  }
 
-function toggleRubberBand(id) {
-  bouncyList[id].classList.add("bouncing");
-  bouncyList[id].addEventListener("animationend", () => {
-    bouncyList[id].classList.remove("bouncing");
-  });
-}
+  componentDidMount() {
+    // Initialize bouncy list after component mounts
+    this.bouncyList = document.querySelectorAll(".contactMeBouncy");
+  }
 
-export default function ContactMe(props) {
-  const { headerTextHighlightRef, mode, refinview } = props;
-  const [isTitleVisible, setTitleToViewd] = useState(false);
+  componentDidUpdate() {
+    const { refinview } = this.props;
+    const { renderAnimation, isTitleVisible } = this.state;
 
-  useEffect(() => {
-    bouncyList = document.querySelectorAll(".contactMeBouncy");
-  });
-
-  if (mode === "mobile") {
-    if (refinview === "contactMe" && !isTitleVisible) {
-      const textWrapper = document.querySelector(".contactMe--title .letters");
-      if (textWrapper) {
-        textWrapper.innerHTML = textWrapper.textContent.replace(
-          /\S/g,
-          "<span class='letter'>$&</span>"
-        );
-        anime.timeline({ loop: false }).add({
-          targets: ".contactMe--title .letter",
-          scale: [0, 1],
-          duration: 1500,
-          elasticity: 600,
-          delay: (el, i) => 45 * (i + 1)
-        });
-      }
-      setTitleToViewd(true);
-    }
-  } else if (mode === "desktop") {
-    if (refinview === "contactMe" && !isTitleVisible) {
-      anime.timeline({ loop: false }).add({
-        targets: ".contactMeBouncy",
-        scale: [0, 1],
-        duration: 15,
-        elasticity: 600,
-        delay: (el, i) => 150 * (i + 1)
+    if (refinview === "contactMe" && !renderAnimation) {
+      this.setState({
+        comeFromBelow: "come-from-below",
+        renderAnimation: true,
+        visible: "visible"
       });
-      setTitleToViewd(true);
+    }
+
+    // Add bouncy animation when component becomes visible
+    if (refinview === "contactMe" && !isTitleVisible) {
+      this.initializeBouncyAnimation();
+      this.setState({ isTitleVisible: true });
     }
   }
 
-  if (mode === "mobile") {
-    return (
-      <h1 ref={headerTextHighlightRef} className="contactMe--title">
-        <span className="text-wrapper">
-          <span className="letters">Contact me</span>
-        </span>
-      </h1>
-    );
-  }
+  initializeBouncyAnimation = () => {
+    // Animate letters on load - faster animation
+    anime.timeline({ loop: false }).add({
+      targets: ".contactMeBouncy",
+      scale: [0, 1],
+      duration: 200, // Reduced from 1500ms to 800ms
+      elasticity: 600,
+      delay: (el, i) => 80 * (i + 1) // Reduced from 150ms to 80ms
+    });
 
-  if (mode === "desktop") {
+    // Add hover effects to each letter
+    this.bouncyList = document.querySelectorAll(".contactMeBouncy");
+    this.bouncyList.forEach((letter, index) => {
+      letter.addEventListener("mouseover", () => this.toggleRubberBand(index));
+    });
+  };
+
+  toggleRubberBand = (id) => {
+    if (this.bouncyList && this.bouncyList[id]) {
+      this.bouncyList[id].classList.add("bouncing");
+      this.bouncyList[id].addEventListener("animationend", () => {
+        this.bouncyList[id].classList.remove("bouncing");
+      });
+    }
+  };
+
+  render() {
+    const { mode, headerTextHighlightRef } = this.props;
+    const { comeFromBelow, visible } = this.state;
+
+    if (mode === "mobile") {
+      return (
+        <div className={`contactMe--title ${comeFromBelow} ${visible}`} id="contact-title">
+          <h1 ref={headerTextHighlightRef}>
+            <div className="text-wrapper">
+              <span className="letter contactMeBouncy">C</span>
+              <span className="letter contactMeBouncy">o</span>
+              <span className="letter contactMeBouncy">n</span>
+              <span className="letter contactMeBouncy">t</span>
+              <span className="letter contactMeBouncy">a</span>
+              <span className="letter contactMeBouncy">c</span>
+              <span className="letter contactMeBouncy">t</span>
+              <span className="letter contactMeBouncy">&nbsp;</span>
+              <span className="letter contactMeBouncy">m</span>
+              <span className="letter contactMeBouncy">e</span>
+            </div>
+          </h1>
+        </div>
+      );
+    }
+
+    // Desktop mode
     return (
-      <div className="contactMe--title">
+      <div className={`contactMe--title ${comeFromBelow} ${visible}`} id="contact-title">
         <h1 ref={headerTextHighlightRef}>
-          <span
-            className="contactMeBouncy"
-            onMouseEnter={() => toggleRubberBand(0)}
-          >
-            C
-          </span>
-          <span
-            className="contactMeBouncy"
-            onMouseEnter={() => toggleRubberBand(1)}
-          >
-            o
-          </span>
-          <span
-            className="contactMeBouncy"
-            onMouseEnter={() => toggleRubberBand(2)}
-          >
-            n
-          </span>
-          <span
-            className="contactMeBouncy"
-            onMouseEnter={() => toggleRubberBand(3)}
-          >
-            t
-          </span>
-          <span
-            className="contactMeBouncy"
-            onMouseEnter={() => toggleRubberBand(4)}
-          >
-            a
-          </span>
-          <span
-            className="contactMeBouncy"
-            onMouseEnter={() => toggleRubberBand(5)}
-          >
-            c
-          </span>
-          <span
-            className="contactMeBouncy"
-            onMouseEnter={() => toggleRubberBand(6)}
-          >
-            t
-          </span>
           &nbsp;
-          <span
-            className="contactMeBouncy"
-            onMouseEnter={() => toggleRubberBand(7)}
-          >
-            m
-          </span>
-          <span
-            className="contactMeBouncy"
-            onMouseEnter={() => toggleRubberBand(8)}
-          >
-            e
-          </span>
+          <div className="text-wrapper">
+            <span className="letter contactMeBouncy">C</span>
+            <span className="letter contactMeBouncy">o</span>
+            <span className="letter contactMeBouncy">n</span>
+            <span className="letter contactMeBouncy">t</span>
+            <span className="letter contactMeBouncy">a</span>
+            <span className="letter contactMeBouncy">c</span>
+            <span className="letter contactMeBouncy">t</span>
+            <span className="letter contactMeBouncy">&nbsp;</span>
+            <span className="letter contactMeBouncy">m</span>
+            <span className="letter contactMeBouncy">e</span>
+          </div>
         </h1>
       </div>
     );
   }
 }
 
-ContactMe.propTypes = {
-  mode: PropTypes.string.isRequired,
+ContactMeTitle.propTypes = {
+  mode: PropTypes.oneOf(["mobile", "desktop"]).isRequired,
   headerTextHighlightRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
   ]).isRequired,
   refinview: PropTypes.string.isRequired
 };
+
+export default ContactMeTitle;

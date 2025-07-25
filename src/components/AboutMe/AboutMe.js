@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import MediaQuery from "react-responsive";
 import AboutMeTitle from "./AboutMeTitle";
 
+// Import JSON data
+import aboutMeData from "../../data/aboutMe.json";
+
 import "./AboutMe.scss";
 
 export default function AboutMe(props) {
@@ -35,26 +38,20 @@ export default function AboutMe(props) {
             refinview={refinview}
           />
           <div className="aboutMe--description come-from-below align-text-center">
-            <p className={comeFromBelow}>
-              I am a passionate and experienced developer, proficient in
-              developing, operating, and improving software services. Proven ability to
-              work within strict deadlines, collaborate and deliver quality work. I
-              enjoy staying curious, researching and solving puzzles.
-            </p>
+            {Array.isArray(aboutMeData.description.mobile)
+              ? [
+                <p className={comeFromBelow} key="mobile-1">{aboutMeData.description.mobile.slice(0, 2).join(" ")}</p>,
+                <p className={comeFromBelow} key="mobile-2">{aboutMeData.description.mobile.slice(2, 4).join(" ")}</p>
+              ]
+              : <p className={comeFromBelow}>{aboutMeData.description.mobile}</p>}
           </div>
           <div className={`aboutMe--description-flex ${comeFromBelowDelayed} `}>
-            <div className="aboutMe--description-item">
-              <h3 className="aboutMe--description-item-years">Dev-Ops</h3>
-              <p className="aboutMe--description-item-title">+2 years</p>
-            </div>
-            <div className="aboutMe--description-item">
-              <h3 className="aboutMe--description-item-years">Cloud</h3>
-              <p className="aboutMe--description-item-title">+2 years</p>
-            </div>
-            <div className="aboutMe--description-item">
-              <h3 className="aboutMe--description-item-years">Full-Stack</h3>
-              <p className="aboutMe--description-item-title">+4 years</p>
-            </div>
+            {aboutMeData.experience.map((exp) => (
+              <div key={exp.category} className="aboutMe--description-item">
+                <h3 className="aboutMe--description-item-years">{exp.category}</h3>
+                <p className="aboutMe--description-item-title">{exp.years}</p>
+              </div>
+            ))}
           </div>
         </MediaQuery>
         <MediaQuery minWidth={913}>
@@ -66,29 +63,21 @@ export default function AboutMe(props) {
                 refinview={refinview}
               />
               <div className={`aboutMe--description-row ${comeFromBelow}`}>
-                <div className="aboutMe--description-item">
-                  <h3 className="aboutMe--description-item-years">Dev-Ops</h3>
-                  <h3 className="aboutMe--description-item-title">2+ years</h3>
-                </div>
-                <div className="aboutMe--description-item">
-                  <h3 className="aboutMe--description-item-years">Cloud</h3>
-                  <h3 className="aboutMe--description-item-title">2+ years</h3>
-                </div>
-                <div className="aboutMe--description-item">
-                  <h3 className="aboutMe--description-item-years">
-                    Full-Stack
-                  </h3>
-                  <h3 className="aboutMe--description-item-title">4+ years</h3>
-                </div>
+                {aboutMeData.experience.map((exp) => (
+                  <div key={exp.category} className="aboutMe--description-item">
+                    <h3 className="aboutMe--description-item-years">{exp.category}</h3>
+                    <h3 className="aboutMe--description-item-title">{exp.yearsDesktop}</h3>
+                  </div>
+                ))}
               </div>
             </div>
             <div className={`second-column ${comeFromBelowDelayed} `}>
-              <p>
-                I am a passionate and experienced developer, proficient in
-                developing, operating, and improving software services. Proven ability to
-                work within strict deadlines, collaborate and deliver quality work. I
-                enjoy staying curious, researching and solving puzzles.
-              </p>
+              {Array.isArray(aboutMeData.description.desktop)
+                ? [
+                  <p key="desktop-1">{aboutMeData.description.desktop.slice(0, 2).join(" ")}</p>,
+                  <p key="desktop-2">{aboutMeData.description.desktop.slice(2, 4).join(" ")}</p>
+                ]
+                : <p>{aboutMeData.description.desktop}</p>}
             </div>
           </div>
         </MediaQuery>

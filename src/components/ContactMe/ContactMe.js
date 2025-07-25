@@ -4,16 +4,25 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser"; // Updated import
 import { ToastContainer, toast } from "react-toastify";
 import MediaQuery from "react-responsive";
 
 import ContactMeTitle from "./ContactMeTitle";
 
-import linkedinLogo from "../../images/LinkedinLogo.svg";
+// Import JSON data
+import contactMeData from "../../data/contactMe.json";
+
 import "./ContactMe.scss";
 
 const inputTresHold = 5;
+
+// Updated environment variable names for EmailJS v3+
+const {
+  REACT_APP_EMAILJS_TEMPLATE_ID,
+  REACT_APP_EMAILJS_SERVICE_ID,
+  REACT_APP_EMAILJS_PUBLIC_KEY
+} = process.env;
 
 class ContactMe extends React.Component {
   constructor() {
@@ -28,7 +37,8 @@ class ContactMe extends React.Component {
       comeFromBelowDelayedMore: "",
 
       renderAnimation: false,
-      visible: "invisible"
+      visible: "invisible",
+      isLoading: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -57,6 +67,7 @@ class ContactMe extends React.Component {
 
     this.checkValidation();
 
+    // Since form field names now match state properties, no mapping needed
     this.setState({
       [name]: value
     });
@@ -76,7 +87,7 @@ class ContactMe extends React.Component {
     ) {
       const emailResponseApi = await this.sendEmail(event);
       if (emailResponseApi) {
-        toast.success("Message sent 🙌", {
+        toast.success(contactMeData.toastMessages.success, {
           className: "toast-general",
           position: "top-right",
           autoClose: 5000,
@@ -93,10 +104,10 @@ class ContactMe extends React.Component {
           message: ""
         });
       } else {
-        toast.error("Failed to send. Please use andreisvasile@gmail.com", {
+        toast.error(contactMeData.toastMessages.error, {
           className: "toast-general",
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 8000,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
@@ -105,10 +116,10 @@ class ContactMe extends React.Component {
         });
       }
     } else {
-      toast.error("Please complete all fields", {
+      toast.warn(contactMeData.toastMessages.validation, {
         className: "toast-general",
-        position: "bottom-right",
-        autoClose: 5000,
+        position: "top-right",
+        autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
@@ -118,30 +129,38 @@ class ContactMe extends React.Component {
     }
   }
 
-  sendEmail(event) {
-    const { REACT_APP_TEMPLATE_ID, REACT_APP_SERVICE_ID, REACT_APP_USER_ID } =
-      process.env;
-    if (!REACT_APP_TEMPLATE_ID || !REACT_APP_SERVICE_ID || !REACT_APP_USER_ID) {
+  async sendEmail(event) {
+    // Check if environment variables are set
+    if (
+      !REACT_APP_EMAILJS_TEMPLATE_ID ||
+      !REACT_APP_EMAILJS_SERVICE_ID ||
+      !REACT_APP_EMAILJS_PUBLIC_KEY) {
       return false;
     }
 
     event.preventDefault();
-    const apiSuccessful = emailjs
-      .sendForm(
-        REACT_APP_SERVICE_ID,
-        REACT_APP_TEMPLATE_ID,
+    this.setState({ isLoading: true });
+
+    try {
+      const result = await emailjs.sendForm(
+        REACT_APP_EMAILJS_SERVICE_ID,
+        REACT_APP_EMAILJS_TEMPLATE_ID,
         event.target,
-        REACT_APP_USER_ID
-      )
-      .then(
-        (result) => {
-          if (result.text === "OK") return true;
-          return false;
-        },
-        () => false
+        REACT_APP_EMAILJS_PUBLIC_KEY
       );
 
-    return apiSuccessful;
+      this.setState({ isLoading: false });
+      let returnValue = true;
+      if (result.status === 200) {
+        // Email sent successfully
+      } else {
+        returnValue = false;
+      }
+      return returnValue;
+    } catch (error) {
+      this.setState({ isLoading: false });
+      return false;
+    }
   }
 
   // return True = valid
@@ -168,13 +187,12 @@ class ContactMe extends React.Component {
 
   render() {
     const {
-      fullName,
-      email,
-      message,
       comeFromBelow,
       comeFromBelowDelayed,
       comeFromBelowDelayedMore,
-      visible
+      visible,
+      isLoading,
+      renderAnimation
     } = this.state;
     const { headerTextHighlightRef, refinview } = this.props;
 
@@ -200,69 +218,79 @@ class ContactMe extends React.Component {
           </MediaQuery>
           <div className={`contactMe--description ${comeFromBelow} `}>
             <p>
-              Feel free to contact me for any questions, job opportunities or
-              general questions by completing the following form.
+              {contactMeData.description}
             </p>
           </div>
           <form
             id="contact-form"
-            className="contactMe--form"
+            className={`contactMe--form ${renderAnimation ? "" : "form-loading"}`}
             onSubmit={this.handleSubmit}
           >
-            <input
-              name="fullName"
-              type="text"
-              placeholder="Name"
-              value={fullName}
-              className={`contactMe--input ${comeFromBelowDelayed} ${
-                !this.checkValidation("fullName")
-                  ? "input-form-started"
-                  : "input-form-finished"
-              }`}
-              onChange={this.handleChange}
-            />
-
-            <input
-              name="email"
-              type="email"
-              placeholder="Email"
-              value={email}
-              className={`contactMe--input ${comeFromBelowDelayed} ${
-                !this.checkValidation("email")
-                  ? "input-form-started"
-                  : "input-form-finished"
-              }`}
-              onChange={this.handleChange}
-            />
-
-            <textarea
-              name="message"
-              type="textarea"
-              placeholder="Message"
-              value={message}
-              className={`contactMe--input ${comeFromBelowDelayed} contactMe--textarea ${
-                !this.checkValidation("message")
-                  ? "input-form-started"
-                  : "input-form-finished"
-              }`}
-              onChange={this.handleChange}
-            />
+            {/* Generate form fields from JSON data */}
+            {contactMeData.form.fields.map((field) => {
+              const { name, type, placeholder, className } = field;
+              const { [name]: fieldValue } = this.state;
+              if (type === "textarea") {
+                return (
+                  <textarea
+                    key={name}
+                    name={name}
+                    type="textarea"
+                    placeholder={placeholder}
+                    value={fieldValue}
+                    className={`contactMe--input ${renderAnimation ? comeFromBelowDelayed : "input-loading"} ${className || ""} ${
+                      !this.checkValidation(name)
+                        ? "input-form-started"
+                        : "input-form-finished"
+                    }`}
+                    onChange={this.handleChange}
+                  />
+                );
+              }
+              return (
+                <input
+                  key={name}
+                  name={name}
+                  type={type}
+                  placeholder={placeholder}
+                  value={fieldValue}
+                  className={`contactMe--input ${renderAnimation ? comeFromBelowDelayed : "input-loading"} ${
+                    !this.checkValidation(name)
+                      ? "input-form-started"
+                      : "input-form-finished"
+                  }`}
+                  onChange={this.handleChange}
+                />
+              );
+            })}
 
             <div
               className={`contactMe--submit-group ${comeFromBelowDelayedMore} `}
             >
-              <input
-                className="main-btn-style contactMe--submit-btn"
-                type="submit"
-                value="Send message!"
-              />
-              <a href="https://www.linkedin.com/in/andrei-vasile/">
-                <img
-                  className="contactMe--lkdn-logo"
-                  src={linkedinLogo}
-                  alt="Linkedin Logo"
+              <MediaQuery maxWidth={912}>
+                <input
+                  className="main-btn-style contactMe--submit-btn"
+                  type="submit"
+                  value={
+                    isLoading
+                      ? contactMeData.form.loadingText
+                      : contactMeData.form.submitText.mobile
+                  }
+                  disabled={isLoading}
                 />
-              </a>
+              </MediaQuery>
+              <MediaQuery minWidth={913}>
+                <input
+                  className="main-btn-style contactMe--submit-btn"
+                  type="submit"
+                  value={
+                    isLoading
+                      ? contactMeData.form.loadingText
+                      : contactMeData.form.submitText.desktop
+                  }
+                  disabled={isLoading}
+                />
+              </MediaQuery>
             </div>
           </form>
           <ToastContainer

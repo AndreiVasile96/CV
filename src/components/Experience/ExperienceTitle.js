@@ -1,142 +1,124 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import anime from "animejs/lib/anime.es";
+import anime from "animejs";
 
-import "./Experience.scss";
+class ExperienceTitle extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      renderAnimation: false,
+      comeFromBelow: "",
+      visible: "invisible",
+      isTitleVisible: false
+    };
+    this.bouncyList = null;
+  }
 
-let bouncyList;
+  componentDidMount() {
+    // Initialize bouncy list after component mounts
+    this.bouncyList = document.querySelectorAll(".experienceBouncy");
+  }
 
-function toggleRubberBand(id) {
-  bouncyList[id].classList.add("bouncing");
-  bouncyList[id].addEventListener("animationend", () => {
-    bouncyList[id].classList.remove("bouncing");
-  });
-}
+  componentDidUpdate() {
+    const { refinview } = this.props;
+    const { renderAnimation, isTitleVisible } = this.state;
 
-export default function ContactMe(props) {
-  const { headerTextHighlightRef, mode, refinview } = props;
-  const [isTitleVisible, setTitleToViewd] = useState(false);
-
-  useEffect(() => {
-    bouncyList = document.querySelectorAll(".experienceBouncy");
-  });
-
-  if (mode === "mobile") {
-    if (refinview === "experience" && !isTitleVisible) {
-      const textWrapper = document.querySelector(".experience--title .letters");
-      if (textWrapper) {
-        textWrapper.innerHTML = textWrapper.textContent.replace(
-          /\S/g,
-          "<span class='letter'>$&</span>"
-        );
-        anime.timeline({ loop: false }).add({
-          targets: ".experience--title .letter",
-          scale: [0, 1],
-          duration: 1500,
-          elasticity: 600,
-          delay: (el, i) => 45 * (i + 1)
-        });
-        setTitleToViewd(true);
-      }
-    }
-  } else if (mode === "desktop") {
-    if (refinview === "experience" && !isTitleVisible) {
-      anime.timeline({ loop: false }).add({
-        targets: ".experienceBouncy",
-        scale: [0, 1],
-        duration: 15,
-        elasticity: 600,
-        delay: (el, i) => 150 * (i + 1)
+    if (refinview === "experience" && !renderAnimation) {
+      this.setState({
+        comeFromBelow: "come-from-below",
+        renderAnimation: true,
+        visible: "visible"
       });
-      setTitleToViewd(true);
+    }
+
+    // Add bouncy animation when component becomes visible
+    if (refinview === "experience" && !isTitleVisible) {
+      this.initializeBouncyAnimation();
+      this.setState({ isTitleVisible: true });
     }
   }
 
-  if (mode === "mobile") {
-    return (
-      <h1 ref={headerTextHighlightRef} className="experience--title">
-        <span className="text-wrapper">
-          <span className="letters">Experience</span>
-        </span>
-      </h1>
-    );
-  }
+  initializeBouncyAnimation = () => {
+    // Animate letters on load - faster animation
+    anime.timeline({ loop: false }).add({
+      targets: ".experienceBouncy",
+      scale: [0, 1],
+      duration: 200, // Reduced from 1500ms to 800ms
+      elasticity: 600,
+      delay: (el, i) => 80 * (i + 1) // Reduced from 150ms to 80ms
+    });
 
-  if (mode === "desktop") {
+    // Add hover effects to each letter
+    this.bouncyList = document.querySelectorAll(".experienceBouncy");
+    this.bouncyList.forEach((letter, index) => {
+      letter.addEventListener("mouseover", () => this.toggleRubberBand(index));
+    });
+  };
+
+  toggleRubberBand = (id) => {
+    if (this.bouncyList && this.bouncyList[id]) {
+      this.bouncyList[id].classList.add("bouncing");
+      this.bouncyList[id].addEventListener("animationend", () => {
+        this.bouncyList[id].classList.remove("bouncing");
+      });
+    }
+  };
+
+  render() {
+    const { mode, headerTextHighlightRef } = this.props;
+    const { comeFromBelow, visible } = this.state;
+
+    if (mode === "mobile") {
+      return (
+        <div className={`experience--title ${comeFromBelow} ${visible}`} id="experience-title">
+          <h1 ref={headerTextHighlightRef}>
+            <div className="text-wrapper">
+              <span className="letter experienceBouncy">E</span>
+              <span className="letter experienceBouncy">x</span>
+              <span className="letter experienceBouncy">p</span>
+              <span className="letter experienceBouncy">e</span>
+              <span className="letter experienceBouncy">r</span>
+              <span className="letter experienceBouncy">i</span>
+              <span className="letter experienceBouncy">e</span>
+              <span className="letter experienceBouncy">n</span>
+              <span className="letter experienceBouncy">c</span>
+              <span className="letter experienceBouncy">e</span>
+            </div>
+          </h1>
+        </div>
+      );
+    }
+
+    // Desktop mode
     return (
-      <div className="experience--title">
+      <div className={`experience--title ${comeFromBelow} ${visible}`} id="experience-title">
         <h1 ref={headerTextHighlightRef}>
-          <span
-            className="experienceBouncy"
-            onMouseEnter={() => toggleRubberBand(0)}
-          >
-            E
-          </span>
-          <span
-            className="experienceBouncy"
-            onMouseEnter={() => toggleRubberBand(1)}
-          >
-            x
-          </span>
-          <span
-            className="experienceBouncy"
-            onMouseEnter={() => toggleRubberBand(2)}
-          >
-            p
-          </span>
-          <span
-            className="experienceBouncy"
-            onMouseEnter={() => toggleRubberBand(3)}
-          >
-            e
-          </span>
-          <span
-            className="experienceBouncy"
-            onMouseEnter={() => toggleRubberBand(4)}
-          >
-            r
-          </span>
-          <span
-            className="experienceBouncy"
-            onMouseEnter={() => toggleRubberBand(5)}
-          >
-            i
-          </span>
-          <span
-            className="experienceBouncy"
-            onMouseEnter={() => toggleRubberBand(6)}
-          >
-            e
-          </span>
-          <span
-            className="experienceBouncy"
-            onMouseEnter={() => toggleRubberBand(7)}
-          >
-            n
-          </span>
-          <span
-            className="experienceBouncy"
-            onMouseEnter={() => toggleRubberBand(8)}
-          >
-            c
-          </span>
-          <span
-            className="experienceBouncy"
-            onMouseEnter={() => toggleRubberBand(9)}
-          >
-            e
-          </span>
+          &nbsp;
+          <div className="text-wrapper">
+            <span className="letter experienceBouncy">E</span>
+            <span className="letter experienceBouncy">x</span>
+            <span className="letter experienceBouncy">p</span>
+            <span className="letter experienceBouncy">e</span>
+            <span className="letter experienceBouncy">r</span>
+            <span className="letter experienceBouncy">i</span>
+            <span className="letter experienceBouncy">e</span>
+            <span className="letter experienceBouncy">n</span>
+            <span className="letter experienceBouncy">c</span>
+            <span className="letter experienceBouncy">e</span>
+          </div>
         </h1>
       </div>
     );
   }
 }
 
-ContactMe.propTypes = {
-  mode: PropTypes.string.isRequired,
+ExperienceTitle.propTypes = {
+  mode: PropTypes.oneOf(["mobile", "desktop"]).isRequired,
   headerTextHighlightRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
   ]).isRequired,
   refinview: PropTypes.string.isRequired
 };
+
+export default ExperienceTitle;

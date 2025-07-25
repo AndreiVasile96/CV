@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import React, { useEffect } from "react";
 import MediaQuery from "react-responsive";
 
-import ScrollTriangles from "../../images/ScrollTriangles.svg";
+import ScrollTriangles from "../../assets/illustrations/ScrollTriangles.svg";
 import LandingPageTitle from "./LandingPageTitle";
 
 import "./LandingPage.scss";
@@ -43,33 +43,44 @@ export default function LandingPage(props) {
         </MediaQuery>
         <div className="landingPage--description landingPage--item-popin">
           <p>
-            <span
-              className="landingPageBouncy"
-              onMouseEnter={() => toggleRubberBand(16)}
-            >
-              Dev-Ops
-            </span>
-            &nbsp;/&nbsp;
-            <span
-              className="landingPageBouncy"
-              onMouseEnter={() => toggleRubberBand(17)}
-            >
-              Cloud
-            </span>
-            &nbsp;/&nbsp;
-            <span
-              className="landingPageBouncy"
-              onMouseEnter={() => toggleRubberBand(18)}
-            >
-              Full-Stack
-            </span>
-            &nbsp;
-            <span
-              className="landingPageBouncy"
-              onMouseEnter={() => toggleRubberBand(19)}
-            >
-              Developer
-            </span>
+            <MediaQuery maxWidth={912}>
+              <span>Dev-Ops</span>
+              &nbsp;/&nbsp;
+              <span>Cloud</span>
+              &nbsp;/&nbsp;
+              <span>Full-Stack</span>
+              &nbsp;
+              <span>Developer</span>
+            </MediaQuery>
+            <MediaQuery minWidth={913}>
+              <span
+                className="landingPageBouncy"
+                onMouseEnter={() => toggleRubberBand(16)}
+              >
+                Dev-Ops
+              </span>
+              &nbsp;/&nbsp;
+              <span
+                className="landingPageBouncy"
+                onMouseEnter={() => toggleRubberBand(17)}
+              >
+                Cloud
+              </span>
+              &nbsp;/&nbsp;
+              <span
+                className="landingPageBouncy"
+                onMouseEnter={() => toggleRubberBand(18)}
+              >
+                Full-Stack
+              </span>
+              &nbsp;
+              <span
+                className="landingPageBouncy"
+                onMouseEnter={() => toggleRubberBand(19)}
+              >
+                Developer
+              </span>
+            </MediaQuery>
           </p>
         </div>
         <div>
@@ -78,20 +89,34 @@ export default function LandingPage(props) {
             className="main-btn-style landingPage--item-popin"
             type="button"
           >
-            Contact me!
+            Contact me
           </button>
         </div>
-        <div className="landingPage--scroll">
-          <button
-            onClick={() => scroll("#about", "bot")}
-            className="landingPage--scroll-btn come-from-below-delayed-more"
-            type="button"
-          >
-            <p className="landingPage--scroll-text come-from-below-delayed-more">
-              Scroll
-            </p>
-            <img src={ScrollTriangles} alt="Scroll Triangles" />
-          </button>
+        <div className="landingPage--scroll-group">
+          <div className="landingPage--scroll landingPage--scroll--left">
+            <button
+              onClick={() => scroll("#about", "bot")}
+              className="landingPage--scroll-btn come-from-below-delayed-more"
+              type="button"
+            >
+              <p className="landingPage--scroll-text come-from-below-delayed-more">
+                Scroll
+              </p>
+              <img src={ScrollTriangles} alt="Scroll Triangles" />
+            </button>
+          </div>
+          <div className="landingPage--scroll landingPage--scroll--right">
+            <button
+              onClick={() => scroll("#about", "bot")}
+              className="landingPage--scroll-btn come-from-below-delayed-more"
+              type="button"
+            >
+              <p className="landingPage--scroll-text come-from-below-delayed-more">
+                Scroll
+              </p>
+              <img src={ScrollTriangles} alt="Scroll Triangles" />
+            </button>
+          </div>
         </div>
       </section>
     </div>

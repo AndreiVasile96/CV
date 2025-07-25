@@ -7,6 +7,10 @@ import PropTypes from "prop-types";
 import MediaQuery from "react-responsive";
 import ExperienceTitle from "./ExperienceTitle";
 
+// Import JSON data
+import workData from "../../data/work.json";
+import educationData from "../../data/education.json";
+
 import "./Experience.scss";
 
 class Experience extends React.Component {
@@ -14,19 +18,14 @@ class Experience extends React.Component {
     super();
     this.state = {
       selectedTab: "work",
-
       renderAnimation: false,
       comeFromBelow: "",
       comeFromBelowDelayed: "",
-
       renderGridAnimation: "",
       visible: "invisible",
-
-      expandItem0: false,
-      expandItem1: false,
-      expandItem2: false,
-      expandItem3: false,
-      expandItem4: false
+      expandedItems: {}, // Track expanded state by item ID
+      isTabSwitching: false, // Track tab switching animation
+      tabSwitchDirection: null // Track switch direction for animation
     };
 
     this.selectTab = this.selectTab.bind(this);
@@ -46,21 +45,168 @@ class Experience extends React.Component {
     }
   }
 
-  selectTab(target) {
-    this.setState({
-      selectedTab: target,
-      renderGridAnimation: "come-from-below-fast"
-    });
+  // Handle card click - only expand, don"t collapse
+  handleCardClick(itemId, event) {
+    const { expandedItems, isTabSwitching } = this.state;
+
+    // Prevent expansion during tab switching
+    if (isTabSwitching) {
+      return;
+    }
+
+    // Don"t trigger if clicking on the "See less" button
+    if (event.target.closest(".experience--item-box-see-more")) {
+      return;
+    }
+
+    const isCurrentlyExpanded = expandedItems[itemId] || false;
+
+    // Only expand if not already expanded
+    if (!isCurrentlyExpanded) {
+      this.setState((prevState) => ({
+        expandedItems: {
+          ...prevState.expandedItems,
+          [itemId]: true
+        }
+      }));
+    }
   }
 
-  expandWork(item) {
-    const { expandItem0, expandItem1, expandItem2, expandItem3, expandItem4 } =
-      this.state;
-    if (item === 0) this.setState({ expandItem0: !expandItem0 });
-    if (item === 1) this.setState({ expandItem1: !expandItem1 });
-    if (item === 2) this.setState({ expandItem2: !expandItem2 });
-    if (item === 3) this.setState({ expandItem3: !expandItem3 });
-    if (item === 4) this.setState({ expandItem4: !expandItem4 });
+  // Handle "See less" button click - only collapse
+  handleSeeLessClick(itemId, event) {
+    const { isTabSwitching } = this.state;
+
+    // Stop event propagation to prevent card click
+    event.stopPropagation();
+
+    // Prevent action during tab switching
+    if (isTabSwitching) {
+      return;
+    }
+
+    // Always collapse when "See less" is clicked
+    this.setState((prevState) => ({
+      expandedItems: {
+        ...prevState.expandedItems,
+        [itemId]: false
+      }
+    }));
+  }
+
+  selectTab(target) {
+    const { selectedTab, isTabSwitching } = this.state;
+
+    // Prevent multiple clicks during transition
+    if (isTabSwitching || target === selectedTab) {
+      return;
+    }
+
+    // Start tab switching animation
+    this.setState({
+      isTabSwitching: true,
+      tabSwitchDirection: "out"
+    });
+
+    // After switch-out animation completes, change tab and start switch-in
+    setTimeout(() => {
+      this.setState({
+        selectedTab: target,
+        renderGridAnimation: "come-from-below-fast",
+        expandedItems: {}, // Reset expanded items when switching tabs
+        tabSwitchDirection: "in"
+      });
+
+      // Complete the transition
+      setTimeout(() => {
+        this.setState({
+          isTabSwitching: false,
+          tabSwitchDirection: null
+        });
+      }, 400); // Match animation duration
+    }, 400); // Match switch-out animation duration
+  }
+
+  // Stable helper method to render experience items
+  renderExperienceItem(item) {
+    const { expandedItems, isTabSwitching, tabSwitchDirection } = this.state;
+    const isExpanded = expandedItems[item.id] || false;
+
+    // Determine transition class for tab switching
+    let transitionClass = "";
+    if (isTabSwitching) {
+      transitionClass = tabSwitchDirection === "out" ? "switching-out" : "switching-in";
+    }
+
+    return (
+      <div
+        key={`item-${item.id}`}
+        className={`experience--item-general-box experience--tab-content ${transitionClass} ${isExpanded ? "expanded" : ""} ${!isExpanded ? "clickable" : ""}`}
+        onClick={(event) => this.handleCardClick(item.id, event)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            this.handleCardClick(item.id, event);
+          }
+        }}
+        aria-label={isExpanded ? "Experience details expanded" : "Click to expand experience details"}
+      >
+        <p className="experience--item-general-box-title">
+          {item.title}
+          {item.subtitle && (
+            <>
+              <br />
+              {item.subtitle}
+            </>
+          )}
+        </p>
+        <p className="experience--item-general-box-date">
+          {item.date}
+        </p>
+        <div className="experience--item-general-box-description">
+          <div className="experience--item-content-container">
+            {/* Base content - always visible */}
+            <div className="experience--item-base-content">
+              {item.summary.map((point) => (
+                <React.Fragment key={`summary-${item.id}-${point.substring(0, 20)}`}>
+                  - {point}
+                  <br />
+                </React.Fragment>
+              ))}
+            </div>
+
+            {/* Expanded content - shows below base content when expanded */}
+            <div className={`experience--item-expanded-content ${isExpanded ? "expanded" : ""}`}>
+              {item.details}
+            </div>
+          </div>
+
+          {/* Conditional button - shows "See more" or "See less" */}
+          {!isExpanded ? (
+            <div className="experience--item-box-see-more-indicator">
+              <div className="experience--item-box-see-more-bar" />
+              <div className="experience--item-box-see-more-text">
+                <p>Click to see more</p>
+              </div>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="experience--item-box-see-more"
+              onClick={(event) => this.handleSeeLessClick(item.id, event)}
+              disabled={isTabSwitching}
+              aria-label="Collapse experience details"
+            >
+              <div className="experience--item-box-see-more-bar" />
+              <div className="experience--item-box-see-more-text">
+                <p>See less</p>
+              </div>
+            </button>
+          )}
+        </div>
+      </div>
+    );
   }
 
   render() {
@@ -70,208 +216,14 @@ class Experience extends React.Component {
       comeFromBelowDelayed,
       renderGridAnimation,
       visible,
-      expandItem0,
-      expandItem1,
-      expandItem2,
-      expandItem3,
-      expandItem4
+      isTabSwitching
     } = this.state;
     const { headerTextHighlightRef, refinview } = this.props;
 
-    const workItems = [
-      <div key={0} className="experience--item-general-box">
-        <p className="experience--item-general-box-title">
-          IBM UK
-          <br />
-          Cloud developer
-        </p>
-        <p className="experience--item-general-box-date">
-          (Jul 2019 - Sept 2020)
-        </p>
-        <div className="experience--item-general-box-description">
-          - Golang - Angular service, and pipeline integration (Jenkins, Travis)
-          <br />
-          - Cloud integration, migration, and deployment: VMs, Docker, K8s, Helm
-          <br />
-          - Client interaction, out-of-hours maintenance, and design thinking
-          <br />
-          - Side projects: JavaScript, new platforms (ReactJS), and patent filing
-          {expandItem0 ? (
-            <div className="experience--item-general-box-description">
-              As a returning developer, I immediately synchronised with the
-              team, and resumed work. I contributed to the integration to a new
-              cloud platform and deployment of new services. Also, I had the
-              opportunity to discuss with current and potential clients and
-              operate the out-of-hours service maintenance. Additionally, I
-              attended several side-projects, developing new internal platforms.
-              I succesfully filed a patent.
-            </div>
-          ) : null}
-          <button
-            type="button"
-            className="experience--item-box-see-more"
-            onClick={() => this.expandWork(0)}
-          >
-            <div className="experience--item-box-see-more-bar" />
-            <div className="experience--item-box-see-more-text">
-              {expandItem0 ? <p>See less</p> : <p>See more</p>}
-            </div>
-          </button>
-        </div>
-      </div>,
-      <div key={1} className="experience--item-general-box">
-        <p className="experience--item-general-box-title">
-          Software Developer Freelancer
-        </p>
-        <p className="experience--item-general-box-date">
-          (Sept 2020 - Present)
-        </p>
-        <div className="experience--item-general-box-description">
-          - Software architectural improvement, implementation and microservices
-          <br />
-          - TDD, continuous integration, delivery, deployment (Heroku, Firebase)
-          <br />
-          - Communication, presentations and high flexibility to clients
-          {expandItem1 ? (
-            <div className="experience--item-general-box-description">
-              During this time, I developed full-stack web applications,
-              implementing testing, continuous integration, and deployment into
-              the cloud. Moreover, I further developed excellent communication
-              skills, by collaborating and staying in close contact with clients.
-            </div>
-          ) : null}
-          <button
-            type="button"
-            className="experience--item-box-see-more"
-            onClick={() => this.expandWork(1)}
-          >
-            <div className="experience--item-box-see-more-bar" />
-            <div className="experience--item-box-see-more-text">
-              {expandItem1 ? <p>See less</p> : <p>See more</p>}
-            </div>
-          </button>
-        </div>
-      </div>,
-      <div key={2} className="experience--item-general-box">
-        <p className="experience--item-general-box-title">
-          IBM UK
-          <br />
-          (internship)
-        </p>
-        <p className="experience--item-general-box-date">
-          (Jul 2017 - Aug 2018)
-        </p>
-        <div className="experience--item-general-box-description">
-          - Quickly adapting to team of professionals, learning APIs, pipelines
-          <br />
-          - Automation, documentation and monitoring: Golang, Bash scripting
-          <br />
-          - Extension of internship and invitation to return as graduate
-          {expandItem2 ? (
-            <div className="experience--item-general-box-description">
-              As an intern, I was introduced to working with a team of
-              professionals and adapting quickly to a new environment. In the
-              beginning, I was developing automation and monitoring scripts, and
-              by the end reaching the point of being an integral part of the
-              team. I obtained an extension to the internship, and I was invited
-              to return as a graduate.
-            </div>
-          ) : null}
-          <button
-            type="button"
-            className="experience--item-box-see-more"
-            onClick={() => this.expandWork(2)}
-          >
-            <div className="experience--item-box-see-more-bar" />
-            <div className="experience--item-box-see-more-text">
-              {expandItem2 ? <p>See less</p> : <p>See more</p>}
-            </div>
-          </button>
-        </div>
-      </div>
-    ];
-
-    const educationItems = [
-      <div key={3} className="experience--item-general-box">
-        <p className="experience--item-general-box-title">
-          Coventry University
-          <br />
-          BSc Computer Science
-        </p>
-        <p className="experience--item-general-box-date">
-          (Oct 2015 - Jun 2019)
-        </p>
-        <div className="experience--item-general-box-description">
-          - Data structures, algorithm and database architecture
-          <br />
-          - First full-stack web applications developed (Node, React, SQL)
-          <br />
-          - Final year project working with big data (Python3, NoSQL)
-          {expandItem3 ? (
-            <div className="experience--item-general-box-description">
-              As a student, I significantly developed my programming skills,
-              learning data structures, algorithms, and database architecture.
-              In addition, I improved my problem-solving skills, developed
-              full-stack applications and submitted the final year project in
-              big data.
-            </div>
-          ) : null}
-          <button
-            type="button"
-            className="experience--item-box-see-more"
-            onClick={() => this.expandWork(3)}
-          >
-            <div className="experience--item-box-see-more-bar" />
-            <div className="experience--item-box-see-more-text">
-              {expandItem3 ? <p>See less</p> : <p>See more</p>}
-            </div>
-          </button>
-        </div>
-      </div>,
-      <div key={4} className="experience--item-general-box">
-        <p className="experience--item-general-box-title">
-          Traian High School
-          <br />
-          Science and Math
-        </p>
-        <p className="experience--item-general-box-date">
-          (Sept 2011 - Jun 2015)
-        </p>
-        <div className="experience--item-general-box-description">
-          - Increased passion and curiosity for technology
-          <br />
-          - Practical problem-solving and engineering mindset
-          <br />
-          - Communication, presenting and volunteering
-          {expandItem4 ? (
-            <div className="experience--item-general-box-description">
-              My passion and curiosity for technology were greatly nourished
-              during this time. Being always inclined to discover and problem
-              solve, I have participated in numerous extracurricular activities
-              and contests. I was able to develop my communication skills, by
-              presenting projects, publically speaking and participating in
-              volunteering activities.
-            </div>
-          ) : null}
-          <button
-            type="button"
-            className="experience--item-box-see-more"
-            onClick={() => this.expandWork(4)}
-          >
-            <div className="experience--item-box-see-more-bar" />
-            <div className="experience--item-box-see-more-text">
-              {expandItem4 ? <p>See less</p> : <p>See more</p>}
-            </div>
-          </button>
-        </div>
-      </div>
-    ];
+    const currentData = selectedTab === "work" ? workData : educationData;
 
     return (
-      <div
-        className={`experience ${visible}`}
-        id="experience"
-      >
+      <div className={`experience ${visible}`} id="experience">
         <section className="experience--center-flex">
           <MediaQuery maxWidth={912}>
             <ExperienceTitle
@@ -287,6 +239,7 @@ class Experience extends React.Component {
                 }`}
                 type="button"
                 onClick={() => this.selectTab("work")}
+                disabled={isTabSwitching} // Disable during transition
               >
                 <p>Work</p>
               </button>
@@ -297,38 +250,25 @@ class Experience extends React.Component {
                 }`}
                 type="button"
                 onClick={() => this.selectTab("education")}
+                disabled={isTabSwitching} // Disable during transition
               >
                 <p>Education</p>
               </button>
             </div>
-            {selectedTab === "work" ? (
-              <div className="experience--item-description">
-                {workItems.map((item) => (
-                  <div
-                    key={item.key}
-                    className={`experience--item-description ${
-                      renderGridAnimation || comeFromBelowDelayed
-                    } `}
-                  >
-                    {item}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="experience--item-description">
-                {educationItems.map((item) => (
-                  <div
-                    key={item.key}
-                    className={`experience--item-description ${
-                      renderGridAnimation || comeFromBelowDelayed
-                    } `}
-                  >
-                    {item}
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className="experience--item-description">
+              {currentData.map((item) => (
+                <div
+                  key={`mobile-${item.id}`}
+                  className={`experience--item-description ${
+                    renderGridAnimation || comeFromBelowDelayed
+                  } `}
+                >
+                  {this.renderExperienceItem(item)}
+                </div>
+              ))}
+            </div>
           </MediaQuery>
+
           <MediaQuery minWidth={913}>
             <div className="two-rows">
               <div className="first-row">
@@ -346,6 +286,7 @@ class Experience extends React.Component {
                     }`}
                     type="button"
                     onClick={() => this.selectTab("work")}
+                    disabled={isTabSwitching} // Disable during transition
                   >
                     <p>Work</p>
                   </button>
@@ -356,39 +297,25 @@ class Experience extends React.Component {
                     }`}
                     type="button"
                     onClick={() => this.selectTab("education")}
+                    disabled={isTabSwitching} // Disable during transition
                   >
                     <p>Education</p>
                   </button>
                 </div>
               </div>
             </div>
-            {selectedTab === "work" ? (
-              <div className="experience--item-grid-desktop">
-                {workItems.map((item) => (
-                  <div
-                    key={item.key}
-                    className={`experience--item-description-desktop ${
-                      renderGridAnimation || comeFromBelowDelayed
-                    }`}
-                  >
-                    {item}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="experience--item-grid-desktop">
-                {educationItems.map((item) => (
-                  <div
-                    key={item.key}
-                    className={`experience--item-description-desktop ${
-                      renderGridAnimation || comeFromBelowDelayed
-                    }`}
-                  >
-                    {item}
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className="experience--item-grid-desktop">
+              {currentData.map((item) => (
+                <div
+                  key={`desktop-${item.id}`}
+                  className={`experience--item-description-desktop ${
+                    renderGridAnimation || comeFromBelowDelayed
+                  }`}
+                >
+                  {this.renderExperienceItem(item)}
+                </div>
+              ))}
+            </div>
           </MediaQuery>
         </section>
       </div>

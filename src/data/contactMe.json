@@ -1,0 +1,40 @@
+{
+  "title": "Contact Me",
+  "description": "Feel free to reach out with questions, collaboration ideas, or job opportunities using the form below.",
+  "form": {
+    "fields": [
+      {
+        "name": "fullName",
+        "type": "text",
+        "placeholder": "Name",
+        "required": true,
+        "validation": "required"
+      },
+      {
+        "name": "email",
+        "type": "email",
+        "placeholder": "Email",
+        "required": true,
+        "validation": "email"
+      },
+      {
+        "name": "message",
+        "type": "textarea",
+        "placeholder": "Message",
+        "required": true,
+        "validation": "required",
+        "className": "contactMe--textarea"
+      }
+    ],
+    "submitText": {
+      "mobile": "Send",
+      "desktop": "Send Message"
+    },
+    "loadingText": "Sending..."
+  },
+  "toastMessages": {
+    "success": "Thanks! I’ll get back to you soon.",
+    "error": "Oops — something went wrong. Try again or reach me via LinkedIn/email.",
+    "validation": "Looks like something’s missing or invalid."
+  }
+}

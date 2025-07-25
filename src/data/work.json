@@ -1,0 +1,54 @@
+[
+  {
+    "id": 0,
+    "title": "SRE Consultant",
+    "subtitle": "Verified",
+    "date": "(Mar 2022 – Present)",
+    "summary": [
+      "Led critical disaster recovery exercises and ISO audit preparations",
+      "Owned and maintained data deletion tooling across all major clients",
+      "Took over all SSO onboarding and improved system architecture",
+      "Handled high-impact incidents and participated in customer support"
+    ],
+    "details": "At Verified, I played a key role in platform stability and operations. I led disaster recovery exercises aligned with ISO standards, handled a major production incident with root cause analysis and scripting to identify and fix affected data, and maintained core deletion tooling with custom flows per client. I also took full ownership of SSO integrations after a team transition, improving architecture and onboarding major clients. I continuously serve as a cross-team reference point and contribute to customer-facing investigations and fixes, often outside of business hours."
+  },
+  {
+    "id": 1,
+    "title": "Software Developer (Freelance)",
+    "subtitle": "Self-Employed",
+    "date": "(Sept 2020 – Mar 2022)",
+    "summary": [
+      "Developed full-stack web applications with Node.js, React, and Firebase",
+      "Implemented microservices and improved existing architecture",
+      "Practiced TDD, CI/CD, and cloud deployments (Heroku, Firebase)",
+      "Maintained constant communication and flexibility with clients"
+    ],
+    "details": "I worked independently on several projects involving architectural design, backend and frontend development, and deploying applications to cloud platforms. I maintained a strong focus on testing, quality, and continuous delivery, while adapting quickly to changing client needs and expectations."
+  },
+  {
+    "id": 2,
+    "title": "Cloud Developer",
+    "subtitle": "IBM UK",
+    "date": "(Jul 2019 – Sept 2020)",
+    "summary": [
+      "Developed and integrated Golang and Angular-based services",
+      "Managed cloud deployments using Docker, Kubernetes, and Helm",
+      "Handled client communication and operated out-of-hours support",
+      "Contributed to internal projects and filed a successful patent"
+    ],
+    "details": "I rejoined IBM as a returning graduate and quickly reintegrated into the team. I focused on cloud infrastructure projects, pipeline integration (Jenkins, Travis), and service deployment. I supported clients directly and led out-of-hours service maintenance. I also participated in internal innovation efforts, building tools and platforms in JavaScript and ReactJS, culminating in a successful patent filing."
+  },
+  {
+    "id": 3,
+    "title": "Software Engineering Intern",
+    "subtitle": "IBM UK",
+    "date": "(Jul 2017 – Aug 2018)",
+    "summary": [
+      "Developed automation scripts and monitoring tools in Golang and Bash",
+      "Collaborated with senior engineers to learn APIs and deployment flows",
+      "Contributed to team workflows and gained experience with CI/CD",
+      "Internship extended; invited to return as a graduate developer"
+    ],
+    "details": "During my internship, I focused on learning cloud services and backend workflows while contributing automation and documentation improvements. I earned the team's trust through strong results and communication, which led to an extension of the internship and a graduate return offer."
+  }
+]

@@ -1,12 +1,13 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import anime from "animejs/lib/anime.es";
+import anime from "animejs";
 
-import ATriangle from "../../images/A-Triangle.svg";
+import ATriangle from "../../assets/icons/A-Triangle.svg";
 import "./LandingPage.scss";
 
 let bouncyList;
+let triangleElement;
 
 function toggleRubberBand(id) {
   bouncyList[id].classList.add("bouncing");
@@ -15,12 +16,22 @@ function toggleRubberBand(id) {
   });
 }
 
+function toggleTriangleRubberBand() {
+  if (triangleElement) {
+    triangleElement.classList.add("bouncing");
+    triangleElement.addEventListener("animationend", () => {
+      triangleElement.classList.remove("bouncing");
+    });
+  }
+}
+
 export default function LandingPageTitle(props) {
   const { headerTextHighlightRef, mode, refinview } = props;
   const [isTitleVisible, setTitleToViewd] = useState(false);
 
   useEffect(() => {
     bouncyList = document.querySelectorAll(".landingPageBouncy");
+    triangleElement = document.querySelector(".landingPage--ATriangle");
   });
 
   if (mode === "mobile") {
@@ -51,7 +62,14 @@ export default function LandingPageTitle(props) {
         duration: 15,
         elasticity: 600,
         delay: (el, i) => 45 * (i + 1)
-      });
+      }).add({
+        // Animate triangle with the letters
+        targets: ".landingPage--ATriangle",
+        scale: [0, 1],
+        duration: 15,
+        elasticity: 600,
+        delay: 0 // Triangle appears first
+      }, 0); // Start at the same time as letters
       setTitleToViewd(true);
     }
   }
@@ -153,6 +171,7 @@ export default function LandingPageTitle(props) {
           className="landingPage--ATriangle logo-bouncing-character"
           src={ATriangle}
           alt="A triangle"
+          onMouseEnter={() => toggleTriangleRubberBand()}
         />
         <span
           className="landingPageBouncy"

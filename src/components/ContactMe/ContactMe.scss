@@ -1,20 +1,24 @@
-@import "./../../constants.scss";
+@import "../../styles/constants.scss";
+@import "../../styles/cardConstants.scss";
 
 .contactMe {
   @include page-layout;
+  overflow-x: hidden; // Prevent horizontal overflow
 }
 
 .contactMe--center-flex {
-  @include center-flex;
-
-  width: 100vw;
+  @include section-layout;
+  min-height: 89vh;
+  padding: 4rem 2rem;
+  max-width: 100vw; // Ensure it doesn't exceed viewport
+  box-sizing: border-box;
 }
 
 .contactMe--title {
   color: white;
   line-height: 0;
   margin-top: 0.5rem;
-  font-size: 2rem;
+  font-size: clamp(2.5rem, 6vw, 3rem);
   color: $cyan;
 }
 
@@ -22,15 +26,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width: 80vw;
-  // padding-left: 2rem;
-  // padding-right: 2rem;
+  width: 100%;
   padding: 0rem 2rem 1rem 2rem;
-
   color: white;
   text-align: center;
   font-size: 1rem;
+  box-sizing: border-box;
 }
 
 .contactMe--form {
@@ -38,10 +39,19 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 80vw;
-
-  padding-left: 2rem;
-  padding-right: 2rem;
+  width: 100%;
+  max-width: 600px; // Limit form width
+  padding: 2rem;
+  margin-top: 0.5rem; // Reduced gap from 2rem to 0.5rem
+  box-sizing: border-box;
+  
+  // Only hide if it has the hidden class
+  &.form-hidden {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 .input-form-started {
@@ -64,14 +74,20 @@
   color: white;
   border: 0;
   width: 100%;
-
   font-family: "Roboto";
   padding: 0.5rem 0 0.5rem 0.5rem;
-
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-
   font-size: 1rem;
+  border-radius: $border-radius-small;
+  transition: $transition-normal;
+  box-sizing: border-box;
+  
+  // Only hide if it has the hidden class (visible by default)
+  &.input-hidden {
+    opacity: 0;
+    transform: translateY(15px);
+  }
 
   &::placeholder {
     padding-left: 0.5rem;
@@ -91,49 +107,200 @@
   &:focus::placeholder {
     color: transparent !important;
   }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba($color: $cyan, $alpha: 0.3);
+  }
 }
 
 .contactMe--textarea {
+  @extend .contactMe--input; // Inherit all input styles including animation
   height: 6rem;
+  resize: vertical;
+  
+  // Ensure textarea also starts hidden to prevent flash
+  &.input-hidden {
+    opacity: 0;
+    transform: translateY(15px);
+  }
 }
 
 .contactMe--submit-group {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center; // Center the button horizontally
   align-items: center;
   margin-top: 1em;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .contactMe--submit-btn {
+  width: 60%; // Fixed width for better centering
+  height: 44px !important; // Override global height for mobile compatibility
+  min-height: 44px;
+  transition: all 0.3s ease-in-out;
+  box-sizing: border-box;
+  
+  // Perfect vertical centering for input elements
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  
+  // Text centering - preserve global button text styles
+  text-align: center !important;
+  line-height: 1 !important;
+  
+  // Remove only vertical padding, keep horizontal and let flexbox center
+  padding: 0 1.5rem !important;
+  
+  // Keep the global button styling (border, background, etc.)
+  // Only override what's necessary for input element centering
+  
   &:disabled {
     color: $gray;
     cursor: not-allowed;
+    opacity: 0.6;
+  }
+  
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 255, 255, 0.3);
   }
 }
 
-.contactMe--lkdn-logo {
-  height: 3rem;
-  width: 3rem;
-  cursor: pointer;
+// Mobile specific styles - PROPER MOBILE MARGINS
+@media only screen and (max-width: 912px) {
+  .contactMe--title {
+    font-size: clamp(2.5rem, 6vw, 3rem);
+  }
+  
+  .contactMe--center-flex {
+    padding: 2rem 1rem; // Reduced padding
+    max-width: 100vw;
+  }
+  
+  .contactMe--description {
+    padding: 0 1rem 1.5rem 1rem; // Reduced padding
+  }
+  
+  .contactMe--form {
+    padding: 1.5rem 0.5rem; // Reduced padding
+    margin-top: 0.5rem; // Consistent with desktop
+    max-width: 100%;
+  }
+  
+  .contactMe--input {
+    padding: 1rem 0.75rem;
+    font-size: 1.1rem;
+    margin: 0.75rem 0;
+  }
+  
+  .contactMe--textarea {
+    height: 8rem;
+    padding: 1rem 0.75rem;
+  }
+  
+  .contactMe--submit-group {
+    justify-content: center; // Center button on mobile too
+    margin-top: 1.5rem;
+    width: 100%;
+  }
+  
+  .contactMe--submit-btn {
+    width: 80%; // Slightly wider on mobile
+    font-size: 1.1rem;
+    min-height: 48px;
+  }
+}
+
+// Very small phones
+@media only screen and (max-width: 375px) {
+  .contactMe--center-flex {
+    padding: 1.5rem 0.5rem; // Further reduced padding
+  }
+  
+  .contactMe--description {
+    padding: 0 0.5rem 1rem 0.5rem;
+  }
+  
+  .contactMe--form {
+    padding: 1rem 0.25rem;
+  }
+  
+  .contactMe--submit-group {
+    gap: 0.75rem;
+  }
+  
+  .contactMe--submit-btn {
+    padding: 1rem 0.75rem;
+    font-size: 1rem;
+  }
+}
+
+// Large phones/small tablets
+@media only screen and (min-width: 413px) and (max-width: 912px) {
+  .contactMe--form {
+    padding: 2rem 1rem; // Reduced padding
+  }
+  
+  .contactMe--submit-group {
+    justify-content: center;
+  }
+  
+  .contactMe--submit-btn {
+    width: 70%;
+    padding: 1.25rem 1.5rem;
+  }
+}
+
+// Desktop - ensure proper layout
+@media only screen and (min-width: 913px) {
+  .contactMe--center-flex {
+    padding: 4rem 2rem;
+    max-width: 800px; // Limit max width on desktop
+    margin: 0 auto; // Center the content
+  }
+  
+  .contactMe--form {
+    max-width: 600px;
+    padding: 2rem;
+  }
+  
+  .contactMe--submit-group {
+    justify-content: center;
+  }
+  
+  .contactMe--submit-btn {
+    width: 60%;
+    padding: 1rem 2rem;
+  }
 }
 
 .toast-general {
   font-family: "Bitter, sans" !important;
   font-size: 1.1rem;
   color: white !important;
-
   background-color: $bg-black !important;
-  border-radius: 1rem solid !important;
-  margin: 1px solid $cyan !important;
+  border-radius: $border-radius-xlarge !important;
+  border: 1px solid $cyan !important;
 }
 
-// Title
-
+// Title animation
 .contactMeBouncy {
   display: inline-block;
   transition: 0.5s;
+  cursor: pointer;
+  
+  &:hover {
+    color: $cyan;
+    transform: translateY(-3px);
+  }
+  
+  &.bouncing {
+    animation: rubberBand 1s;
+  }
 }
 
 .contactMe--title .text-wrapper {
@@ -146,4 +313,75 @@
   transform-origin: 50% 100%;
   display: inline-block;
   line-height: 1em;
+}
+
+// Add the bouncing animation keyframes
+@keyframes rubberBand {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+// Animation classes for smooth form appearance (consistent with Skills section)
+.contactMe--form.form-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.contactMe--input.input-visible,
+.contactMe--textarea.input-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+// Prevent flash on initial load - hide until component is ready
+.contactMe--form.form-loading {
+  opacity: 0 !important;
+  transform: translateY(20px) !important;
+}
+
+.contactMe--input.input-loading,
+.contactMe--textarea.input-loading {
+  opacity: 0 !important;
+  transform: translateY(15px) !important;
+}
+
+// Staggered animation for individual inputs
+.contactMe--input:nth-child(1).input-visible,
+.contactMe--textarea:nth-child(1).input-visible {
+  transition-delay: 0.1s;
+}
+
+.contactMe--input:nth-child(2).input-visible,
+.contactMe--textarea:nth-child(2).input-visible {
+  transition-delay: 0.2s;
+}
+
+.contactMe--input:nth-child(3).input-visible,
+.contactMe--textarea:nth-child(3).input-visible {
+  transition-delay: 0.3s;
 }

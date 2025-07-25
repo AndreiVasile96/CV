@@ -1,186 +1,475 @@
-@import "./../../constants.scss";
+@import "../../styles/constants.scss";
+@import "../../styles/cardConstants.scss";
 
 .skillsPage {
   @include page-layout;
 }
 
 .skillsPage--center-flex {
-  @include center-flex;
-
-  width: 100vw;
-
-  overflow-x: hidden !important;
+  @include section-layout;
+  overflow: hidden !important; // Prevent any scrollbars from appearing
+  min-height: 80vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .skillsPage--title {
-  color: white;
-  line-height: 0;
-  font-size: 2rem;
   color: $cyan;
+  line-height: 0;
+  font-size: clamp(2.5rem, 6vw, 3rem);
+// ...existing code...
+
+@media (max-width: $breakpoint-mobile) {
+  .skillsPage--title {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+  .skillsPage--description {
+    font-size: 0.95rem;
+    padding: 0 $spacing-sm $spacing-sm $spacing-sm;
+  }
+  .skillsPage--skills-items {
+    gap: $spacing-xs;
+  }
+  .skillsPage--skill {
+    font-size: 0.95rem;
+    min-height: 36px;
+    margin: $spacing-xs 0;
+  }
+}
 }
 
 .skillsPage--description {
   font-size: 1rem;
-  padding: 0 2rem 2rem 2rem;
+  padding: 0 $spacing-md $spacing-md $spacing-md;
   color: white;
+  text-align: center;
+  /* Removed flex vertical alignment so description sits above skills list */
 }
 
 .skillsPage--skills-items {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 0.5rem;
+  gap: $spacing-sm;
+  margin: 0;
+  padding: 0;
 }
 
 .skillsPage--skill {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  height: 3rem;
+  @include button-card-base;
+  margin: 0.2rem 0;
+  
+  // Mobile styling with smooth transitions
   border: 0.1em solid $cyan;
-  border-radius: 0.5rem;
-
-  &:hover {
-    transition: 0.2s;
+  border-radius: $border-radius-medium;
+  transition: $transition-normal !important; // Override any conflicting transitions
+  
+  // Ensure proper positioning and pointer events for mobile
+  position: relative;
+  pointer-events: auto; // Ensure clickability
+  
+  &:hover:not(.cyan-btn-selected) {
     background-color: $cyan-transparent;
     color: white;
+    transform: translateY(-2px);
+  }
+  
+  // Prevent flashing during state changes
+  &:focus {
+    outline: none;
+  }
+  
+  &:active {
+    transition: $transition-fast !important; // Faster transition for click feedback
+    transform: translateY(0px);
   }
 }
 
 .remove-btn-style {
   margin: 0;
+  padding: 0;
   background-color: transparent;
-
-  margin-left: 2rem;
-  margin-right: 2rem;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: none; // Remove any inherited transitions
 }
 
 .skillsPage-skill-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 1rem;
-
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-  border: 0;
-
-  letter-spacing: 0.2em;
-  color: white;
+  @include button-card-content;
+  transition: all 0.3s ease-in-out; // Smooth content transitions
 }
 
 .skillsPage--skill-name {
   font-family: "Roboto";
   font-size: 1rem;
-  margin: 0 !important;
-  align-self: center;
+  margin: 0;
+  flex-grow: 1;
+  text-align: center;
+  transition: all 0.3s ease-in-out; // Smooth text transitions
+  line-height: 1; // Remove default line-height that might affect centering
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .skillsPage--skill-img {
-  padding-right: 1rem;
   cursor: pointer;
+  flex-shrink: 0;
+  margin-right: 1rem;
+  transition: transform 0.3s ease-in-out; // Smooth arrow transitions
 }
 
+// Enhanced selected state with stable styling
+.cyan-btn-selected {
+  @include button-card-selected;
+  transition: all 0.3s ease-in-out !important; // Smooth selection transition
+  
+  &:hover {
+    // Keep selected state stable on hover
+    background-color: rgba($color: $cyan, $alpha: 0.2) !important;
+    border-color: rgba($color: $cyan, $alpha: 0.6) !important;
+    transform: translateY(-4px) !important;
+  }
+  
+  &:active {
+    transition: all 0.1s ease-in-out !important;
+    transform: translateY(-2px) !important;
+  }
+}
+
+// Mobile specific styles - PROPER MOBILE MARGINS
+@media only screen and (max-width: 912px) {
+  .skillsPage--center-flex {
+    padding: 2rem 1rem;
+  }
+  
+  .skillsPage--description {
+    padding: 0 1.5rem 2rem 1.5rem;
+  }
+  
+  .skillsPage--skills-items {
+    width: 100%;
+    margin: 0;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+  }
+  
+  .skillsPage--skill {
+    width: 100%;
+    margin: 0.5rem 0;
+    box-sizing: border-box;
+    
+    // Keep simple border for mobile with smooth transitions
+    border: 0.1em solid $cyan;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease-in-out !important;
+    
+    // Ensure mobile buttons are clickable
+    pointer-events: auto !important;
+    touch-action: manipulation;
+  }
+  
+  .remove-btn-style {
+    width: 100%;
+    pointer-events: auto !important;
+  }
+  
+  .skillsPage-skill-btn {
+    width: 100%;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    min-height: 44px;
+    pointer-events: auto !important;
+  }
+  
+  .skillsPage--skill-name {
+    text-align: center;
+    flex-grow: 1;
+    font-size: 1.1rem;
+    line-height: 1; // Consistent line-height for mobile
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .skillsPage--skill-img {
+    margin-left: 0.75rem;
+    width: 16px;
+    height: 16px;
+  }
+  
+  // Enhanced mobile skill illustrations
+  .skillsPage-skill-illustration {
+    margin: 0.75rem 0;
+    padding: 0 0.5rem;
+  }
+  
+  .skillsPage-skill-illustration-title {
+    margin: 1rem 0.75rem 0.5rem 0.75rem;
+    font-size: 0.95rem;
+  }
+  
+  // Mobile-optimized skill bars
+  .skillsPage-skill-illustration-bar-cyan-95,
+  .skillsPage-skill-illustration-bar-cyan-90,
+  .skillsPage-skill-illustration-bar-cyan-85,
+  .skillsPage-skill-illustration-bar-red-95,
+  .skillsPage-skill-illustration-bar-red-90,
+  .skillsPage-skill-illustration-bar-red-85 {
+    margin: 0.3rem 0.75rem;
+    padding: 0.25rem;
+  }
+}
+
+// Very small phones (iPhone SE, etc.)
+@media only screen and (max-width: 375px) {
+  .skillsPage--center-flex {
+    padding: 1.5rem 0.75rem;
+  }
+  
+  .skillsPage--skills-items {
+    padding: 0 0.75rem;
+  }
+  
+  .skillsPage-skill-btn {
+    padding: 0.875rem 1rem;
+  }
+  
+  .skillsPage--skill-name {
+    font-size: 1rem;
+    line-height: 1; // Consistent line-height
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// Large phones/small tablets
+@media only screen and (min-width: 413px) and (max-width: 912px) {
+  .skillsPage--skills-items {
+    padding: 0 1.5rem;
+  }
+  
+  .skillsPage-skill-btn {
+    padding: 1.125rem 1.5rem;
+  }
+}
+
+// Skill illustrations with smoother animations
 .skillsPage-skill-illustration {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-
-  margin-left: 2rem;
-  margin-right: 2rem;
-
+  margin: 0.5rem 0;
   padding-bottom: 1rem;
+  opacity: 0; // Start hidden
+  transform: translateY(10px); // Start slightly below
+  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; // Only animate container
+  overflow: hidden !important; // Prevent any content overflow during animations
+  max-width: 100%; // Ensure container stays within bounds
+  box-sizing: border-box; // Include padding in width calculations
+  
+  // Prevent layout thrashing during animations
+  will-change: transform, opacity;
+  contain: layout style paint; // Isolate this element's layout from affecting the page
+}
+
+.skill-item-container {
+  opacity: 0;
+  transform: translateY(15px);
+  // Remove conflicting transition - let animations handle it
 }
 
 .skillsPage-skill-illustration-title {
   font-size: 1rem;
-  margin: 1rem 0 0.2rem 0.2rem;
+  margin: 1rem 0.5rem 0.2rem 0.5rem;
   color: white;
+  opacity: 0;
+  transform: translateX(-20px);
+  // Remove conflicting transition - let animations handle it
 }
 
-// CYAN
-
-.skillsPage-skill-illustration-bar-cyan-95 {
-  margin-left: 0.2rem;
+// Base style for all skill bars
+.skillsPage-skill-illustration-bar {
+  margin: 0.2rem 0.5rem;
   padding: 0.2rem;
-  background: linear-gradient(to right, $cyan 95%, $gray 5%) bottom;
-  background-size: 100% 10px;
+  height: 2px;
+  background-color: $gray;
+  border-radius: $border-radius-small;
+  position: relative;
+  overflow: hidden !important; // Prevent any overflow during animation
+  max-width: 100%; // Ensure bar never exceeds container
+  box-sizing: border-box; // Include padding in width
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    border-radius: $border-radius-small;
+    // Remove transition - let animations handle the width change
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-width: 100%; // Ensure pseudo-element never exceeds parent
+    box-sizing: border-box;
+  }
+}
+
+// CYAN bars with animated fills
+// CYAN 80 bar
+.skillsPage-skill-illustration-bar-cyan-80 {
+  @extend .skillsPage-skill-illustration-bar;
+  &::before {
+    background: linear-gradient(90deg, $cyan, lighten($cyan, 10%));
+    box-shadow: 0 0 15px rgba($cyan, 0.4);
+  }
+}
+.skillsPage-skill-illustration-bar-cyan-95 {
+  @extend .skillsPage-skill-illustration-bar;
+  
+  &::before {
+    background: linear-gradient(90deg, $cyan, lighten($cyan, 10%));
+    box-shadow: 0 0 15px rgba($cyan, 0.4);
+  }
 }
 
 .skillsPage-skill-illustration-bar-cyan-90 {
-  margin-left: 0.2rem;
-  padding: 0.2rem;
-  background: linear-gradient(to right, $cyan 90%, $gray 10%) bottom;
-  background-size: 100% 10px;
+  @extend .skillsPage-skill-illustration-bar;
+  
+  &::before {
+    background: linear-gradient(90deg, $cyan, lighten($cyan, 10%));
+    box-shadow: 0 0 15px rgba($cyan, 0.4);
+  }
 }
 
 .skillsPage-skill-illustration-bar-cyan-85 {
-  margin-left: 0.2rem;
-  padding: 0.2rem;
-  background: linear-gradient(to right, $cyan 85%, $gray 15%) bottom;
-  background-size: 100% 10px;
+  @extend .skillsPage-skill-illustration-bar;
+  
+  &::before {
+    background: linear-gradient(90deg, $cyan, lighten($cyan, 10%));
+    box-shadow: 0 0 15px rgba($cyan, 0.4);
+  }
 }
 
+// RED bars with animated fills
+.skillsPage-skill-illustration-bar-red-80 {
+  @extend .skillsPage-skill-illustration-bar;
+  &::before {
+    background: linear-gradient(90deg, $red, lighten($red, 10%));
+    box-shadow: 0 0 15px rgba($red, 0.4);
+  }
+}
 .skillsPage-skill-illustration-bar-cyan-80 {
-  margin-left: 0.2rem;
-  padding: 0.2rem;
-  background: linear-gradient(to right, $cyan 80%, $gray 20%) bottom;
-  background-size: 100% 10px;
+  @extend .skillsPage-skill-illustration-bar;
+  &::before {
+    background: linear-gradient(90deg, $cyan, lighten($cyan, 10%));
+    box-shadow: 0 0 15px rgba($cyan, 0.4);
+  }
 }
-
-// RED
-
+// RED 80 bar
+.skillsPage-skill-illustration-bar-red-80 {
+  @extend .skillsPage-skill-illustration-bar;
+  &::before {
+    background: linear-gradient(90deg, $red, lighten($red, 10%));
+    box-shadow: 0 0 15px rgba($red, 0.4);
+  }
+}
 .skillsPage-skill-illustration-bar-red-95 {
-  margin-left: 0.2rem;
-  padding: 0.2rem;
-  background: linear-gradient(to right, $red 95%, $gray 5%) bottom;
-  background-size: 100% 10px;
+  @extend .skillsPage-skill-illustration-bar;
+  
+  &::before {
+    background: linear-gradient(90deg, $red, lighten($red, 10%));
+    box-shadow: 0 0 15px rgba($red, 0.4);
+  }
 }
 
 .skillsPage-skill-illustration-bar-red-90 {
-  margin-left: 0.2rem;
-  padding: 0.2rem;
-  background: linear-gradient(to right, $red 90%, $gray 10%) bottom;
-  background-size: 100% 10px;
+  @extend .skillsPage-skill-illustration-bar;
+  
+  &::before {
+    background: linear-gradient(90deg, $red, lighten($red, 10%));
+    box-shadow: 0 0 15px rgba($red, 0.4);
+  }
 }
 
 .skillsPage-skill-illustration-bar-red-85 {
-  margin-left: 0.2rem;
-  padding: 0.2rem;
-  background: linear-gradient(to right, $red 85%, $gray 15%) bottom;
-  background-size: 100% 10px;
+  @extend .skillsPage-skill-illustration-bar;
+  
+  &::before {
+    background: linear-gradient(90deg, $red, lighten($red, 10%));
+    box-shadow: 0 0 15px rgba($red, 0.4);
+  }
 }
 
-.skillsPage-skill-illustration-bar-red-80 {
-  margin-left: 0.2rem;
-  padding: 0.2rem;
-  background: linear-gradient(to right, $red 80%, $gray 20%) bottom;
-  background-size: 100% 10px;
-}
-
+// Improved animation classes
 .rotate-img {
-  animation: flip-and-invisible 0.5s;
-  -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
-  -moz-animation-fill-mode: forwards; /* FF 5+ */
-  -o-animation-fill-mode: forwards; /* Not implemented yet */
-  -ms-animation-fill-mode: forwards; /* IE 10+ */
+  animation: flip-and-invisible 0.4s ease-in-out; // Smoother timing
   animation-fill-mode: forwards;
+  margin-right: 1rem;
 }
 
 .appear-text {
-  animation: pop-from-above 0.5s;
-  -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
-  -moz-animation-fill-mode: forwards; /* FF 5+ */
-  -o-animation-fill-mode: forwards; /* Not implemented yet */
-  -ms-animation-fill-mode: forwards; /* IE 10+ */
-  animation-fill-mode: forwards;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  animation: pop-from-above 0.4s ease-out forwards;
+  
+  // Animate individual skill items with staggered delay
+  .skill-item-container {
+    animation: skill-item-appear 0.5s ease-out forwards;
+  }
+  
+  // Animate skill titles with separate timing
+  .skillsPage-skill-illustration-title {
+    animation: slide-in-from-left 0.4s ease-out forwards;
+    animation-delay: 0.1s;
+  }
+  
+  // Animate progress bars with staggered timing - simplified
+  .skillsPage-skill-illustration-bar-cyan-95::before,
+  .skillsPage-skill-illustration-bar-red-95::before {
+    animation: fill-bar-95 0.8s ease-out forwards;
+    animation-delay: 0.3s;
+  }
+  
+  .skillsPage-skill-illustration-bar-cyan-90::before,
+  .skillsPage-skill-illustration-bar-red-90::before {
+    animation: fill-bar-90 0.8s ease-out forwards;
+    animation-delay: 0.4s;
+  }
+  
+  .skillsPage-skill-illustration-bar-cyan-85::before,
+  .skillsPage-skill-illustration-bar-red-85::before {
+    animation: fill-bar-85 0.8s ease-out forwards;
+    animation-delay: 0.5s;
+  }
 }
 
 .disappear-text {
-  display: none;
+  opacity: 0 !important;
+  transform: translateY(10px) !important;
+  height: 0; // Collapse height to prevent layout shift
+  overflow: hidden;
+  transition: opacity 0.2s ease-in, transform 0.2s ease-in, height 0.3s ease-in;
+  
+  // Reset skill item containers when hiding - no conflicting transitions
+  .skill-item-container {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  
+  // Reset progress bars when hiding - instant reset
+  .skillsPage-skill-illustration-bar::before {
+    width: 0% !important;
+    animation: none !important; // Cancel any running animations
+  }
+  
+  .skillsPage-skill-illustration-title {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
 }
 
 @keyframes flip-and-invisible {
@@ -188,7 +477,8 @@
     transform: scaleY(1);
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.7; // Less dramatic opacity change
+    transform: scaleY(0.1);
   }
   100% {
     transform: scaleY(-1);
@@ -198,52 +488,237 @@
 
 @keyframes pop-from-above {
   0% {
-    display: none;
     opacity: 0;
-    -webkit-transform: translateY(-2rem);
+    transform: translateY(-5px);
   }
   100% {
-    display: inherit;
     opacity: 1;
-    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
   }
 }
 
-@keyframes pop-to-above {
+@keyframes skill-item-appear {
   0% {
-    height: inherit;
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
   }
   100% {
-    position: absolute;
-    visibility: hidden;
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
-// DESKTOP
-
-.skillsPage--desktop-skill-illustration {
-  margin-left: 2rem;
-  margin-right: 2rem;
-
-  width: 100vw;
+@keyframes slide-in-from-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.skills--flex-end {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  bottom: 0;
+// Progress bar fill animations
+@keyframes fill-bar-95 {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 95%;
+  }
+}
 
-  p {
-    margin-bottom: 0 !important;
+@keyframes fill-bar-90 {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 90%;
+  }
+}
+
+@keyframes fill-bar-85 {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 85%;
+  }
+}
+
+// DESKTOP styles - ENHANCED BORDERS FOR CATEGORY ITEMS
+@media only screen and (min-width: 913px) {
+  // Prevent scrollbar flash on desktop
+  .skillsPage--center-flex {
+    max-width: 1200px; // Match other sections
+    margin: 0 auto; // Center the section
+    width: 100%; // Full width within max-width constraint
+    overflow: hidden !important; // Force hidden overflow on desktop
+    box-sizing: border-box; // Include padding in width calculation
+    contain: layout style paint; // Isolate this container to prevent layout shifts
+    will-change: auto; // Let browser optimize animations
+  
+  
+  // Ensure all skill containers are properly contained
+  .skillsPage-skill-illustration {
+    overflow: hidden !important; // Prevent progress bar overflow
+    max-width: 100%; // Never exceed parent container
+  }
+  
+  .skillsPage--desktop-skill-illustration {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    max-width: 100%; // Prevent overflow
+    box-sizing: border-box;
+    overflow: hidden !important; // Prevent any inner content overflow
+  }
+
+  .skills--flex-end {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    bottom: 0;
+
+    p {
+      margin-bottom: 0 !important;
+    }
+  }
+
+  .two-columns {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    align-items: stretch; /* Make both columns same height */
+
+    .first-column {
+      flex: 1;
+      margin-right: 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .second-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end; /* Align content to bottom */
+      margin-top: 11rem; /* Desktop-only: Add top margin to align with first column content */
+    }
+
+    p {
+      margin: 2rem;
+    }
+  }
+  
+  // DESKTOP-SPECIFIC: Enhanced card styling with stable transitions
+  .skillsPage--skill {
+    @include card-base;
+    margin: 0.5rem 0;
+    width: 100%;
+    height: 3.5rem;
+    
+    // Enhanced desktop borders and styling
+    background-color: rgba($color: $cyan, $alpha: 0.05);
+    border: 0.15em solid rgba($color: $cyan, $alpha: 0.3);
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out !important; // Consistent smooth transitions
+    
+    &:hover:not(.cyan-btn-selected) {
+      background-color: rgba($color: $cyan, $alpha: 0.15);
+      border-color: rgba($color: $cyan, $alpha: 0.5);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 255, 255, 0.15);
+    }
+    
+    &:active {
+      transition: all 0.15s ease-in-out !important; // Faster feedback
+      transform: translateY(-2px);
+    }
+  }
+  
+  // Enhanced selected state for desktop with stable styling
+  .cyan-btn-selected {
+    background-color: rgba($color: $cyan, $alpha: 0.25) !important;
+    border-color: rgba($color: $cyan, $alpha: 0.7) !important;
+    transform: translateY(-4px) !important;
+    box-shadow: 0 8px 20px rgba(0, 255, 255, 0.25) !important;
+    transition: all 0.3s ease-in-out !important;
+    
+    .skillsPage--skill-name {
+      color: white;
+      font-weight: 500;
+      line-height: 1; // Consistent line-height for selected state
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    &::before {
+      left: 100%;
+    }
+    
+    // Stable hover state for selected items
+    &:hover {
+      background-color: rgba($color: $cyan, $alpha: 0.25) !important;
+      border-color: rgba($color: $cyan, $alpha: 0.7) !important;
+      transform: translateY(-4px) !important;
+      box-shadow: 0 8px 20px rgba(0, 255, 255, 0.25) !important;
+    }
+    
+    &:active {
+      transform: translateY(-2px) !important;
+      transition: all 0.15s ease-in-out !important;
+    }
+  }
+  
+  .skillsPage-skill-btn {
+    padding: 0 1.5rem; // Remove vertical padding, only keep horizontal
+    min-height: 3.5rem;
+    display: flex; // Ensure flexbox for proper centering
+    align-items: center; // Center content vertically
+    justify-content: center; // Center content (no space-between since no arrow)
+    box-sizing: border-box; // Ensure padding doesn't affect height calculations
+  }
+  
+  .skillsPage--skill-name {
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1; // Consistent line-height for desktop
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0; // Ensure no margin affecting positioning
+    padding: 0; // Remove any padding that might affect centering
+    height: 100%; // Take full height of container for perfect centering
+    width: 100%; // Take full width for better centering
+  }
+  
+  .skillsPage--skill-img {
+    display: none; // Hide arrow on desktop
   }
 }
 
 // Title animation
-
 .skillsPageBouncy {
   display: inline-block;
   transition: 0.5s;
+  cursor: pointer;
+  
+  &:hover {
+    color: $cyan;
+    transform: translateY(-3px);
+  }
+  
+  &.bouncing {
+    animation: rubberBand 1s;
+  }
 }
 
 .skillsPage--title .text-wrapper {
@@ -256,4 +731,48 @@
   transform-origin: 50% 100%;
   display: inline-block;
   line-height: 1em;
+}
+
+// Add the bouncing animation keyframes
+@keyframes rubberBand {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+  // Alignment helper
+  .align-text-center {
+    text-align: center;
+  }
+
+  // Add stability class to prevent layout shifts
+  .skill-category-stable {
+    will-change: transform, opacity; // Optimize for animations
+    backface-visibility: hidden; // Prevent flickering
+    transform: translateZ(0); // Force hardware acceleration
+  }
 }

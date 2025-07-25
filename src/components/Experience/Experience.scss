@@ -1,28 +1,45 @@
-@import "./../../constants.scss";
+@import "../../styles/constants.scss";
+@import "../../styles/cardConstants.scss";
 
 .experience {
   @include page-layout;
 }
 
 .experience--center-flex {
-  @include center-flex;
-
-  width: 100vw;
+  @include section-layout;
+  padding: 4rem 2rem;
 }
 
 .experience--title {
   color: white;
   line-height: 0;
-  font-size: 2rem;
+  font-size: clamp(2.5rem, 6vw, 3rem);
   color: $cyan;
-  margin-bottom: 1rem;
+  margin-bottom: $spacing-sm;
+// ...existing code...
+
+@media (max-width: $breakpoint-mobile) {
+  .experience--title {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-bottom: $spacing-sm;
+  }
+  .experience--btn-group {
+    flex-direction: column;
+    gap: $spacing-sm;
+    width: 100%;
+  }
+  .experience--btn-tab {
+    min-height: 40px;
+    font-size: 0.95rem;
+  }
+}
 }
 
 .experience--btn-group {
-  margin: 1rem 0;
+  margin: $spacing-sm 0 $spacing-xs 0;
   display: flex;
   justify-content: space-evenly;
-  gap: 1rem;
+  gap: $spacing-sm;
   width: 90%;
 }
 
@@ -30,13 +47,61 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: $border-radius-medium;
+  transition: $transition-normal;
+  min-height: 44px;
+  border: 0.1em solid $cyan;
+  background-color: transparent;
+  cursor: pointer;
+  
+  &:hover:not(.cyan-btn-selected):not(:disabled) {
+    background-color: rgba($color: $cyan, $alpha: 0.15);
+    border-color: rgba($color: $cyan, $alpha: 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 255, 255, 0.2);
+  }
+  
+  &:active:not(:disabled) {
+    transition: $transition-fast;
+    transform: translateY(0px);
+  }
+}
 
-  border-radius: 0.5rem;
+// Enhanced selected state transition
+.cyan-btn-selected {
+  background-color: rgba($color: $cyan, $alpha: 0.25) !important;
+  border-color: rgba($color: $cyan, $alpha: 0.7) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.3) !important;
+  transition: all 0.3s ease-in-out !important;
+  
+  &:hover {
+    background-color: rgba($color: $cyan, $alpha: 0.25) !important;
+    border-color: rgba($color: $cyan, $alpha: 0.7) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 255, 255, 0.3) !important;
+  }
+  
+  p {
+    color: white !important;
+    font-weight: 500 !important;
+  }
+}
+
+// Visual feedback for disabled tab buttons
+.experience--btn-tab:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  
+  &:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
 }
 
 .experience--btn {
   cursor: pointer;
-  width: 40vw;
+  width: 40%;
   height: 100%;
   border: 0;
   color: white;
@@ -48,149 +113,574 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-
-  width: 100vw;
+  width: 100%;
   color: white;
 }
 
+// EXPANDABLE CARD DESIGN - grows when content is expanded
 .experience--item-general-box {
-  background-color: rgba($color: $cyan, $alpha: 0.1) !important;
-  margin-top: 1em;
-  padding-top: 0.5em;
-  border-radius: 1rem 1rem 0 0;
-  border-top: 0.1em solid $cyan;
-  border-left: 0.1em solid $cyan;
-  border-right: 0.1em solid $cyan;
-  border-bottom: 0.01em solid rgba($color: $cyan, $alpha: 0.2);
-
-  width: 90vw;
+  @include card-base;
+  background-color: rgba($color: $cyan, $alpha: 0.05);
+  border: 0.1em solid rgba($color: $cyan, $alpha: 0.3);
+  border-radius: 1rem;
+  margin-top: 1rem;
+  padding: 1.5rem;
+  width: 90%;
+  min-height: 280px; // Minimum height for collapsed state
   color: white;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  transition: all 0.4s ease-in-out;
+  
+  // Remove max-height constraint to allow expansion
+  &.expanded {
+    min-height: auto; // Allow card to grow
+  }
+  
+  // Clickable state styling
+  &.clickable {
+    cursor: pointer;
+    
+    &:hover {
+      background-color: rgba($color: $cyan, $alpha: 0.12);
+      border-color: rgba($color: $cyan, $alpha: 0.5);
+      transform: translateY(-6px);
+      box-shadow: 0 10px 20px rgba(0, 255, 255, 0.15);
+    }
+    
+    &:focus {
+      outline: 2px solid rgba($color: $cyan, $alpha: 0.6);
+      outline-offset: 2px;
+    }
+    
+    &:active {
+      transform: translateY(-3px);
+      transition: all 0.15s ease-in-out;
+    }
+  }
+  
+  // Expanded state - not clickable
+  &.expanded {
+    &:hover {
+      background-color: rgba($color: $cyan, $alpha: 0.08);
+      border-color: rgba($color: $cyan, $alpha: 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 255, 255, 0.1);
+    }
+  }
 }
 
 .experience--item-general-box-title {
   font-size: 1.1rem;
-  margin: 0 0 0 0.5rem;
+  margin: 0 0 0.5rem 0;
   text-align: center;
+  line-height: 1.3;
+  flex-shrink: 0; // Don't compress title
 }
 
 .experience--item-general-box-date {
   font-size: 1rem;
-  margin: 0 0 0 0.5rem;
+  margin: 0 0 1rem 0;
   color: $cyan;
-  font-size: 1rem;
   font-weight: 100;
   text-align: center;
+  flex-shrink: 0; // Don't compress date
 }
 
+// EXPANDABLE CONTENT AREA
 .experience--item-general-box-description {
   font-size: 1rem;
-  margin: 0.5rem 0.5rem 0 0.5rem;
-  font-size: 1rem;
   font-weight: 100;
+  line-height: 1.4;
+  flex-grow: 1; // Take available space
+  display: flex;
+  flex-direction: column;
 }
 
+// CONTENT CONTAINER - normal flow layout
+.experience--item-content-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+// EXPANDED CONTENT - shows below base content when expanded
+.experience--item-expanded-content {
+  background-color: rgba($color: $cyan, $alpha: 0.08);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  box-sizing: border-box;
+  border: 1px solid rgba($color: $cyan, $alpha: 0.2);
+  
+  // Animation states
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-10px);
+  transition: all 0.4s ease-in-out;
+  
+  &.expanded {
+    max-height: 500px; // Adjust based on your content needs
+    opacity: 1;
+    transform: translateY(0);
+    margin-bottom: 1rem; // Space below expanded content
+  }
+}
+
+// SEE MORE BUTTON - always at bottom
 .experience--item-box-see-more {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
   background-color: transparent;
   border: 0;
   width: 100%;
-
   cursor: pointer;
-  margin-top: 1rem;
   text-align: center;
+  transition: all 0.3s ease-in-out;
+  min-height: 44px;
+  margin-top: auto; // Push to bottom
+  flex-shrink: 0; // Don't compress button
+  padding: 0.5rem 0;
+  
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    
+    .experience--item-box-see-more-bar {
+      background-color: rgba($color: $cyan, $alpha: 0.7);
+      transform: scaleY(1.5);
+    }
+    
+    .experience--item-box-see-more-text {
+      color: rgba($color: $cyan, $alpha: 0.8);
+    }
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    
+    &:hover {
+      transform: none !important;
+    }
+  }
+  
+  &:focus {
+    outline: 2px solid rgba($color: $cyan, $alpha: 0.6);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
 }
 
 .experience--item-box-see-more-bar {
   width: 100%;
-  padding: 0.01em;
+  height: 2px;
   background-color: $cyan;
+  transition: all 0.3s ease-in-out;
 }
 
 .experience--item-box-see-more-text {
   font-weight: 100;
   color: $cyan;
   font-size: 1rem;
-  &:hover {
-    color: $cyan-transparent !important;
+  transition: color 0.3s ease-in-out;
+  margin: 0.5rem 0 0 0;
+  
+  p {
+    margin: 0;
   }
 }
 
-// DESKTOP
-
-.two-rows {
-  display: flex;
-  align-content: center;
-  justify-content: space-between;
-  flex-direction: row;
-
-  margin-left: 2rem;
-  margin-right: 2rem;
-
-  width: 100vw;
-}
-
-.first-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  margin-left: 4rem;
-  margin-right: 2rem;
-
-  width: 100vw;
-}
-
-.second-row {
-  margin-left: 2rem;
-  margin-right: 2rem;
-
-  width: 100vw;
-
+// NEW: "See more" indicator for clickable cards
+.experience--item-box-see-more-indicator {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+  min-height: 44px;
+  margin-top: auto; // Push to bottom
+  flex-shrink: 0; // Don't compress indicator
+  padding: 0.5rem 0;
+  pointer-events: none; // Don't interfere with card clicks
+  transition: all 0.3s ease-in-out;
+  
+  .experience--item-box-see-more-bar {
+    width: 100%;
+    height: 2px;
+    background-color: rgba($color: $cyan, $alpha: 0.7);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .experience--item-box-see-more-text {
+    font-weight: 100;
+    color: rgba($color: $cyan, $alpha: 0.8);
+    font-size: 0.9rem;
+    transition: color 0.3s ease-in-out;
+    margin: 0.5rem 0 0 0;
+    
+    p {
+      margin: 0;
+    }
+  }
 }
 
-.experience--info-box-group {
-  display: flex;
-  align-self: flex-start;
+// Enhanced styling for clickable cards
+.experience--item-general-box.clickable:hover {
+  .experience--item-box-see-more-indicator {
+    .experience--item-box-see-more-bar {
+      background-color: $cyan;
+      transform: scaleY(1.5);
+    }
+    
+    .experience--item-box-see-more-text {
+      color: $cyan;
+    }
+  }
 }
 
-.experience--item-grid-desktop {
-  margin-left: 2rem;
-  margin-right: 2rem;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-
-  width: 100vw;
+// Mobile specific updates
+@media only screen and (max-width: 912px) {
+  .experience--center-flex {
+    padding: 2rem 1rem;
+  }
+  
+  .experience--btn-group {
+    width: 100%;
+    padding: 0 1rem;
+    gap: 1rem;
+  }
+  
+  .experience--btn-tab {
+    flex: 1;
+    padding: 1rem;
+    min-height: 48px;
+    font-size: 1.1rem;
+  }
+  
+  .experience--item-description {
+    padding: 0 1rem;
+  }
+  
+  .experience--item-general-box {
+    width: 100%;
+    margin-top: 1.5rem;
+    min-height: 320px; // Larger for mobile
+    padding: 1.25rem;
+  }
+  
+  .experience--item-general-box-title {
+    font-size: 1.2rem;
+    margin: 0 0 0.75rem 0;
+  }
+  
+  .experience--item-general-box-date {
+    font-size: 1.05rem;
+    margin: 0 0 1rem 0;
+  }
+  
+  .experience--item-general-box-description {
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+  
+  .experience--item-expanded-content {
+    padding: 0.75rem;
+    
+    &.expanded {
+      max-height: 250px; // Smaller for mobile
+    }
+  }
+  
+  .experience--item-general-box.clickable:hover {
+    transform: translateY(-2px); // Reduced hover effect for mobile
+    box-shadow: 0 6px 12px rgba(0, 255, 255, 0.1);
+  }
+  
+  .experience--item-box-see-more-indicator {
+    .experience--item-box-see-more-text {
+      font-size: 1rem; // Larger text for mobile
+    }
+  }
 }
 
-.experience--item-description-desktop {
-  display: flex;
-  justify-content: center;
-  align-content: space-between;
-
-  height: fit-content;
-  width: calc(50vw - 1.5rem);
-  font-size: 1rem;
-  margin: 0.5rem 0.5rem 0 0.5rem;
-  font-size: 1rem;
-  font-weight: 100;
-  border-radius: 1rem;
-
-  color: white;
+// Very small phones
+@media only screen and (max-width: 375px) {
+  .experience--center-flex {
+    padding: 1.5rem 0.75rem;
+  }
+  
+  .experience--btn-group {
+    padding: 0 0.75rem;
+  }
+  
+  .experience--item-description {
+    padding: 0 0.75rem;
+  }
+  
+  .experience--item-general-box {
+    padding: 1rem;
+    min-height: 300px;
+  }
+  
+  .experience--item-expanded-content.expanded {
+    max-height: 200px; // Even smaller for very small phones
+  }
 }
 
-// Title
+// Large phones/small tablets
+@media only screen and (min-width: 413px) and (max-width: 912px) {
+  .experience--btn-group {
+    padding: 0 1.5rem;
+  }
+  
+  .experience--item-description {
+    padding: 0 1.5rem;
+  }
+  
+  .experience--item-general-box {
+    min-height: 340px;
+  }
+  
+  .experience--item-expanded-content.expanded {
+    max-height: 280px;
+  }
+}
 
+// Smooth tab transition animations
+.experience--tab-content {
+  transition: all 0.4s ease-in-out;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.experience--tab-content.switching-out {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.98);
+}
+
+.experience--tab-content.switching-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+// DESKTOP styles - ENHANCED TAB STYLING
+@media only screen and (min-width: 913px) {
+  .experience--center-flex {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .experience--btn-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 600px;
+    margin: 2rem auto 3rem auto;
+    padding: 0;
+  }
+  
+  .experience--btn-tab {
+    @include card-base;
+    flex: 0 0 280px; // Much wider for better visual balance
+    min-height: 3.5rem;
+    padding: 0 2.5rem; // Increased padding for the wider buttons
+    font-size: 1.2rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    // Enhanced glass morphism design matching Skills buttons
+    background: linear-gradient(135deg, 
+      rgba($color: $cyan, $alpha: 0.08) 0%, 
+      rgba($color: $cyan, $alpha: 0.02) 100%);
+    backdrop-filter: blur(10px);
+    border: 0.15em solid rgba($color: $cyan, $alpha: 0.3);
+    border-radius: 1rem; // Slightly more rounded
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease-in-out !important;
+    
+    &:hover:not(.cyan-btn-selected):not(:disabled) {
+      background: linear-gradient(135deg, 
+        rgba($color: $cyan, $alpha: 0.18) 0%, 
+        rgba($color: $cyan, $alpha: 0.08) 100%);
+      border-color: rgba($color: $cyan, $alpha: 0.6);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(0, 255, 255, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+    
+    &:active:not(:disabled) {
+      transition: all 0.15s ease-in-out !important;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 255, 255, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    p {
+      margin: 0;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 500;
+      transition: all 0.3s ease-in-out;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  .cyan-btn-selected {
+    background: linear-gradient(135deg, 
+      rgba($color: $cyan, $alpha: 0.35) 0%, 
+      rgba($color: $cyan, $alpha: 0.15) 100%) !important;
+    backdrop-filter: blur(12px) !important;
+    border-color: rgba($color: $cyan, $alpha: 0.8) !important;
+    transform: translateY(-6px) !important;
+    box-shadow: 0 16px 32px rgba(0, 255, 255, 0.3), 0 8px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 255, 255, 0.3) !important;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba($cyan, 0.8), transparent);
+      animation: slideIn 0.6s ease-in-out forwards;
+      border-radius: 1px;
+    }
+    
+    &:hover {
+      background: linear-gradient(135deg, 
+        rgba($color: $cyan, $alpha: 0.35) 0%, 
+        rgba($color: $cyan, $alpha: 0.15) 100%) !important;
+      border-color: rgba($color: $cyan, $alpha: 0.8) !important;
+      transform: translateY(-6px) !important;
+      box-shadow: 0 16px 32px rgba(0, 255, 255, 0.3), 0 8px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 255, 255, 0.3) !important;
+    }
+    
+    &:active {
+      transform: translateY(-3px) !important;
+      transition: all 0.15s ease-in-out !important;
+    }
+    
+    p {
+      color: white !important;
+      font-weight: 600 !important;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+    }
+  }
+  
+  .experience--btn-tab:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    
+    &:hover {
+      background-color: rgba($color: $cyan, $alpha: 0.05) !important;
+      border-color: rgba($color: $cyan, $alpha: 0.3) !important;
+      transform: none !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    }
+  }
+
+  .experience--item-grid-desktop {
+    margin-left: 0;
+    margin-right: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 2rem;
+    min-height: 400px;
+    margin-top: 2rem;
+  }
+
+  .experience--item-description-desktop {
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
+    height: fit-content;
+    width: calc(50% - 1rem);
+    font-size: 1rem;
+    margin: 0;
+    border-radius: 1rem;
+    color: white;
+  }
+
+  .two-rows {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .first-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .second-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .experience--info-box-group {
+    display: flex;
+    align-self: flex-start;
+  }
+  
+  // Desktop card sizing
+  .experience--item-general-box {
+    min-height: 350px;
+    padding: 2rem;
+  }
+  
+  .experience--item-expanded-content {
+    padding: 1.5rem;
+    
+    &.expanded {
+      max-height: 400px; // Larger for desktop
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    left: -100%;
+  }
+  to {
+    left: 100%;
+  }
+}
+
+// Title animation
 .experienceBouncy {
   display: inline-block;
   transition: 0.5s;
+  cursor: pointer;
+  
+  &:hover {
+    color: $cyan;
+    transform: translateY(-3px);
+  }
+  
+  &.bouncing {
+    animation: rubberBand 1s;
+  }
 }
 
 .experience--title .text-wrapper {
@@ -203,4 +693,65 @@
   transform-origin: 50% 100%;
   display: inline-block;
   line-height: 1em;
+}
+
+// Add the bouncing animation keyframes
+@keyframes rubberBand {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+// Enhanced focus states for accessibility
+.experience--item-general-box:focus-visible {
+  outline: 3px solid rgba($color: $cyan, $alpha: 0.8);
+  outline-offset: 3px;
+}
+
+.experience--item-box-see-more:focus-visible {
+  outline: 3px solid rgba($color: $cyan, $alpha: 0.8);
+  outline-offset: 3px;
+  border-radius: 0.5rem;
+}
+
+// Smooth transitions for state changes
+.experience--item-general-box {
+  &.clickable {
+    .experience--item-box-see-more-indicator {
+      animation: pulseIndicator 2s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes pulseIndicator {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
 }

@@ -1,3 +1,10 @@
+:root {
+  --bg-black: #1e1e1e;
+  --cyan: #00f6ef;
+  --gray: #3c3c3c;
+  --red: #fe004e;
+}
+
 html {
   scroll-behavior: smooth;
   overflow-x: hidden !important;
@@ -13,7 +20,7 @@ body {
   -webkit-font-smoothing: antialiased;
   letter-spacing: 0.05rem;
 
-  background-color: #1e1e1e;
+  background-color: var(--bg-black);
 }
 
 @media only screen and (max-width: 912px) {

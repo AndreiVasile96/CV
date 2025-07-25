@@ -1,0 +1,920 @@
+@import "../../styles/constants.scss";
+
+.footer {
+  // Remove custom background to use global background
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+  margin-top: 4rem; // Reduced from 12rem for better spacing
+  width: 100vw; // Ensure full width
+  
+  // Force footer to take full width and break to new line
+  flex-basis: 100%;
+  order: 999; // Ensure it appears last
+  
+  // Enhanced footer overlay that complements global background
+  &::before {
+    content: '';
+    position: absolute;
+    top: -6rem;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 12rem);
+    background: 
+      // Subtle additional grid lines for footer emphasis
+      linear-gradient(90deg, transparent 0%, rgba($color: $cyan, $alpha: 0.03) 1px, transparent 1px),
+      linear-gradient(0deg, transparent 0%, rgba($color: $cyan, $alpha: 0.03) 1px, transparent 1px),
+      // Enhanced footer gradient
+      linear-gradient(180deg, 
+        transparent 0%,
+        rgba($color: $cyan, $alpha: 0.01) 20%,
+        rgba($color: $cyan, $alpha: 0.03) 40%,
+        rgba($color: $cyan, $alpha: 0.08) 70%,
+        rgba($color: $cyan, $alpha: 0.15) 100%
+      );
+    background-size: 
+      25px 25px,  // Finer grid for footer
+      25px 25px,  // Finer grid for footer
+      100% 100%;  // Main gradient
+    animation: footerGridPulse 20s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: -3;
+  }
+  
+  // Subtle footer-specific glow
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      // Concentrated footer light rays
+      radial-gradient(ellipse 60% 30% at 30% 20%, rgba($color: $cyan, $alpha: 0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 20% at 70% 80%, rgba($color: $cyan, $alpha: 0.03) 0%, transparent 60%),
+      radial-gradient(ellipse 100% 15% at 50% 100%, rgba($color: $cyan, $alpha: 0.05) 0%, transparent 60%);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    animation: footerLightRays 25s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: -2;
+  }
+}
+
+.footer--container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-md $spacing-lg; // Increased top padding
+  position: relative;
+  z-index: $z-index-content;
+  text-align: center; // Center everything for modern look
+}
+
+.footer--top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem; // Increased spacing
+  gap: 1.5rem;
+}
+
+.footer--signature {
+  display: flex;
+  flex-direction: column;
+  align-items: center; // Center align everything
+  gap: 1rem; // Increased gap
+  max-width: 600px; // Constrain width for better readability
+}
+
+.footer--signature-text {
+  font-size: 1.1rem; // Larger, more prominent
+  color: rgba($color: white, $alpha: 0.8); // Higher contrast
+  font-weight: 400; // Slightly bolder
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.footer--name {
+  display: flex;
+  align-items: center;
+  font-size: 2.2rem; // Much larger, hero-style
+  font-weight: 700; // Bolder
+  color: white;
+  transition: all 0.3s ease-in-out;
+  margin: 1rem 0; // Add vertical spacing
+  
+  &:hover {
+    color: $cyan;
+    transform: translateY(-3px) scale(1.02); // More dramatic hover
+    text-shadow: 0 4px 20px rgba(0, 255, 255, 0.4);
+  }
+}
+
+.footer--triangle {
+  height: 1rem;
+  margin-right: 0.2rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.footer--email {
+  font-size: 1.2rem; // Larger, more prominent
+  color: $cyan; // Full cyan color, not transparent
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  border-bottom: 2px solid transparent;
+  padding: 0.75rem 1.5rem; // Add padding like a button
+  border-radius: 2rem; // Rounded button style
+  background: rgba($color: $cyan, $alpha: 0.1);
+  border: 1px solid rgba($color: $cyan, $alpha: 0.3);
+  margin: 1rem 0; // Add spacing
+  display: inline-block; // Allow padding to work
+  
+  &:hover {
+    color: white;
+    background: rgba($color: $cyan, $alpha: 0.2);
+    border-color: $cyan;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 255, 255, 0.3);
+  }
+}
+
+// Add a new CTA section
+.footer--cta {
+  margin: 2rem 0;
+  
+  h3 {
+    font-size: 1.3rem;
+    color: white;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+  
+  p {
+    font-size: 1rem;
+    color: rgba($color: white, $alpha: 0.8);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+}
+
+.footer--navigation {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.footer--nav-link {
+  background: none;
+  border: none;
+  color: rgba($color: white, $alpha: 0.7);
+  font-size: 0.95rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  padding: 0.5rem 0;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: $cyan;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  &:hover {
+    color: white;
+    transform: translateY(-2px);
+    
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+.footer--divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba($color: $cyan, $alpha: 0.2) 20%, 
+    rgba($color: $cyan, $alpha: 0.4) 50%, 
+    rgba($color: $cyan, $alpha: 0.2) 80%, 
+    transparent 100%
+  );
+  margin: 2rem 0;
+}
+
+.footer--bottom {
+  display: flex;
+  flex-direction: column; // Stack vertically for better hierarchy
+  align-items: center;
+  gap: 2rem;
+  padding-top: 2rem;
+}
+
+.footer--info {
+  display: flex;
+  flex-direction: column;
+  align-items: center; // Center align
+  gap: 0.5rem;
+  order: 2; // Put copyright info at bottom
+}
+
+.footer--copyright {
+  font-size: 0.85rem;
+  color: rgba($color: white, $alpha: 0.6);
+  font-weight: 400;
+}
+
+.footer--built-with {
+  font-size: 0.8rem;
+  color: rgba($color: white, $alpha: 0.4);
+  font-weight: 300;
+  font-style: italic;
+}
+
+.footer--social {
+  display: flex;
+  align-items: center;
+  justify-content: center; // Center the button
+  gap: 2rem; // Double the gap from 1.5rem to 3rem
+  order: 1; // Put back-to-top button before copyright
+}
+
+.footer--linkedin {
+  border: 1px solid rgba($color: $cyan, $alpha: 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem; // Increase padding to accommodate larger icon: 0.5rem * 1.5 = 0.75rem
+  border-radius: 50%;
+  background: rgba($color: $cyan, $alpha: 0.1);
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+  
+  &:hover {
+    background: rgba($color: $cyan, $alpha: 0.2);
+    border-color: $cyan;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 255, 255, 0.2);
+  }
+}
+
+.footer--linkedin-logo {
+  height: 2.25rem; // 50% bigger: 1.5rem * 1.5 = 2.25rem
+  width: 2.25rem; // 50% bigger: 1.5rem * 1.5 = 2.25rem
+  filter: brightness(0) saturate(100%) invert(100%) opacity(0.6); // Default white but transparent
+  transition: all 0.3s ease-in-out;
+  
+  .footer--linkedin:hover & {
+    filter: brightness(0) saturate(100%) invert(75%) sepia(100%) saturate(300%) hue-rotate(160deg) brightness(1.2) opacity(1); // Cyan and fully opaque on hover
+  }
+}
+
+// Mobile specific - match header mobile menu icon styles
+@media only screen and (max-width: 912px) {
+  .footer--github {
+    border: 1px solid rgba($color: $cyan, $alpha: 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    border-radius: 50%;
+    background: rgba($color: $cyan, $alpha: 0.1);
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    
+    &:hover {
+      background: rgba($color: $cyan, $alpha: 0.2);
+      border-color: $cyan;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 255, 255, 0.2);
+    }
+  }
+
+  .footer--github-logo {
+    height: 2.25rem;
+    width: 2.25rem;
+    filter: none; // Remove all filters to show original GitHub color
+    opacity: 0.8; // Slight transparency for subtle look
+    
+    .footer--github:hover & {
+      filter: none; // Keep original color on hover
+      opacity: 1; // Full opacity on hover
+      transform: scale(1.1); // Slight scale for interaction feedback
+    }
+  }
+  
+  .footer--linkedin-logo {
+    filter: none; // Remove all filters to show original LinkedIn blue color
+    opacity: 0.8; // Slight transparency for subtle look
+    
+    .footer--linkedin:hover & {
+      filter: none; // Keep original color on hover
+      opacity: 1; // Full opacity on hover
+      transform: scale(1.1); // Slight scale for interaction feedback
+    }
+  }
+}
+
+.footer--social-link {
+  transition: all 0.3s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-3px) scale(1.1);
+  }
+}
+
+.footer--social-logo {
+  height: 1.8rem;
+  width: 1.8rem;
+  transition: all 0.3s ease-in-out;
+  
+  &:hover {
+    filter: brightness(1.2);
+  }
+}
+
+.footer--back-to-top {
+  background: rgba($color: $cyan, $alpha: 0.1);
+  border: 1px solid rgba($color: $cyan, $alpha: 1);
+  color: $cyan;
+  width: 3.75rem; // 50% bigger: 2.5rem * 1.5 = 3.75rem
+  height: 3.75rem; // 50% bigger: 2.5rem * 1.5 = 3.75rem
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem; // 50% bigger: 1.2rem * 1.5 = 1.8rem
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  
+  &:hover {
+    background: rgba($color: $cyan, $alpha: 0.2);
+    border-color: $cyan;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 255, 255, 0.2);
+  }
+}
+
+.footer--decoration {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  opacity: 0.15;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.footer--decoration-line {
+  position: absolute;
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, $cyan, transparent);
+  animation: lineGlow 3s ease-in-out infinite alternate;
+  
+  &:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    transform: rotate(15deg);
+    animation-delay: 0s;
+  }
+  
+  &:nth-child(2) {
+    top: 70%;
+    right: 15%;
+    transform: rotate(-30deg);
+    animation-delay: 1.5s;
+  }
+  
+  &:nth-child(3) {
+    bottom: 30%;
+    left: 20%;
+    transform: rotate(45deg);
+    animation-delay: 3s;
+  }
+}
+
+.footer--decoration-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: $cyan;
+  box-shadow: 
+    0 0 10px $cyan,
+    0 0 20px $cyan,
+    0 0 30px rgba($color: $cyan, $alpha: 0.5);
+  animation: dotPulse 2s ease-in-out infinite;
+  
+  &:nth-child(1) {
+    top: 15%;
+    left: 25%;
+    animation-delay: 0s;
+  }
+  
+  &:nth-child(2) {
+    top: 60%;
+    right: 20%;
+    animation-delay: 1s;
+  }
+  
+  &:nth-child(3) {
+    bottom: 25%;
+    left: 70%;
+    animation-delay: 2s;
+  }
+}
+
+// Add floating geometric shapes
+.footer--decoration::before {
+  content: '';
+  position: absolute;
+  top: 30%;
+  right: 30%;
+  width: 60px;
+  height: 60px;
+  border: 2px solid rgba($color: $cyan, $alpha: 0.3);
+  border-radius: 50%;
+  animation: floatRotate 8s linear infinite;
+}
+
+.footer--decoration::after {
+  content: '';
+  position: absolute;
+  bottom: 40%;
+  left: 60%;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba($color: $cyan, $alpha: 0.2);
+  transform: rotate(45deg);
+  animation: floatRotate 6s linear infinite reverse;
+}
+
+// Mobile responsive design
+@media only screen and (max-width: 912px) {
+  .footer--container {
+    padding: $spacing-lg $spacing-sm $spacing-md; // Use consistent spacing tokens
+  }
+  
+  .footer--name {
+    font-size: 1.8rem; // Smaller on mobile but still prominent
+  }
+  
+  .footer--signature-text {
+    font-size: 1rem;
+  }
+  
+  .footer--email {
+    font-size: 1.1rem;
+    padding: 0.6rem 1.2rem;
+  }
+  
+  .footer--cta {
+    h3 {
+      font-size: 1.1rem;
+    }
+    
+    p {
+      font-size: 0.95rem;
+    }
+  }
+  
+  .footer--bottom {
+    gap: 1.5rem;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .footer--container {
+    padding: 2rem 0.75rem 1.25rem;
+  }
+  
+  .footer--navigation {
+    gap: 1rem;
+  }
+  
+  .footer--nav-link {
+    font-size: 0.9rem;
+  }
+  
+  .footer--name {
+    font-size: 1.2rem;
+  }
+  
+  .footer--email {
+    font-size: 0.9rem;
+  }
+}
+
+// Large screens
+@media only screen and (min-width: 913px) {
+  .footer {
+    // Ultra-smooth gradient transition that extends way up the page
+    &::before {
+      content: '';
+      position: absolute;
+      top: -20rem; // Extended even higher for ultra-smooth transition
+      left: 0;
+      right: 0;
+      height: calc(100% + 40rem); // Much taller overlay
+      pointer-events: none;
+      z-index: 1;
+      background: 
+        // Fine grid overlay that gets stronger toward bottom
+        linear-gradient(90deg, transparent 0%, rgba($color: $cyan, $alpha: 0.002) 1px, transparent 1px),
+        linear-gradient(0deg, transparent 0%, rgba($color: $cyan, $alpha: 0.002) 1px, transparent 1px),
+        // Ultra-smooth gradient with dramatic bottom accent
+        linear-gradient(180deg, 
+          transparent 0%,
+          rgba($color: $cyan, $alpha: 0.0001) 10%,
+          rgba($color: $cyan, $alpha: 0.0005) 15%,
+          rgba($color: $cyan, $alpha: 0.001) 20%,
+          rgba($color: $cyan, $alpha: 0.002) 25%,
+          rgba($color: $cyan, $alpha: 0.004) 30%,
+          rgba($color: $cyan, $alpha: 0.007) 35%,
+          rgba($color: $cyan, $alpha: 0.012) 40%,
+          rgba($color: $cyan, $alpha: 0.018) 45%,
+          rgba($color: $cyan, $alpha: 0.026) 50%,
+          rgba($color: $cyan, $alpha: 0.036) 55%,
+          rgba($color: $cyan, $alpha: 0.048) 60%,
+          rgba($color: $cyan, $alpha: 0.062) 65%,
+          rgba($color: $cyan, $alpha: 0.078) 70%,
+          rgba($color: $cyan, $alpha: 0.096) 75%,
+          rgba($color: $cyan, $alpha: 0.116) 80%,
+          rgba($color: $cyan, $alpha: 0.138) 85%,
+          rgba($color: $cyan, $alpha: 0.162) 90%,
+          rgba($color: $cyan, $alpha: 0.188) 95%,
+          rgba($color: $cyan, $alpha: 0.25) 100% // Much more dramatic at bottom
+        );
+      background-size: 
+        25px 25px,   // Fine grid
+        25px 25px,   // Fine grid
+        100% 100%;   // Main gradient
+      animation: footerGridPulse 20s ease-in-out infinite;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: -10rem; // Extend light rays further upward
+      left: 0;
+      right: 0;
+      height: calc(100% + 20rem);
+      pointer-events: none;
+      z-index: 2;
+      background: 
+        // Light rays that intensify toward bottom
+        radial-gradient(ellipse 120% 100% at 15% 10%, rgba($color: $cyan, $alpha: 0.01) 0%, transparent 80%),
+        radial-gradient(ellipse 100% 80% at 85% 20%, rgba($color: $cyan, $alpha: 0.015) 0%, transparent 70%),
+        radial-gradient(ellipse 80% 40% at 50% 0%, rgba($color: $cyan, $alpha: 0.012) 0%, transparent 90%),
+        radial-gradient(ellipse 60% 120% at 70% 80%, rgba($color: $cyan, $alpha: 0.025) 0%, transparent 60%),
+        // Ultra-subtle top rays for perfect blending
+        radial-gradient(ellipse 300% 60% at 30% -15%, rgba($color: $cyan, $alpha: 0.003) 0%, transparent 80%),
+        radial-gradient(ellipse 250% 40% at 70% -10%, rgba($color: $cyan, $alpha: 0.002) 0%, transparent 85%),
+        // Dramatic bottom concentration
+        radial-gradient(ellipse 150% 40% at 50% 100%, rgba($color: $cyan, $alpha: 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 120% 60% at 25% 95%, rgba($color: $cyan, $alpha: 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 140% 50% at 75% 98%, rgba($color: $cyan, $alpha: 0.07) 0%, transparent 65%),
+        // Intense bottom glow overlay
+        linear-gradient(180deg,
+          transparent 0%,
+          transparent 70%,
+          rgba($color: $cyan, $alpha: 0.05) 80%,
+          rgba($color: $cyan, $alpha: 0.12) 90%,
+          rgba($color: $cyan, $alpha: 0.2) 95%,
+          rgba($color: $cyan, $alpha: 0.3) 100%
+        ),
+        // Bottom edge highlight
+        linear-gradient(0deg,
+          rgba($color: $cyan, $alpha: 0.4) 0%,
+          rgba($color: $cyan, $alpha: 0.2) 5%,
+          transparent 15%
+        );
+      backdrop-filter: blur(0.8px);
+      animation: footerLightRays 25s ease-in-out infinite;
+    }
+  }
+  
+  .footer--container {
+    padding: $spacing-lg $spacing-md $spacing-lg; // Use consistent spacing tokens
+  }
+  
+  .footer--decoration-line {
+    width: 300px;
+    
+    &:nth-child(4) {
+      top: 10%;
+      right: 5%;
+      transform: rotate(60deg);
+      animation-delay: 4.5s;
+    }
+    
+    &:nth-child(5) {
+      bottom: 15%;
+      right: 40%;
+      transform: rotate(-15deg);
+      animation-delay: 6s;
+    }
+  }
+  
+  .footer--decoration-dot {
+    &:nth-child(4) {
+      top: 25%;
+      right: 10%;
+      animation-delay: 3s;
+    }
+    
+    &:nth-child(5) {
+      bottom: 45%;
+      left: 15%;
+      animation-delay: 4s;
+    }
+  }
+  
+  // Add more floating elements
+  .footer--decoration {
+    &::before {
+      width: 80px;
+      height: 80px;
+      border-width: 3px;
+    }
+    
+    &::after {
+      width: 60px;
+      height: 60px;
+      border-width: 2px;
+    }
+  }
+  
+  // Show both GitHub and LinkedIn on desktop
+  .footer--github {
+    border: 1px solid rgba($color: $cyan, $alpha: 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    border-radius: 50%;
+    background: rgba($color: $cyan, $alpha: 0.1);
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    
+    &:hover {
+      background: rgba($color: $cyan, $alpha: 0.2);
+      border-color: $cyan;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 255, 255, 0.2);
+    }
+  }
+
+  .footer--github-logo {
+    height: 2.25rem;
+    width: 2.25rem;
+    filter: brightness(0) saturate(100%) invert(100%) opacity(0.6);
+    transition: all 0.3s ease-in-out;
+    
+    .footer--github:hover & {
+      filter: brightness(0) saturate(100%) invert(75%) sepia(100%) saturate(300%) hue-rotate(160deg) brightness(1.2) opacity(1);
+    }
+  }
+
+  .footer--linkedin {
+    border: 1px solid rgba($color: $cyan, $alpha: 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    border-radius: 50%;
+    background: rgba($color: $cyan, $alpha: 0.1);
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    
+    &:hover {
+      background: rgba($color: $cyan, $alpha: 0.2);
+      border-color: $cyan;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 255, 255, 0.2);
+    }
+  }
+
+  .footer--linkedin-logo {
+    height: 2.25rem;
+    width: 2.25rem;
+    filter: brightness(0) saturate(100%) invert(100%) opacity(0.6);
+    transition: all 0.3s ease-in-out;
+    
+    .footer--linkedin:hover & {
+      filter: brightness(0) saturate(100%) invert(75%) sepia(100%) saturate(300%) hue-rotate(160deg) brightness(1.2) opacity(1);
+    }
+  }
+  
+  // Adjust social section spacing for both icons
+  .footer--social {
+    gap: 2rem; // Proper gap between GitHub, back-to-top, and LinkedIn
+  }
+  
+  // Enhanced back-to-top button for desktop
+  .footer--back-to-top {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.3rem;
+    box-shadow: 
+      0 2px 12px rgba(0, 255, 255, 0.1),
+      0 0 20px rgba($color: $cyan, $alpha: 0.1);
+    
+    &:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 
+        0 6px 20px rgba(0, 255, 255, 0.25),
+        0 0 30px rgba($color: $cyan, $alpha: 0.3);
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .footer--container {
+    padding: $spacing-lg $spacing-md $spacing-lg; // Use consistent spacing tokens
+  }
+  
+  .footer--decoration-line {
+    width: 350px; // Even wider for very large screens
+  }
+}
+
+// Footer-specific futuristic animations (lighter than global)
+@keyframes footerGridPulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.002);
+  }
+  100% {
+    opacity: 0.62;
+    transform: scale(1.001);
+  }
+}
+
+@keyframes footerLightRays {
+  0% {
+    opacity: 0.35;
+    transform: translateX(-2px) translateY(-1px);
+  }
+  50% {
+    opacity: 0.4;
+    transform: translateX(2px) translateY(1px);
+  }
+  100% {
+    opacity: 0.37;
+    transform: translateX(-1px) translateY(-2px);
+  }
+}
+
+@keyframes footerBottomGlow {
+  0% {
+    opacity: 0.8;
+    transform: scaleY(1);
+  }
+  33% {
+    opacity: 0.9;
+    transform: scaleY(1.02);
+  }
+  66% {
+    opacity: 0.85;
+    transform: scaleY(0.98);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes lineGlow {
+  0% {
+    opacity: 0.1;
+    box-shadow: 0 0 5px rgba($color: $cyan, $alpha: 0.3);
+  }
+  50% {
+    opacity: 0.4;
+    box-shadow: 0 0 15px rgba($color: $cyan, $alpha: 0.6);
+  }
+  100% {
+    opacity: 0.2;
+    box-shadow: 0 0 10px rgba($color: $cyan, $alpha: 0.4);
+  }
+}
+
+@keyframes dotPulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.8);
+    box-shadow: 
+      0 0 5px $cyan,
+      0 0 10px $cyan,
+      0 0 15px rgba($color: $cyan, $alpha: 0.3);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2);
+    box-shadow: 
+      0 0 15px $cyan,
+      0 0 25px $cyan,
+      0 0 35px rgba($color: $cyan, $alpha: 0.7);
+  }
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+    box-shadow: 
+      0 0 10px $cyan,
+      0 0 20px $cyan,
+      0 0 25px rgba($color: $cyan, $alpha: 0.5);
+  }
+}
+
+@keyframes floatRotate {
+  0% {
+    transform: rotate(0deg) translateY(0px);
+    opacity: 0.2;
+  }
+  25% {
+    transform: rotate(90deg) translateY(-10px);
+    opacity: 0.4;
+  }
+  50% {
+    transform: rotate(180deg) translateY(0px);
+    opacity: 0.6;
+  }
+  75% {
+    transform: rotate(270deg) translateY(10px);
+    opacity: 0.4;
+  }
+  100% {
+    transform: rotate(360deg) translateY(0px);
+    opacity: 0.2;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2);
+  }
+}
+
+// Hover effect for the entire footer - enhanced futuristic interaction
+.footer:hover {
+  .footer--decoration {
+    opacity: 0.25;
+    transition: opacity 0.5s ease-in-out;
+    
+    .footer--decoration-line {
+      animation-duration: 1.5s; // Speed up animations on hover
+    }
+    
+    .footer--decoration-dot {
+      animation-duration: 1s; // Speed up animations on hover
+    }
+  }
+  
+  &::before {
+    animation-duration: 2.5s; // Speed up footer grid animation
+  }
+  
+  &::after {
+    animation-duration: 3.5s; // Speed up footer light rays
+  }
+}
+
+// Smooth entrance animation
+.footer {
+  animation: footerSlideIn 0.6s ease-out;
+}
+
+@keyframes footerSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

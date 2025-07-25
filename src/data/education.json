@@ -1,0 +1,26 @@
+[
+  {
+    "id": 0,
+    "title": "Coventry University",
+    "subtitle": "BSc Computer Science",
+    "date": "(Oct 2015 – Jun 2019)",
+    "summary": [
+      "Studied data structures, algorithms, and database architecture",
+      "Built first full-stack applications (Node.js, React, SQL)",
+      "Final year project focused on big data using Python and NoSQL"
+    ],
+    "details": "During my studies at Coventry University, I built a strong foundation in software engineering, algorithms, and system design. I developed several full-stack web applications and completed a final year project that focused on processing and analyzing large datasets using Python and NoSQL technologies. This period shaped my technical direction and solidified my passion for backend systems and data engineering."
+  },
+  {
+    "id": 1,
+    "title": "Traian High School",
+    "subtitle": "Science and Math",
+    "date": "(Sept 2011 – Jun 2015)",
+    "summary": [
+      "Developed a deep interest in technology and problem-solving",
+      "Built a practical engineering mindset through math and physics",
+      "Improved communication through public speaking and volunteering"
+    ],
+    "details": "High school sparked my curiosity for computers and logic, laying the groundwork for my career in tech. I actively engaged in extracurricular activities, competitions, and public presentations. Volunteering and team projects helped me strengthen soft skills like communication and adaptability early on."
+  }
+]

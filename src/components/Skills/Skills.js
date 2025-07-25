@@ -3,13 +3,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable operator-linebreak */
 /* eslint-disable class-methods-use-this */
+/* eslint-disable react/jsx-one-expression-per-line */
 
 import PropTypes from "prop-types";
 import React from "react";
 import MediaQuery from "react-responsive";
 import SkillsTitle from "./SkillsTitle";
 
-import downArrow from "../../images/V-Small-Triangle.svg";
+// Import JSON data
+import skillsData from "../../data/skills.json";
+
+import downArrow from "../../assets/icons/V-Small-Triangle.svg";
 import "./Skills.scss";
 
 class Skills extends React.Component {
@@ -17,11 +21,9 @@ class Skills extends React.Component {
     super();
     this.state = {
       expand: "devOps",
-
       comeFromBelow: "",
       comeFromBelowDelayed: "",
       comeFromBelowDelayedMore: "",
-
       renderAnimation: false,
       visible: "invisible"
     };
@@ -51,6 +53,35 @@ class Skills extends React.Component {
     } else this.setState({ expand: target });
   }
 
+  // Helper method to render skill illustrations
+  renderSkillIllustration(category) {
+    const { expand } = this.state;
+
+    return (
+      <div
+        key={category.id}
+        className={`skillsPage-skill-illustration ${
+          expand === category.id ? "appear-text" : "disappear-text"
+        }`}
+      >
+        {category.skills.map((skill, index) => (
+          <div
+            key={`${category.id}-${skill.name.replace(/\s+/g, "-").toLowerCase()}`}
+            className="skill-item-container"
+            style={{
+              animationDelay: expand === category.id ? `${0.2 + index * 0.1}s` : "0s"
+            }}
+          >
+            <p className="skillsPage-skill-illustration-title">
+              {skill.name}
+            </p>
+            <div className={`skillsPage-skill-illustration-bar-${skill.color}-${skill.level}`} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   render() {
     const {
       expand,
@@ -61,85 +92,11 @@ class Skills extends React.Component {
     } = this.state;
     const { headerTextHighlightRef, refinview, scroll } = this.props;
 
-    const devOpsSkills = (
-      <div
-        className={`skillsPage-skill-illustration ${
-          expand === "devOps" ? "appear-text" : "disappear-text"
-        }`}
-      >
-        <p className="skillsPage-skill-illustration-title">
-          Continous Integration and Delivery
-        </p>
-        <div className="skillsPage-skill-illustration-bar-cyan-95" />
-
-        <p className="skillsPage-skill-illustration-title">
-          Operations and Responsability
-        </p>
-        <div className="skillsPage-skill-illustration-bar-red-90" />
-
-        <p className="skillsPage-skill-illustration-title">
-          Monitoring and Automation
-        </p>
-        <div className="skillsPage-skill-illustration-bar-cyan-85" />
-
-        <p className="skillsPage-skill-illustration-title">
-          Agile and Communication
-        </p>
-        <div className="skillsPage-skill-illustration-bar-red-85" />
-      </div>
-    );
-
-    const cloudSkills = (
-      <div
-        className={`skillsPage-skill-illustration ${
-          expand === "cloud" ? "appear-text" : "disappear-text"
-        }`}
-      >
-        <p className="skillsPage-skill-illustration-title">
-          Cloud Infrastructure (IBM, AWS)
-        </p>
-        <div className="skillsPage-skill-illustration-bar-red-90" />
-
-        <p className="skillsPage-skill-illustration-title">
-          Network, Migration and Microservices
-        </p>
-        <div className="skillsPage-skill-illustration-bar-cyan-85" />
-
-        <p className="skillsPage-skill-illustration-title">
-          Docker, Kubernetes and VMs
-        </p>
-        <div className="skillsPage-skill-illustration-bar-red-85" />
-      </div>
-    );
-
-    const fullStackSkills = (
-      <div
-        className={`skillsPage-skill-illustration ${
-          expand === "fullStack" ? "appear-text" : "disappear-text"
-        }`}
-      >
-        <p className="skillsPage-skill-illustration-title">
-          JavaScript: Node, React and Database
-        </p>
-        <div className="skillsPage-skill-illustration-bar-cyan-95" />
-
-        <p className="skillsPage-skill-illustration-title">
-          Python 3, Golang, Bash and Linux
-        </p>
-        <div className="skillsPage-skill-illustration-bar-red-90" />
-
-        <p className="skillsPage-skill-illustration-title">
-          Architecture, Design and APIs
-        </p>
-        <div className="skillsPage-skill-illustration-bar-cyan-85" />
-      </div>
-    );
-
     const downArrowDiv = (
       <img
         className="skillsPage--skill-img rotate-img"
         src={downArrow}
-        alt="Down arrow 3"
+        alt="Down arrow"
       />
     );
 
@@ -147,7 +104,7 @@ class Skills extends React.Component {
       <img
         className="skillsPage--skill-img"
         src={downArrow}
-        alt="Down arrow 3"
+        alt="Up arrow"
       />
     );
 
@@ -160,68 +117,62 @@ class Skills extends React.Component {
               headerTextHighlightRef={headerTextHighlightRef}
               refinview={refinview}
             />
-            <div
-              className={`skillsPage--description align-text-center ${comeFromBelow} `}
-            >
-              <p className="skill--description-text">
-                These are just a small sample of selected skills that I have
-                developed over the years, by working with amazing people. I am
-                interested in data, mathematics, and design, besides my inclination
-                towards computer sciences. Eager in finding more? Please
-                <a
-                  role="button"
-                  className="cyan-text invisible--buton"
-                  onClick={() => scroll("#contact")}
-                >
-                  &nbsp;contact me
-                </a>
-                .
-              </p>
+            <div className={`skillsPage--description align-text-center ${comeFromBelow}`}>
+              {skillsData.descriptions.map((desc, index) => (
+                <p key={`skills-desc-mobile-${desc.substring(0, 20).replace(/[^a-zA-Z0-9]/g, "")}`} className="skill--description-text" style={{ marginBottom: index < skillsData.descriptions.length - 1 ? "1rem" : "0" }}>
+                  {index === skillsData.descriptions.length - 1 ? (
+                    <>
+                      {desc.split("contact me")[0]}
+                      <a
+                        role="button"
+                        className="cyan-text invisible--buton"
+                        onClick={() => scroll("#contact")}
+                      >
+                        &nbsp;Contact me.
+                      </a>
+                    </>
+                  ) : (
+                    desc
+                  )}
+                </p>
+              ))}
             </div>
-            <div
-              className={`skillsPage--skills-items ${comeFromBelowDelayed} `}
-            >
-              <button
-                type="button"
-                onClick={() => this.expandSkills("devOps")}
-                className={`skillsPage--skill remove-btn-style ${
-                  expand === "devOps" ? "cyan-btn-selected" : null
-                }`}
-              >
-                <div className="skillsPage-skill-btn">
-                  <p className="skillsPage--skill-name">Dev-Ops</p>
+            <div className={`skillsPage--skills-items ${comeFromBelowDelayed}`}>
+              {skillsData.categories.map((category) => (
+                <div key={`mobile-${category.id}`}>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      this.expandSkills(category.id);
+                    }}
+                    onTouchStart={(e) => {
+                      // Ensure touch events work on mobile
+                      e.stopPropagation();
+                    }}
+                    className={`skillsPage--skill remove-btn-style ${
+                      expand === category.id ? "cyan-btn-selected" : null
+                    }`}
+                    style={{
+                      pointerEvents: "auto",
+                      touchAction: "manipulation",
+                      cursor: "pointer"
+                    }}
+                  >
+                    <div className="skillsPage-skill-btn">
+                      <p className="skillsPage--skill-name">{category.title}</p>
+                    </div>
+                    {expand === category.id ? downArrowDiv : upArrowDiv}
+                  </button>
                 </div>
-                {expand === "devOps" ? downArrowDiv : upArrowDiv}
-              </button>
-              {devOpsSkills}
-              <button
-                type="button"
-                onClick={() => this.expandSkills("cloud")}
-                className={`skillsPage--skill remove-btn-style ${
-                  expand === "cloud" ? "cyan-btn-selected" : null
-                }`}
-              >
-                <div className="skillsPage-skill-btn">
-                  <p className="skillsPage--skill-name">Cloud</p>
-                </div>
-                {expand === "cloud" ? downArrowDiv : upArrowDiv}
-              </button>
-              {cloudSkills}
-              <button
-                type="button"
-                onClick={() => this.expandSkills("fullStack")}
-                className={`skillsPage--skill remove-btn-style ${
-                  expand === "fullStack" ? "cyan-btn-selected" : null
-                }`}
-              >
-                <div className="skillsPage-skill-btn">
-                  <p className="skillsPage--skill-name">Full-Stack</p>
-                </div>
-                {expand === "fullStack" ? downArrowDiv : upArrowDiv}
-              </button>
-              {fullStackSkills}
+              ))}
+            </div>
+            <div className={`skillsPage--mobile-skill-illustrations ${comeFromBelowDelayedMore}`}>
+              {skillsData.categories.map((category) => this.renderSkillIllustration(category))}
             </div>
           </MediaQuery>
+
           <MediaQuery minWidth={913}>
             <div>
               <div className="two-columns">
@@ -232,69 +183,56 @@ class Skills extends React.Component {
                     refinview={refinview}
                   />
                   <div className={`skillsPage--skills-items ${comeFromBelow}`}>
-                    <button
-                      type="button"
-                      onClick={() => this.expandSkills("devOps")}
-                      className={`skillsPage--skill remove-btn-style ${
-                        expand === "devOps" ? "cyan-btn-selected" : null
-                      }`}
-                    >
-                      <div className="skillsPage-skill-btn">
-                        <p className="skillsPage--skill-name">Dev-Ops</p>
-                      </div>
-                      {expand === "devOps" ? downArrowDiv : upArrowDiv}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => this.expandSkills("cloud")}
-                      className={`skillsPage--skill remove-btn-style ${
-                        expand === "cloud" ? "cyan-btn-selected" : null
-                      }`}
-                    >
-                      <div className="skillsPage-skill-btn">
-                        <p className="skillsPage--skill-name">Cloud</p>
-                      </div>
-                      {expand === "cloud" ? downArrowDiv : upArrowDiv}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => this.expandSkills("fullStack")}
-                      className={`skillsPage--skill remove-btn-style ${
-                        expand === "fullStack" ? "cyan-btn-selected" : null
-                      }`}
-                    >
-                      <div className="skillsPage-skill-btn">
-                        <p className="skillsPage--skill-name">Full-Stack</p>
-                      </div>
-                      {expand === "fullStack" ? downArrowDiv : upArrowDiv}
-                    </button>
+                    {skillsData.categories.map((category) => (
+                      <button
+                        key={`desktop-btn-${category.id}`}
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          this.expandSkills(category.id);
+                        }}
+                        className={`skillsPage--skill remove-btn-style ${
+                          expand === category.id ? "cyan-btn-selected" : null
+                        }`}
+                        style={{
+                          pointerEvents: "auto",
+                          cursor: "pointer"
+                        }}
+                      >
+                        <div className="skillsPage-skill-btn">
+                          <p className="skillsPage--skill-name">{category.title}</p>
+                        </div>
+                        {expand === category.id ? downArrowDiv : upArrowDiv}
+                      </button>
+                    ))}
                   </div>
                 </div>
-                <div
-                  className={`second-column skills--flex-end ${comeFromBelowDelayed} `}
-                >
-                  <div>
-                    These are just a small sample of selected skills that I have
-                    developed over the years, by working with amazing people. I am
-                    interested in data, mathematics, and design, besides my inclination
-                    towards computer sciences. Eager in finding more? Please
-                    <a
-                      role="button"
-                      className="cyan-text invisible--buton"
-                      onClick={() => scroll("#contact")}
-                    >
-                      &nbsp;contact me
-                    </a>
-                    .
+                <div className={`second-column ${comeFromBelowDelayed}`}>
+                  <div className={`skillsPage--description ${comeFromBelow}`}>
+                    {skillsData.descriptions.map((desc, index) => (
+                      <p key={`skills-desc-desktop-${desc.substring(0, 20).replace(/[^a-zA-Z0-9]/g, "")}`} className="skill--description-text" style={{ marginBottom: index < skillsData.descriptions.length - 1 ? "1rem" : "0" }}>
+                        {index === skillsData.descriptions.length - 1 ? (
+                          <>
+                            {desc.split("contact me")[0]}
+                            <a
+                              role="button"
+                              className="cyan-text invisible--buton"
+                              onClick={() => scroll("#contact")}
+                            >
+                              &nbsp;Contact me.
+                            </a>
+                          </>
+                        ) : (
+                          desc
+                        )}
+                      </p>
+                    ))}
                   </div>
                 </div>
               </div>
-              <div
-                className={`skillsPage--desktop-skill-illustration ${comeFromBelowDelayedMore}`}
-              >
-                {devOpsSkills}
-                {cloudSkills}
-                {fullStackSkills}
+              <div className={`skillsPage--desktop-skill-illustration ${comeFromBelowDelayedMore}`}>
+                {skillsData.categories.map((category) => this.renderSkillIllustration(category))}
               </div>
             </div>
           </MediaQuery>

@@ -1,20 +1,40 @@
-@import "./../../constants.scss";
+@import "../../styles/constants.scss";
+@import "../../styles/cardConstants.scss";
 
 .aboutMe {
   @include page-layout;
 }
 
 .aboutMe--center-flex {
-  @include center-flex;
-
-  min-height: 60vh !important;
-  width: 100vw;
+  @include section-layout;
+  min-height: 85vh;
+  padding: $spacing-lg $spacing-md;
 }
 
 .aboutMe--title {
   line-height: 0;
-  font-size: 2rem;
+  font-size: clamp(2.5rem, 6vw, 3rem);
   color: $cyan;
+// ...existing code...
+
+
+@media (max-width: $breakpoint-mobile) {
+  .aboutMe--title {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+  .aboutMe--description {
+    font-size: 0.95rem;
+    padding: 0 $spacing-sm $spacing-sm $spacing-sm;
+  }
+  .aboutMe--description-flex {
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+  .aboutMe--description-item {
+    min-height: 80px;
+    padding: $spacing-sm;
+  }
+}
 }
 
 .aboutMe--ATriangle-mobile {
@@ -24,69 +44,259 @@
 
 .aboutMe--ATriangle {
   height: 0.75em;
+  vertical-align: baseline;
+  margin-bottom: 0.15em; // Fine-tune vertical alignment
+  display: inline-block;
+  transition: 0.5s;
+  cursor: pointer;
+  
+  &:hover {
+    color: $cyan;
+    transform: translateY(-3px);
+  }
+  
+  &.bouncing {
+    animation: rubberBand 1s;
+  }
 }
 
 .aboutMe--description {
   font-size: 1rem;
-
-  padding: 0 2rem 2rem 2rem;
+  padding: 0 $spacing-md $spacing-md $spacing-md;
   font-weight: 500;
-
   color: white;
 }
 
 .aboutMe--description-flex {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 100vw;
-
+  flex-direction: row; // Keep as row for 3-column layout
+  justify-content: space-between; // Even distribution
+  align-items: stretch; // Make all items same height
+  width: 100%;
   font-weight: 100;
   text-align: center;
   color: white;
+  gap: $spacing-md;
 }
 
 .aboutMe--description-item {
-  margin: 0 1rem;
+  flex: 1; // Each item takes equal width (1/3)
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $spacing-md $spacing-sm;
+  background-color: rgba($color: $cyan, $alpha: 0.05);
+  border: 0.1em solid rgba($color: $cyan, $alpha: 0.2);
+  border-radius: $border-radius-large;
+  transition: $transition-normal;
+  min-height: 120px; // Consistent height
+  
+  // Ensure proper touch interactions on all devices
+  cursor: pointer;
+  pointer-events: auto;
+  touch-action: manipulation;
+  
+  &:hover {
+    background-color: rgba($color: $cyan, $alpha: 0.15);
+    border-color: rgba($color: $cyan, $alpha: 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 255, 255, 0.1);
+  }
+  
+  // Add active state for better mobile feedback
+  &:active {
+    transition: all 0.1s ease-in-out;
+    transform: translateY(-2px);
+    background-color: rgba($color: $cyan, $alpha: 0.2);
+  }
 }
 
 .aboutMe--description-item-years {
   color: $cyan;
-  margin: 0;
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.75rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.2;
 }
 
 .aboutMe--description-item-title {
   margin: 0;
-  font-weight: 100;
+  font-weight: 300;
   font-size: 1rem;
+  color: rgba($color: white, $alpha: 0.9);
+  line-height: 1.3;
 }
 
-// DESKTOP
-.first-column {
-  @include first-column;
-
-  flex-direction: column;
-  justify-content: space-around;
+// Mobile specific styles - PROPER MOBILE MARGINS
+@media only screen and (max-width: 912px) {
+  .aboutMe--center-flex {
+    padding: 2rem 1rem;
+  }
+  
+  .aboutMe--description {
+    padding: 0 1.5rem 2rem 1.5rem;
+  }
+  
+  .aboutMe--description-flex {
+    flex-direction: row; // Keep row layout even on mobile
+    gap: 0.75rem; // Smaller gap on mobile
+    padding: 0 0.5rem;
+  }
+  
+  .aboutMe--description-item {
+    padding: 1.25rem 0.5rem;
+    min-height: 100px;
+    border-radius: 0.5rem;
+    
+    // Ensure mobile touch interactions work
+    pointer-events: auto !important;
+    touch-action: manipulation;
+    cursor: pointer;
+    
+    // Add position relative to ensure proper layering
+    position: relative;
+    z-index: 1; // Above base content but below modal/header
+  }
+  
+  .aboutMe--description-item-years {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .aboutMe--description-item-title {
+    font-size: 0.9rem;
+  }
 }
 
-.second-column {
-  @include second-column;
+// Very small phones - Stack vertically only on very small screens
+@media only screen and (max-width: 375px) {
+  .aboutMe--center-flex {
+    padding: 1.5rem 0.75rem;
+  }
+  
+  .aboutMe--description {
+    padding: 0 1rem 1.5rem 1rem;
+  }
+  
+  .aboutMe--description-flex {
+    flex-direction: column; // Stack on very small phones
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+  
+  .aboutMe--description-item {
+    width: 100%;
+    padding: 1rem;
+    
+    // Enhanced mobile touch support for small screens
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    cursor: pointer;
+    min-height: 44px; // Minimum touch target size
+    
+    // Ensure proper layering on small screens
+    position: relative;
+    z-index: 1;
+  }
+  
+  .aboutMe--description-item-years {
+    font-size: 1.1rem;
+  }
+  
+  .aboutMe--description-item-title {
+    font-size: 0.95rem;
+  }
 }
 
-.aboutMe--description-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+// Large phones/small tablets - Optimize for better spacing
+@media only screen and (min-width: 413px) and (max-width: 912px) {
+  .aboutMe--description-flex {
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+  
+  .aboutMe--description-item {
+    padding: 1.5rem 0.75rem;
+    min-height: 110px;
+    
+    // Enhanced touch support for larger mobile screens
+    pointer-events: auto !important;
+    touch-action: manipulation;
+    cursor: pointer;
+    
+    // Ensure proper positioning
+    position: relative;
+    z-index: 1;
+  }
+  
+  .aboutMe--description-item-years {
+    font-size: 1.15rem;
+  }
+  
+  .aboutMe--description-item-title {
+    font-size: 0.95rem;
+  }
 }
 
-// Title
+// DESKTOP - Enhanced layout
+@media only screen and (min-width: 913px) {
+  .first-column {
+    @include first-column;
+    flex-direction: column;
+    justify-content: space-around;
+  }
 
+  .second-column {
+    @include second-column;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: 300px;
+  }
+
+  .aboutMe--description-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .aboutMe--description-item {
+    flex: 1;
+    max-width: 200px; // Prevent items from getting too wide
+    padding: 2rem 1rem;
+    min-height: 140px;
+  }
+  
+  .aboutMe--description-item-years {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .aboutMe--description-item-title {
+    font-size: 1.1rem;
+  }
+}
+
+// Title animation
 .aboutMeBouncy {
   display: inline-block;
   transition: 0.5s;
+  cursor: pointer;
+  
+  &:hover {
+    color: $cyan;
+    transform: translateY(-3px);
+  }
+  
+  &.bouncing {
+    animation: rubberBand 1s;
+  }
 }
 
 .aboutMe--title .text-wrapper {
@@ -99,4 +309,67 @@
   transform-origin: 50% 100%;
   display: inline-block;
   line-height: 1em;
+}
+
+// Add the bouncing animation keyframes
+@keyframes rubberBand {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+// Enhanced visual effects
+.aboutMe--description-item {
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, $cyan, transparent);
+    transition: left 0.5s ease-in-out;
+  }
+  
+  &:hover::before {
+    left: 100%;
+  }
+}
+
+// Responsive typography scaling
+@media only screen and (min-width: 1200px) {
+  .aboutMe--description-item-years {
+    font-size: 1.4rem;
+  }
+  
+  .aboutMe--description-item-title {
+    font-size: 1.2rem;
+  }
 }

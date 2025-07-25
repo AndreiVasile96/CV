@@ -9,13 +9,30 @@ import AboutMe from "./components/AboutMe/AboutMe";
 import Skills from "./components/Skills/Skills";
 import Experience from "./components/Experience/Experience";
 import ContactMe from "./components/ContactMe/ContactMe";
+import Footer from "./components/Footer/Footer"; // Add this import
 
 import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
 
 function scroll(target) {
   const element = document.querySelector(target);
-  element.scrollIntoViewIfNeeded();
+  if (element) {
+    // First scroll to the element
+    element.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+    // Then adjust for header offset after a short delay
+    setTimeout(() => {
+      const topOffset = 160; // Increased to match header height (e.g., 10rem)
+      const currentScroll = window.pageYOffset;
+      window.scrollTo({
+        middle: Math.max(0, currentScroll - topOffset),
+        behavior: "smooth"
+      });
+    }, 100);
+  }
 }
 
 export default function App() {
@@ -52,6 +69,9 @@ export default function App() {
         refinview={refinview}
       />
       <ContactMe headerTextHighlightRef={contactMeRef} refinview={refinview} />
+
+      {/* Add the Footer component */}
+      <Footer scroll={scroll} />
     </div>
   );
 }
