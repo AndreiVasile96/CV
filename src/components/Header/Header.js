@@ -174,7 +174,7 @@ export default function Header(props) {
               <div className="header--modal-bar" />
               <div className="header--modal-social">
                 <a
-                  href="https://github.com/"
+                  href="https://github.com/AndreiVasile96/CV"
                   className="header--modal-social-link"
                   aria-label="Visit GitHub profile"
                   target="_blank"

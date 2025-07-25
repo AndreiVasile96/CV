@@ -31,7 +31,7 @@ export default function Footer({ scroll }) {
         <div className="footer--bottom">
           <div className="footer--social">
             <a
-              href="https://github.com/" // TODO: Replace with your repo link
+              href="https://github.com/AndreiVasile96/CV"
               className="footer--github"
               aria-label="Visit GitHub profile"
               target="_blank"
