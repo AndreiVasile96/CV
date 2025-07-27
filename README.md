@@ -139,4 +139,4 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 ---
 
-*Built with ❤️ using React, SCSS, and modern web technologies*
+**Built with ❤️ using React, SCSS, and modern web technologies**
