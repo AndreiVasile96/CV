@@ -20,7 +20,8 @@ body {
   -webkit-font-smoothing: antialiased;
   letter-spacing: 0.05rem;
 
-  background-color: var(--bg-black);
+  /* Remove solid background to allow global gradient to show through */
+  background: transparent;
 }
 
 @media only screen and (max-width: 912px) {

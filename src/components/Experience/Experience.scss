@@ -5,6 +5,7 @@
   @include page-layout;
   overflow-x: hidden; // Prevent horizontal scroll
   overflow-y: none !important; // Allow vertical scroll when needed, but prevent flash
+  min-height: 100vh;
   max-width: 100vw; // Ensure container doesn't exceed viewport
   box-sizing: border-box; // Include padding in width calculations
   

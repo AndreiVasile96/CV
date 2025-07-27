@@ -5,7 +5,7 @@
   background: transparent;
   position: relative;
   overflow: hidden;
-  margin-top: 4rem; // Reduced from 12rem for better spacing
+  // margin-top: 4rem; // Reduced from 12rem for better spacing
   width: 100vw; // Ensure full width
   
   // Force footer to take full width and break to new line
@@ -22,19 +22,20 @@
     height: calc(100% + 12rem);
     background: 
       // Subtle additional grid lines for footer emphasis
-      linear-gradient(90deg, transparent 0%, rgba($color: $cyan, $alpha: 0.03) 1px, transparent 1px),
-      linear-gradient(0deg, transparent 0%, rgba($color: $cyan, $alpha: 0.03) 1px, transparent 1px),
-      // Enhanced footer gradient
+      linear-gradient(90deg, transparent 0%, rgba($color: $cyan, $alpha: 0.04) 1px, transparent 1px),
+      linear-gradient(0deg, transparent 0%, rgba($color: $cyan, $alpha: 0.04) 1px, transparent 1px),
+      // Enhanced footer gradient - more pronounced to build on global background
       linear-gradient(180deg, 
         transparent 0%,
-        rgba($color: $cyan, $alpha: 0.01) 20%,
-        rgba($color: $cyan, $alpha: 0.03) 40%,
-        rgba($color: $cyan, $alpha: 0.08) 70%,
-        rgba($color: $cyan, $alpha: 0.15) 100%
+        rgba($color: $cyan, $alpha: 0.02) 10%,
+        rgba($color: $cyan, $alpha: 0.05) 30%,
+        rgba($color: $cyan, $alpha: 0.12) 60%,
+        rgba($color: $cyan, $alpha: 0.20) 85%,
+        rgba($color: $cyan, $alpha: 0.25) 100%
       );
     background-size: 
-      25px 25px,  // Finer grid for footer
-      25px 25px,  // Finer grid for footer
+      20px 20px,  // Slightly smaller grid for more texture
+      20px 20px,  // Slightly smaller grid for more texture  
       100% 100%;  // Main gradient
     animation: footerGridPulse 20s ease-in-out infinite alternate;
     pointer-events: none;

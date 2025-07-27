@@ -10,7 +10,7 @@
 
 .aboutMe--center-flex {
   @include section-layout;
-  min-height: 85vh;
+  min-height: 100vh;
   padding: 4rem 2rem; // Match Experience and Skills components
   max-width: 100%; // Prevent overflow
   box-sizing: border-box; // Include padding in width calculations
