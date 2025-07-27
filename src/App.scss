@@ -37,6 +37,10 @@
   }
 }
 
+html, body {
+  cursor: url('/assets/cursor/cursor.png') 16 0, auto;
+}
+
 .appBody {
     display: flex;
     flex-wrap: wrap;
