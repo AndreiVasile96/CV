@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
+import React from "react";
 import MediaQuery from "react-responsive";
 
 import ScrollTriangles from "../../assets/illustrations/ScrollTriangles.svg";
@@ -8,21 +8,18 @@ import LandingPageTitle from "./LandingPageTitle";
 
 import "./LandingPage.scss";
 
-let bouncyList;
-
-function toggleRubberBand(id) {
-  bouncyList[id].classList.add("bouncing");
-  bouncyList[id].addEventListener("animationend", () => {
-    bouncyList[id].classList.remove("bouncing");
-  });
+function toggleRubberBand(event) {
+  const el = event.currentTarget;
+  el.classList.add("bouncing");
+  const handle = () => {
+    el.classList.remove("bouncing");
+    el.removeEventListener("animationend", handle);
+  };
+  el.addEventListener("animationend", handle);
 }
 
 export default function LandingPage(props) {
   const { scroll, headerTextHighlightRef, refinview } = props;
-
-  useEffect(() => {
-    bouncyList = document.querySelectorAll(".landingPageBouncy");
-  });
 
   return (
     <div className="landingPage visible" id="landingPage">
@@ -46,7 +43,7 @@ export default function LandingPage(props) {
             <MediaQuery maxWidth={912}>
               <span>Dev-Ops</span>
               &nbsp;/&nbsp;
-              <span>Cloud</span>
+              <span>SRE</span>
               &nbsp;/&nbsp;
               <span>Full-Stack</span>
               &nbsp;
@@ -55,28 +52,28 @@ export default function LandingPage(props) {
             <MediaQuery minWidth={913}>
               <span
                 className="landingPageBouncy"
-                onMouseEnter={() => toggleRubberBand(16)}
+                onMouseEnter={toggleRubberBand}
               >
                 Dev-Ops
               </span>
               &nbsp;/&nbsp;
               <span
                 className="landingPageBouncy"
-                onMouseEnter={() => toggleRubberBand(17)}
+                onMouseEnter={toggleRubberBand}
               >
-                Cloud
+                SRE
               </span>
               &nbsp;/&nbsp;
               <span
                 className="landingPageBouncy"
-                onMouseEnter={() => toggleRubberBand(18)}
+                onMouseEnter={toggleRubberBand}
               >
                 Full-Stack
               </span>
               &nbsp;
               <span
                 className="landingPageBouncy"
-                onMouseEnter={() => toggleRubberBand(19)}
+                onMouseEnter={toggleRubberBand}
               >
                 Developer
               </span>

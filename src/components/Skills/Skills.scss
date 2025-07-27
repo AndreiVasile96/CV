@@ -3,47 +3,76 @@
 
 .skillsPage {
   @include page-layout;
+  overflow-x: hidden; // Prevent horizontal scroll
+  max-width: 100vw; // Ensure container doesn't exceed viewport
+  box-sizing: border-box; // Include padding in width calculations
 }
 
 .skillsPage--center-flex {
   @include section-layout;
-  overflow: hidden !important; // Prevent any scrollbars from appearing
+  overflow-x: hidden; // Prevent horizontal scroll - changed from overflow: hidden !important
   min-height: 80vh;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+  box-sizing: border-box; // Include padding in width calculations
+  padding: 4rem 2rem; // Match other components for consistency
 }
 
 .skillsPage--title {
   color: $cyan;
   line-height: 0;
-  font-size: clamp(2.5rem, 6vw, 3rem);
-// ...existing code...
+  font-size: 3rem; // Fixed desktop size for stability
+  
+  // Anti-jitter optimizations
+  white-space: nowrap; // Prevent wrapping changes
+  text-rendering: optimizeLegibility; // Consistent rendering
+  will-change: auto; // Prevent unnecessary compositing layers
+}
+
+// Tablet and medium screens
+@media (min-width: 913px) and (max-width: 1200px) {
+  .skillsPage--title {
+    font-size: 2.5rem; // Medium size for tablets
+  }
+}
 
 @media (max-width: $breakpoint-mobile) {
+  .skillsPage--center-flex {
+    padding: 2rem 1rem; // Reduced padding to match other components
+    overflow-x: hidden; // Prevent horizontal scroll on mobile
+  }
+  
   .skillsPage--title {
-    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-size: 2rem; // Fixed mobile size for stability
   }
   .skillsPage--description {
     font-size: 0.95rem;
     padding: 0 $spacing-sm $spacing-sm $spacing-sm;
+    max-width: 100%; // Ensure no overflow
+    box-sizing: border-box;
   }
   .skillsPage--skills-items {
     gap: $spacing-xs;
+    max-width: 100%; // Ensure no overflow
+    box-sizing: border-box;
   }
   .skillsPage--skill {
     font-size: 0.95rem;
     min-height: 36px;
     margin: $spacing-xs 0;
+    max-width: 100%; // Ensure no overflow
+    box-sizing: border-box;
   }
-}
 }
 
 .skillsPage--description {
   font-size: 1rem;
-  padding: 0 $spacing-md $spacing-md $spacing-md;
+  padding: 0 $spacing-sm $spacing-md $spacing-sm; // Reduced horizontal padding to match other components
   color: white;
   text-align: center;
+  max-width: 100%; // Ensure no overflow
+  box-sizing: border-box; // Include padding in width calculations
   /* Removed flex vertical alignment so description sits above skills list */
 }
 
@@ -143,14 +172,18 @@
 @media only screen and (max-width: 912px) {
   .skillsPage--center-flex {
     padding: 2rem 1rem;
+    overflow-x: hidden; // Prevent horizontal scroll on mobile
   }
   
   .skillsPage--description {
-    padding: 0 1.5rem 2rem 1.5rem;
+    padding: 0 $spacing-sm 2rem $spacing-sm; // Reduced to match other components
+    max-width: 100%; // Ensure no overflow
+    box-sizing: border-box;
   }
   
   .skillsPage--skills-items {
     width: 100%;
+    max-width: 100%; // Ensure no overflow
     margin: 0;
     padding: 0 0.5rem;
     box-sizing: border-box;
@@ -158,6 +191,7 @@
   
   .skillsPage--skill {
     width: 100%;
+    max-width: 100%; // Ensure no overflow
     margin: 0.5rem 0;
     box-sizing: border-box;
     
@@ -227,14 +261,19 @@
 @media only screen and (max-width: 375px) {
   .skillsPage--center-flex {
     padding: 1.5rem 0.75rem;
+    overflow-x: hidden; // Prevent horizontal scroll on very small screens
   }
   
   .skillsPage--skills-items {
     padding: 0 0.75rem;
+    max-width: 100%; // Ensure no overflow
+    box-sizing: border-box;
   }
   
   .skillsPage-skill-btn {
     padding: 0.875rem 1rem;
+    max-width: 100%; // Ensure no overflow
+    box-sizing: border-box;
   }
   
   .skillsPage--skill-name {
@@ -243,6 +282,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    max-width: 100%; // Ensure no overflow
+    box-sizing: border-box;
   }
 }
 
@@ -250,10 +291,14 @@
 @media only screen and (min-width: 413px) and (max-width: 912px) {
   .skillsPage--skills-items {
     padding: 0 1.5rem;
+    max-width: 100%; // Ensure no overflow
+    box-sizing: border-box;
   }
   
   .skillsPage-skill-btn {
     padding: 1.125rem 1.5rem;
+    max-width: 100%; // Ensure no overflow
+    box-sizing: border-box;
   }
 }
 
@@ -709,7 +754,7 @@
 .skillsPageBouncy {
   display: inline-block;
   transition: 0.5s;
-  cursor: pointer;
+  cursor: default;
   
   &:hover {
     color: $cyan;

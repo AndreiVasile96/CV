@@ -1,7 +1,7 @@
 {
   "title": "Skills",
   "descriptions": [
-    "These are just a few of the skills I've developed over the years by building, maintaining, and improving software systems across various teams and domains.",
+    "These are just a few of the skills I have developed over the years by building, maintaining, and improving software systems across various teams and domains.",
     "I enjoy working on backend infrastructure, automating processes, and designing services that are secure, scalable, and easy to operate. I thrive in environments where reliability, ownership, and thoughtful collaboration are valued."
   ],
   "categories": [
@@ -51,7 +51,7 @@
           "color": "cyan"
         },
         {
-          "name": "Security, Permissions and Secrets Management",
+          "name": "Security and Permissions Management",
           "level": 90,
           "color": "red"
         }

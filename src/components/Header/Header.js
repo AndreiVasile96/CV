@@ -6,14 +6,10 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import MediaQuery from "react-responsive";
 
-import AVLogo from "../../assets/logos/Logo.svg";
-// import BurgerMenu from "../../assets/icons/BurgerMenu.svg";
-// import XBurgerMenu from "../../assets/icons/X-BurgerMenu.svg";
+import AVLogo from "../../assets/logos/VANDREI-logo.svg";
 
 import VTriangle from "../../assets/icons/V-Triangle.svg";
-import ATriangle from "../../assets/icons/A-Triangle.svg";
-import linkedinLogo from "../../assets/logos/LinkedinLogo.svg";
-import githubLogo from "../../assets/logos/GithubLogo.svg";
+import ATriangle from "../../assets/icons/Crop-Bold-A-Triangle.svg";
 
 import "./Header.scss";
 
@@ -109,7 +105,7 @@ export default function Header(props) {
                   ndrei
                   &nbsp;
                   <img
-                    className="header--triangle"
+                    className="header--triangle header--triangle--v"
                     src={VTriangle}
                     alt="A triangle"
                   />
@@ -172,7 +168,7 @@ export default function Header(props) {
                 </h3>
               </button>
               <div className="header--modal-bar" />
-              <div className="header--modal-social">
+              {/* <div className="header--modal-social">
                 <a
                   href="https://github.com/AndreiVasile96/CV"
                   className="header--modal-social-link"
@@ -199,7 +195,7 @@ export default function Header(props) {
                     className="header--modal-social-logo"
                   />
                 </a>
-              </div>
+              </div> */}
             </section>
           </div>
         ) : null}
@@ -220,7 +216,7 @@ export default function Header(props) {
                 />
                 ndrei &nbsp;
                 <img
-                  className="header--triangle-element"
+                  className="header--triangle-element header--triangle-element--v"
                   src={VTriangle}
                   alt="V triangle"
                 />

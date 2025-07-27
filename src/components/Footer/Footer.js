@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import linkedinLogo from "../../assets/logos/LinkedinLogo.svg";
-import githubLogo from "../../assets/logos/GithubLogo.svg";
+import githubLogo from "../../assets/logos/New-GithubLogo.svg";
 
 import "./Footer.scss";
 
@@ -78,6 +78,7 @@ export default function Footer({ scroll }) {
           <div className="footer--info">
             <span className="footer--built-with">
               ©
+              &nbsp;
               {currentYear}
               &nbsp;
               Andrei Vasile. Crafted with passion and precision.

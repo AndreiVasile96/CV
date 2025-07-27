@@ -12,8 +12,8 @@
 }
 
 .landingPage--ATriangle {
-  height: 0.75em;
-  margin-bottom: -0.1rem;
+  height: 0.8em;
+  margin-right: 0.02em;
 }
 
 .landingPage--title {
@@ -22,10 +22,6 @@
   line-height: 3rem;
   text-align: center;
   font-size: 3rem;
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 
 .landingPage--description {
@@ -67,7 +63,8 @@
 .landingPageBouncy {
   display: inline-block;
   transition: 0.5s;
-  cursor: pointer;
+  // cursor: pointer;
+  cursor: default;
 }
 
 .landingPage--title .text-wrapper {

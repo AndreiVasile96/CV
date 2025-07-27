@@ -600,3 +600,47 @@ $z-index-modal: 5;
     transform: translateX(0px) translateY(0px);
   }
 }
+
+// Anti-jitter utilities for stable initial loading
+.no-jitter-title {
+  // Prevent font from resizing during initial load
+  font-display: swap; // Optimize font loading
+  will-change: auto; // Remove will-change to prevent compositing layers
+  
+  // Ensure stable sizing
+  white-space: nowrap; // Prevent text wrapping changes
+  letter-spacing: 0; // Fixed letter spacing
+  text-rendering: optimizeLegibility; // Consistent text rendering
+  
+  // Disable transitions during initial page load
+  .page-loading & {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+.stable-layout {
+  // Prevent layout shifts during load
+  contain: layout style; // Isolate layout calculations
+  will-change: auto; // Remove will-change unless actively animating
+  
+  // Disable all transitions during page load
+  .page-loading & {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+// Global page loading state to prevent jitter
+.page-loading {
+  * {
+    transition: none !important;
+    animation-play-state: paused !important;
+  }
+}
+
+// Optimize font loading to prevent text jitter
+body, html {
+  font-display: swap; // Prevents invisible text during font load
+}

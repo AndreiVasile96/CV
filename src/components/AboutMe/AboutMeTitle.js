@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import anime from "animejs";
 
-import ATriangle from "../../assets/icons/A-Triangle.svg";
+// import ATriangle from "../../assets/icons/A-Triangle.svg";
+import ATriangle from "../../assets/icons/Crop-Bold-A-Triangle.svg";
 import "./AboutMe.scss";
 
 class AboutMeTitle extends React.Component {

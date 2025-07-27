@@ -291,8 +291,8 @@
 .contactMeBouncy {
   display: inline-block;
   transition: 0.5s;
-  cursor: pointer;
-  
+  cursor: default;
+
   &:hover {
     color: $cyan;
     transform: translateY(-3px);

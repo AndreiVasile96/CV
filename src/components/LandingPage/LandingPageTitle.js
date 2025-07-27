@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import anime from "animejs";
 
-import ATriangle from "../../assets/icons/A-Triangle.svg";
+// import ATriangle from "../../assets/icons/A-Triangle.svg";
+import ATriangle from "../../assets/icons/Crop-Bold-A-Triangle.svg";
 import "./LandingPage.scss";
 
 let bouncyList;
@@ -168,7 +169,7 @@ export default function LandingPageTitle(props) {
       </h1>
       <h1>
         <img
-          className="landingPage--ATriangle logo-bouncing-character"
+          className="landingPageBouncy landingPage--ATriangle logo-bouncing-character"
           src={ATriangle}
           alt="A triangle"
           onMouseEnter={() => toggleTriangleRubberBand()}

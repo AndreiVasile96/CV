@@ -186,13 +186,15 @@
 }
 
 .header--logo {
-  height: 120%;
+  height: 2.4em;
+  // height: 120%;
+  margin-left: 0.8em;
   margin-top: -0.4em;
 }
 
 .header--burger-menu {
-  height: 100%;
-  width: 3.5em; // Ensure consistent width for burger menu
+  height: 2em;
+  // width: 3.5em; // Ensure consistent width for burger menu
 }
 
 .header--burger-menu-btn {
@@ -201,11 +203,14 @@
   border: 0;
   margin-right: 1em;
   min-height: 1.8em;
+  display: flex; // Added flex for consistent alignment
+  align-items: center; // Center content vertically
+  justify-content: center; // Center content horizontally
 }
 
 .header--burger-menu-collapsed {
-  min-height: 1.8em;
-  margin-right: -0.4em;
+  height: 2em;
+  // margin-right: 0.2em;
   margin-bottom: -0.1em;
 }
 
@@ -292,28 +297,37 @@
 
 .header--modal-title {
   color: white;
-  line-height: 0;
   font-size: 1.4em;
 
-  margin-top: 2em;
+  margin-top: 1em;
   margin-bottom: 2em;
 }
 
 .header--triangle {
-  height: 0.75em;
+  height: 0.8em;
+}
+
+.header--triangle--v {
+  margin-right: -0.12em;
 }
 
 .header--modal-bar {
   width: 80vw;
   border-bottom: 0.15em solid $cyan-transparent;
+  margin: 0.5em 0; // Added consistent vertical spacing
 }
 
 .header--modal-item {
   cursor: pointer;
   color: white;
-  font-size: 1.2em;
-  padding: 1em 0;
+  font-size: 1.6em; // Increased from 1.4em for better readability
+  padding: 1.2em 0; // Increased padding for better touch targets
   transition: all 0.3s ease;
+  line-height: 1.2; // Added line-height for better vertical alignment
+  display: flex; // Added flex for perfect centering
+  align-items: center; // Perfect vertical centering
+  justify-content: center; // Perfect horizontal centering
+  margin: 0; // Remove any default margins
   
   // Active section styling (currently viewing)
   &.header--modal-item--active {
@@ -327,6 +341,9 @@
 // Disabled state for menu buttons when on current section
 .header--burger-menu-btn:disabled {
   cursor: default;
+  display: flex; // Ensure flex alignment even when disabled
+  align-items: center;
+  justify-content: center;
   
   .header--modal-item--active {
     pointer-events: none;
@@ -397,6 +414,10 @@
     transition: 0.5s;
     color: $cyan !important;
   }
+}
+
+.header--triangle-element--v {
+  margin-right: -0.1em;
 }
 
 .header--triangle-element {
