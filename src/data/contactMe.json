@@ -6,21 +6,21 @@
       {
         "name": "fullName",
         "type": "text",
-        "placeholder": "Name",
+        "placeholder": "Name *",
         "required": true,
         "validation": "required"
       },
       {
         "name": "email",
         "type": "email",
-        "placeholder": "Email",
+        "placeholder": "Email *",
         "required": true,
         "validation": "email"
       },
       {
         "name": "message",
         "type": "textarea",
-        "placeholder": "Message",
+        "placeholder": "Message *",
         "required": true,
         "validation": "required",
         "className": "contactMe--textarea"

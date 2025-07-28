@@ -49,6 +49,13 @@ html, body {
     
     height: 100vh;
     width: 100vw;
+    
+    // Safari fallback background
+    background: #000000;
+    
+    // Ensure content is visible on Safari
+    min-height: 100vh;
+    -webkit-overflow-scrolling: touch;
   // Custom cyan cursor for desktop (visible only on desktop)
 
   .app-body-visible {
