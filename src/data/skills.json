@@ -1,7 +1,7 @@
 {
   "title": "Skills",
   "descriptions": [
-    "These are just a few of the skills I have developed over the years by building, maintaining, and improving software systems across various teams and domains.",
+    "These are just a few of the skills I have developed over the years by building, operating and improving software systems, and more recently by leading the teams that keep them running.",
     "I enjoy working on backend infrastructure, automating processes, and designing services that are secure, scalable, and easy to operate. I thrive in environments where reliability, ownership, and thoughtful collaboration are valued."
   ],
   "categories": [
@@ -78,6 +78,32 @@
         },
         {
           "name": "System Design and Domain Modeling",
+          "level": 90,
+          "color": "red"
+        }
+      ]
+    },
+    {
+      "id": "leadership",
+      "title": "Leadership",
+      "skills": [
+        {
+          "name": "Team Leadership and Mentoring",
+          "level": 90,
+          "color": "cyan"
+        },
+        {
+          "name": "Incident Command and Escalation",
+          "level": 95,
+          "color": "red"
+        },
+        {
+          "name": "Customer-Facing Technical Work",
+          "level": 85,
+          "color": "cyan"
+        },
+        {
+          "name": "Release and Change Management",
           "level": 90,
           "color": "red"
         }

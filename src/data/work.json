@@ -1,19 +1,32 @@
 [
   {
     "id": 0,
-    "title": "SRE Consultant",
+    "title": "Platform Ops Lead",
     "subtitle": "Verified",
-    "date": "(Mar 2022 – Present)",
+    "date": "(Jan 2026 – Present)",
     "summary": [
-      "Led critical disaster recovery exercises and ISO audit preparations",
-      "Owned and maintained data deletion tooling across all major clients",
-      "Took over all SSO onboarding and improved system architecture",
-      "Handled high-impact incidents and participated in customer support"
+      "Lead Level 2 Technical Support and Level 3 SRE for the whole platform",
+      "Established the L1 → L2 → L3 support structure, processes and training",
+      "Technical lead on major incidents, releases and customer escalations",
+      "Mentor engineers across the organisation, including outside my own teams"
     ],
-    "details": "At Verified, I played a key role in platform stability and operations. I led disaster recovery exercises aligned with ISO standards, handled a major production incident with root cause analysis and scripting to identify and fix affected data, and maintained core deletion tooling with custom flows per client. I also took full ownership of SSO integrations after a team transition, improving architecture and onboarding major clients. I continuously serve as a cross-team reference point and contribute to customer-facing investigations and fixes, often outside of business hours."
+    "details": "I was promoted into a newly created Platform Ops Lead role, built around responsibilities I had already been carrying. I own both Level 2 Technical Support and Level 3 SRE, and helped establish the L1 → L2 → L3 structure that now underpins them — building T2 from scratch as a new function, including its documentation, processes, training and coding infrastructure. I run weekly planning and prioritisation across both teams and contribute to GDPR/DORA and wider operational decisions. I have stayed deliberately hands-on: leading the technical response to a week-long P2 platform degradation, owning production releases across every platform, and acting as the technical representative in customer meetings and escalations — including driving the TagD webhook incident end to end, from investigation through to remediation and customer communication. Across four years at Verified I have closed more than 1,200 tickets, over 1,000 of them incidents, and I am consistently the person other engineers come to for onboarding and difficult problems, whether or not they report to me."
   },
   {
     "id": 1,
+    "title": "SRE Consultant",
+    "subtitle": "Verified",
+    "date": "(Mar 2022 – Dec 2025)",
+    "summary": [
+      "Led disaster recovery exercises and ISO audit preparations",
+      "Rebuilt and owned the customer data deletion process end to end",
+      "Took over all SSO onboarding and improved system architecture",
+      "Built the shared automation tooling the platform teams now rely on"
+    ],
+    "details": "At Verified I played a key role in platform stability and operations. I led disaster recovery exercises aligned with ISO standards, handled major production incidents with root cause analysis and scripting to identify and repair affected data, and took over SSO integrations after a team transition, improving the architecture and onboarding major clients. I inherited an unfinished customer data deletion process, repaired it, cleared the historical backlog and moved the organisation onto a reliable monthly cadence, extending it for the largest customers. Much of my work was automation — mass deletion, data recovery, certificate operations, bulk modifications, production investigations and sensitive data cleanup — which I moved out of personal scripts and into a shared repository so the rest of the platform teams could use it too."
+  },
+  {
+    "id": 2,
     "title": "Software Developer (Freelance)",
     "subtitle": "Self-Employed",
     "date": "(Sept 2020 – Mar 2022)",
@@ -26,7 +39,7 @@
     "details": "I worked independently on several projects involving architectural design, backend and frontend development, and deploying applications to cloud platforms. I maintained a strong focus on testing, quality, and continuous delivery, while adapting quickly to changing client needs and expectations."
   },
   {
-    "id": 2,
+    "id": 3,
     "title": "Cloud Developer",
     "subtitle": "IBM UK",
     "date": "(Jul 2019 – Sept 2020)",
@@ -39,7 +52,7 @@
     "details": "I rejoined IBM as a returning graduate and quickly reintegrated into the team. I focused on cloud infrastructure projects, pipeline integration (Jenkins, Travis), and service deployment. I supported clients directly and led out-of-hours service maintenance. I also participated in internal innovation efforts, building tools and platforms in JavaScript and ReactJS, culminating in a successful patent filing."
   },
   {
-    "id": 3,
+    "id": 4,
     "title": "Software Engineering Intern",
     "subtitle": "IBM UK",
     "date": "(Jul 2017 – Aug 2018)",

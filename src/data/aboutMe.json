@@ -2,68 +2,33 @@
   "title": "About Me",
   "description": {
     "mobile": [
-      "I’m a passionate and experienced software developer with a strong focus on building, operating, and improving backend systems.",
-      "I enjoy solving complex problems, automating processes, and making systems more reliable and efficient.",
-      "I work well under pressure, stay calm during incidents, and collaborate easily across teams.",
-      "I’m known for being dependable, curious, and always willing to dive into technical challenges or help others find the right solution."
+      "I’m a Platform Ops Lead and engineer, focused on building, operating and improving the systems a business depends on — and the teams that keep them running.",
+      "I enjoy solving complex problems, automating processes, and turning neglected or ambiguous work into reliable operational processes.",
+      "I work well under pressure, stay calm during incidents, and collaborate easily across engineering, QA, product and support.",
+      "I’m known for being dependable and curious, and I’m the person colleagues come to when something is difficult or unclear — whether or not they report to me."
     ],
     "desktop": [
-      "I’m a passionate and experienced software developer with a strong focus on building, operating, and improving backend systems.",
-      "I enjoy solving complex problems, automating processes, and making systems more reliable and efficient.",
-      "I work well under pressure, stay calm during incidents, and collaborate easily across teams.",
-      "I’m known for being dependable, curious, and always willing to dive into technical challenges or help others find the right solution."
+      "I’m a Platform Ops Lead and engineer, focused on building, operating and improving the systems a business depends on — and the teams that keep them running.",
+      "I enjoy solving complex problems, automating processes, and turning neglected or ambiguous work into reliable operational processes.",
+      "I work well under pressure, stay calm during incidents, and collaborate easily across engineering, QA, product and support.",
+      "I’m known for being dependable and curious, and I’m the person colleagues come to when something is difficult or unclear — whether or not they report to me."
     ]
   },
   "experience": [
     {
       "category": "Dev-Ops",
-      "years": "2+ years",
-      "yearsDesktop": "2+ years"
+      "years": "6+ years",
+      "yearsDesktop": "6+ years"
     },
     {
-      "category": "SRE Operations", 
-      "years": "3+ years",
-      "yearsDesktop": "3+ years"
+      "category": "SRE Operations",
+      "years": "4+ years",
+      "yearsDesktop": "4+ years"
     },
     {
       "category": "Full Stack",
-      "years": "5+ years", 
-      "yearsDesktop": "5+ years"
-    }
-  ],
-  "sections": [
-    {
-      "id": "introduction",
-      "title": "Who I Am",
-      "content": "I'm a dedicated software engineer with a passion for creating efficient, scalable web applications. With experience in both frontend and backend development, I enjoy tackling complex problems and delivering user-focused solutions.",
-      "highlights": [
-        "5+ years of development experience",
-        "Full-stack web development",
-        "Cloud architecture expertise",
-        "Team collaboration and mentoring"
-      ]
-    },
-    {
-      "id": "expertise",
-      "title": "What I Do",
-      "content": "I specialize in building modern web applications using cutting-edge technologies. From responsive frontends to robust backend systems, I deliver complete solutions that drive business success.",
-      "highlights": [
-        "React & Node.js development",
-        "AWS cloud solutions",
-        "CI/CD implementation",
-        "Performance optimization"
-      ]
-    },
-    {
-      "id": "approach",
-      "title": "How I Work",
-      "content": "I believe in clean code, continuous learning, and collaborative development. My approach focuses on understanding business needs and translating them into technical solutions that are maintainable and scalable.",
-      "highlights": [
-        "Agile development methodologies",
-        "Test-driven development",
-        "Code quality and best practices",
-        "Continuous learning and improvement"
-      ]
+      "years": "8+ years",
+      "yearsDesktop": "8+ years"
     }
   ]
 }
