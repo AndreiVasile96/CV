@@ -104,6 +104,20 @@ async function run() {
       const wide = await page.evaluate(() => document.body.scrollWidth > window.innerWidth + 1);
       check("no horizontal overflow", !wide);
 
+      // The hero must be at full opacity before anything is scrolled. It has
+      // shipped dimmed twice: once because a view() timeline's exit range is
+      // already complete when the subject is shorter than the viewport, and
+      // once because the CSS minifier reordered the `animation` shorthand after
+      // `animation-timeline`, which resets it. Neither was visible on the dev
+      // server, so this check has to run against the built output.
+      await page.evaluate(() => { document.body.scrollTop = 0; });
+      await sleep(700);
+      const heroAtRest = await page.evaluate(() => {
+        const hero = document.querySelector("#landingPage");
+        return hero ? Number(getComputedStyle(hero).opacity) : 0;
+      });
+      check("hero is fully visible at rest", heroAtRest > 0.95, `opacity ${heroAtRest}`);
+
       await page.emulateMediaType("print");
       await sleep(400);
       const print = await page.evaluate(() => {

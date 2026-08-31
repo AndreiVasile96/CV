@@ -35,7 +35,16 @@
     .skillsPage,
     .experience,
     .contactMe {
-      animation: sectionReveal linear both;
+    // Longhands only, deliberately. The `animation` shorthand resets
+    // `animation-timeline` and `animation-range` to their initial values, and
+    // the production CSS minifier reorders declarations - it moved the
+    // shorthand after the longhands, wiping the timeline. The animation then
+    // ran as an ordinary time-based one with `fill: both`, playing once on load
+    // and parking at its end state. Dev builds are not minified, so this only
+    // ever appeared in production.
+    animation-name: sectionReveal;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
       animation-timeline: view();
       // Runs across the section's entry into the viewport, finishing a little
       // early so the content is settled and readable before it is centred.
@@ -73,7 +82,9 @@
     // container, which means a child's view() timeline resolves against it
     // rather than the page, and never advances.
     .landingPage {
-      animation: heroExit linear both;
+      animation-name: heroExit;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
       // Driven by how far the page has scrolled, not by the hero's own
       // geometry. A view() timeline resolved its `exit` range as already
       // complete whenever the hero was shorter than the viewport - which it is
