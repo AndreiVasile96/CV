@@ -103,14 +103,14 @@ class AboutMeTitle extends React.Component {
     anime.timeline({ loop: false }).add({
       targets: ".aboutMeBouncy",
       scale: [0, 1],
-      duration: 520,
+      duration: 320,
       easing: "easeOutElastic(1, 0.6)",
-      delay: (el, i) => 55 * (i + 1)
+      delay: (el, i) => 38 * (i + 1)
     }).add({
       // Animate triangle with the letters
       targets: ".aboutMe--ATriangle",
       scale: [0, 1],
-      duration: 520,
+      duration: 320,
       easing: "easeOutElastic(1, 0.6)",
       delay: 0 // Triangle appears first
     }, 0); // Start at the same time as letters

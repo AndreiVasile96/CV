@@ -99,9 +99,9 @@ class SkillsTitle extends React.Component {
     anime.timeline({ loop: false }).add({
       targets: ".skillsPageBouncy",
       scale: [0, 1],
-      duration: 520,
+      duration: 320,
       easing: "easeOutElastic(1, 0.6)",
-      delay: (el, i) => 55 * (i + 1)
+      delay: (el, i) => 38 * (i + 1)
     });
 
     // Add hover effects to each letter
