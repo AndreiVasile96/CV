@@ -148,7 +148,7 @@
   font-weight: normal;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.78);
   margin: 0 0 1.2rem;
   line-height: 1.4;
 }
@@ -160,6 +160,8 @@
   line-height: 1;
   margin: 0;
   color: white;
+  // Lifts the name off the radial glow behind it without changing its colour.
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
 }
 
 // The fixed 1.5rem line-height cramped the letters once the name grew.
@@ -173,7 +175,7 @@
 // be the dimmest text on the page.
 
 .landingPage--description {
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.95);
   font-size: clamp(1rem, 1.6vw, 1.25rem);
   letter-spacing: 0.14em;
   margin-top: 1.6rem;
