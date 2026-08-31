@@ -134,6 +134,14 @@ class ContactMe extends React.Component {
       !REACT_APP_EMAILJS_TEMPLATE_ID ||
       !REACT_APP_EMAILJS_SERVICE_ID ||
       !REACT_APP_EMAILJS_PUBLIC_KEY) {
+      // Without this the form fails identically to a network error, which is
+      // how it stayed broken unnoticed: the build simply had no credentials.
+      // eslint-disable-next-line no-console
+      console.error(
+        "Contact form disabled: EmailJS environment variables are missing from "
+        + "this build. Set REACT_APP_EMAILJS_SERVICE_ID, REACT_APP_EMAILJS_TEMPLATE_ID "
+        + "and REACT_APP_EMAILJS_PUBLIC_KEY (.env locally, repository secrets in CI)."
+      );
       return false;
     }
 

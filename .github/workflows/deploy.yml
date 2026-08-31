@@ -23,6 +23,15 @@ jobs:
 
       - name: Build project
         run: npm run build
+        env:
+          # CRA inlines REACT_APP_* at build time, so these must be present in
+          # the CI build or the contact form ships with no credentials and every
+          # submission fails. These are EmailJS's public/browser identifiers -
+          # never add the EmailJS private key here, it would be served to
+          # visitors. Lock the service down with EmailJS allowed-origins instead.
+          REACT_APP_EMAILJS_SERVICE_ID: ${{ secrets.REACT_APP_EMAILJS_SERVICE_ID }}
+          REACT_APP_EMAILJS_TEMPLATE_ID: ${{ secrets.REACT_APP_EMAILJS_TEMPLATE_ID }}
+          REACT_APP_EMAILJS_PUBLIC_KEY: ${{ secrets.REACT_APP_EMAILJS_PUBLIC_KEY }}
 
       - name: Check Firebase Service Account Secret
         run: |
