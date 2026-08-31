@@ -704,3 +704,23 @@ $z-index-modal: 5;
 body, html {
   font-display: swap; // Prevents invisible text during font load
 }
+
+// Sections butt directly against one another in layout - every bit of visual
+// separation came from their internal padding, and the apparent gaps varied
+// only because the reveal animation scaled each one in proportion to its
+// height. An explicit, equal gap above every section after the hero.
+.aboutMe,
+.skillsPage,
+.experience,
+.contactMe {
+  margin-top: 3rem;
+}
+
+@media only screen and (max-width: 912px) {
+  .aboutMe,
+  .skillsPage,
+  .experience,
+  .contactMe {
+    margin-top: 2.25rem;
+  }
+}
