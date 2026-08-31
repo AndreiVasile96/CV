@@ -74,8 +74,13 @@
     // rather than the page, and never advances.
     .landingPage {
       animation: heroExit linear both;
-      animation-timeline: view();
-      animation-range: exit 0% exit 100%;
+      // Driven by how far the page has scrolled, not by the hero's own
+      // geometry. A view() timeline resolved its `exit` range as already
+      // complete whenever the hero was shorter than the viewport - which it is
+      // once browser chrome eats into the visible height - so the hero
+      // rendered at opacity 0.25 before a single pixel had been scrolled.
+      animation-timeline: scroll(nearest block);
+      animation-range: 0 90vh;
       will-change: transform, opacity;
     }
   }

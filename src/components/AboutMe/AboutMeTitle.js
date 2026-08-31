@@ -99,13 +99,21 @@ class AboutMeTitle extends React.Component {
   initializeBouncyAnimation = () => {
     this.teardownBouncyAnimation();
 
+    // Spread the stagger across a fixed sweep rather than using a fixed
+    // per-letter delay. With a constant step, a short word finishes its sweep
+    // in a fraction of the time a long one takes - "Skills" (6 letters) swept
+    // in 228ms and read as appearing all at once, while "Experience" (10)
+    // swept over 380ms and visibly ran left to right. Dividing a fixed budget
+    // by the letter count makes every title sweep for the same duration.
+    const sweepStep = Math.round(420 / Math.max(1, this.bouncyList.length));
+
     // Animate letters on load - faster animation
     anime.timeline({ loop: false }).add({
       targets: ".aboutMeBouncy",
       scale: [0, 1],
       duration: 320,
       easing: "easeOutElastic(1, 0.6)",
-      delay: (el, i) => 38 * (i + 1)
+      delay: (el, i) => sweepStep * (i + 1)
     }).add({
       // Animate triangle with the letters
       targets: ".aboutMe--ATriangle",

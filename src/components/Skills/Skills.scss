@@ -856,3 +856,29 @@
     margin-bottom: 1rem;
   }
 }
+
+// ===========================================================================
+// Skill bar position
+//
+// Every category's bars are rendered and the inactive ones hidden with
+// `.disappear-text`. `height: 0` did not fully collapse them - each left an
+// 18px residual - so the visible block sat lower the further down the list its
+// category was: Dev-Sec-Ops started at 648px, Full Stack at 702px, Leadership
+// at 729px. Stacking every category in a single grid cell makes the position
+// independent of which one is open.
+// ===========================================================================
+
+.skillsPage--desktop-skill-illustration,
+.skillsPage--mobile-skill-illustrations {
+  display: grid;
+}
+
+.skillsPage-skill-illustration {
+  grid-area: 1 / 1;
+  // Hidden categories must not capture clicks meant for the visible one.
+  pointer-events: none;
+
+  &.appear-text {
+    pointer-events: auto;
+  }
+}
