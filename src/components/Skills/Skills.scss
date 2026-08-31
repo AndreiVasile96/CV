@@ -758,33 +758,6 @@
   }
 }
 
-// Title animation
-.skillsPageBouncy {
-  display: inline-block;
-  transition: 0.5s;
-  cursor: default;
-  
-  &:hover {
-    color: $cyan;
-    transform: translateY(-3px);
-  }
-  
-  &.bouncing {
-    animation: rubberBand 1s;
-  }
-}
-
-.skillsPage--title .text-wrapper {
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
-}
-
-.skillsPage--title .letter {
-  transform-origin: 50% 100%;
-  display: inline-block;
-  line-height: 1em;
-}
 
 // Add the bouncing animation keyframes
 @keyframes rubberBand {
@@ -881,4 +854,43 @@
   &.appear-text {
     pointer-events: auto;
   }
+}
+
+// ===========================================================================
+// Title letters
+//
+// These rules used to live inside `@media (min-width: 913px)`, so below that
+// width the per-letter spans never received `display: inline-block` and stayed
+// inline. Transforms do not apply to inline elements, so the `scale()` the
+// entrance animation writes on every frame was silently discarded and the
+// title simply appeared at full size - it looked like it had no animation at
+// all on phones, while working on desktop. Experience.scss declares the
+// equivalent rules globally, which is why that title always animated.
+// ===========================================================================
+
+.skillsPageBouncy {
+  display: inline-block;
+  transition: 0.5s;
+  cursor: default;
+
+  &:hover {
+    color: $cyan;
+    transform: translateY(-3px);
+  }
+
+  &.bouncing {
+    animation: rubberBand 1s;
+  }
+}
+
+.skillsPage--title .text-wrapper {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.skillsPage--title .letter {
+  transform-origin: 50% 100%;
+  display: inline-block;
+  line-height: 1em;
 }
