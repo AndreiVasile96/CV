@@ -1,15 +1,15 @@
 {
   "short_name": "Andrei Vasile",
-  "name": "Andrei Vasile - Software Developer",
+  "name": "Andrei Vasile - Platform Ops Lead and SRE",
   "icons": [
     {
       "src": "ScrollTriangles.png",
-      "sizes": "192x192",
+      "sizes": "51x30",
       "type": "image/png"
     },
     {
       "src": "Thumbnail.png",
-      "sizes": "512x512",
+      "sizes": "1079x284",
       "type": "image/png"
     }
   ],
