@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import MediaQuery from "react-responsive";
 import AboutMeTitle from "./AboutMeTitle";
@@ -10,23 +10,17 @@ import "./AboutMe.scss";
 
 export default function AboutMe(props) {
   const { aboutMeRef, refinview } = props;
-  const [comeFromBelow, setComeFromBelow] = useState("");
-  const [comeFromBelowDelayed, setComeFromBelowDelayed] = useState("");
-  const [isTitleVisible, setTitleToViewd] = useState(false);
-  const [isFirstRender, setFirstRender] = useState(false);
+  // Latches on the first time the section scrolls into view: the entrance
+  // animation plays once and the section then stays visible.
+  const [hasBeenSeen, setHasBeenSeen] = useState(false);
 
-  if (refinview === "aboutMe" && !isTitleVisible) {
-    setComeFromBelow("come-from-below");
-    setComeFromBelowDelayed("come-from-below-delayed");
-    setTitleToViewd(true);
-  }
+  useEffect(() => {
+    if (refinview === "aboutMe") setHasBeenSeen(true);
+  }, [refinview]);
 
-  let visible = "invisible";
-  if (isFirstRender) visible = "visible";
-  else if (refinview === "aboutMe") {
-    visible = "visible";
-    setFirstRender(true);
-  }
+  const comeFromBelow = hasBeenSeen ? "come-from-below" : "";
+  const comeFromBelowDelayed = hasBeenSeen ? "come-from-below-delayed" : "";
+  const visible = hasBeenSeen ? "visible" : "invisible";
 
   return (
     <div className={`aboutMe ${visible}`} id="about">

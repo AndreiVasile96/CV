@@ -1,83 +1,89 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import Skills from '../components/Skills/Skills';
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import Skills from "../components/Skills/Skills";
+import skillsData from "../data/skills.json";
+import { setViewportWidth, resetViewportWidth, MOBILE_WIDTH } from "./viewport";
 
-// Mock MediaQuery component
-jest.mock('react-responsive', () => ({
-  __esModule: true,
-  default: ({ children, maxWidth, minWidth }) => {
-    // For testing, we'll simulate mobile view (maxWidth: 912)
-    const isMobile = maxWidth === 912;
-    const isDesktop = minWidth === 913;
-    
-    // Return children based on the condition we want to test
-    if (isMobile) {
-      return <div data-testid="mobile-view">{children}</div>;
-    }
-    if (isDesktop) {
-      return <div data-testid="desktop-view">{children}</div>;
-    }
-    return null;
-  }
-}));
+const props = {
+  refinview: "skills",
+  headerTextHighlightRef: React.createRef(),
+  scroll: jest.fn()
+};
 
-describe('Skills Component', () => {
-  const defaultProps = {
-    refinview: "skills",
-    headerTextHighlightRef: React.createRef(),
-    scroll: jest.fn()
-  };
+const categoryButton = (title) => screen.getByRole("button", { name: new RegExp(title, "i") });
 
-  it('renders mobile skills correctly', () => {
-    render(<Skills {...defaultProps} />);
-    
-    const mobileView = screen.getByTestId('mobile-view');
-    expect(mobileView).toBeInTheDocument();
+describe.each([
+  ["desktop", null],
+  ["mobile", MOBILE_WIDTH]
+])("Skills (%s)", (_label, width) => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    if (width) setViewportWidth(width); else resetViewportWidth();
   });
+  afterEach(resetViewportWidth);
 
-  it('mobile skills buttons are clickable and activate progress bars', async () => {
-    render(<Skills {...defaultProps} />);
-    
-    // Wait for component to render
-    await waitFor(() => {
-      const mobileView = screen.getByTestId('mobile-view');
-      expect(mobileView).toBeInTheDocument();
+  it("renders one toggle per category from skills.json", () => {
+    render(<Skills {...props} />);
+
+    skillsData.categories.forEach((category) => {
+      expect(categoryButton(category.title)).toBeInTheDocument();
     });
-
-    // Find all skill buttons
-    const skillButtons = screen.getAllByRole('button');
-    const firstSkillButton = skillButtons.find(button => 
-      button.className.includes('skillsPage--skill')
-    );
-
-    expect(firstSkillButton).toBeInTheDocument();
-    expect(firstSkillButton).toHaveStyle('pointer-events: auto');
-
-    // Click the button - the main test is that this doesn't throw an error
-    fireEvent.click(firstSkillButton);
-    
-    // Verify the button is still accessible after click
-    expect(firstSkillButton).toBeInTheDocument();
   });
 
-  it('mobile skills buttons have proper accessibility', () => {
-    render(<Skills {...defaultProps} />);
-    
-    const skillButtons = screen.getAllByRole('button');
-    const firstSkillButton = skillButtons.find(button => 
-      button.className.includes('skillsPage--skill')
-    );
+  it("opens the default category and reports it via aria-expanded", () => {
+    render(<Skills {...props} />);
 
-    expect(firstSkillButton).toBeInTheDocument();
-    expect(firstSkillButton).toHaveStyle('pointer-events: auto');
-    expect(firstSkillButton).toHaveStyle('cursor: pointer');
+    const defaultCategory = skillsData.categories.find((c) => c.id === "devOps");
+    expect(categoryButton(defaultCategory.title)).toHaveAttribute("aria-expanded", "true");
+
+    const other = skillsData.categories.find((c) => c.id !== "devOps");
+    expect(categoryButton(other.title)).toHaveAttribute("aria-expanded", "false");
   });
 
-  it('skills section has proper z-index for mobile', () => {
-    render(<Skills {...defaultProps} />);
-    
-    const skillsSection = screen.getByTestId('mobile-view');
-    expect(skillsSection).toBeInTheDocument();
+  it("switches the expanded category on click", () => {
+    render(<Skills {...props} />);
+
+    const target = skillsData.categories.find((c) => c.id !== "devOps");
+    fireEvent.click(categoryButton(target.title));
+
+    expect(categoryButton(target.title)).toHaveAttribute("aria-expanded", "true");
+    expect(categoryButton("Dev-Sec-Ops")).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("collapses a category when its own toggle is clicked again", () => {
+    render(<Skills {...props} />);
+
+    fireEvent.click(categoryButton("Dev-Sec-Ops"));
+    expect(categoryButton("Dev-Sec-Ops")).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("does not emit a stray 'null' class on unselected toggles", () => {
+    render(<Skills {...props} />);
+
+    const other = skillsData.categories.find((c) => c.id !== "devOps");
+    expect(categoryButton(other.title).className).not.toMatch(/null/);
+  });
+
+  it("scrolls to the contact section from the inline call to action", () => {
+    render(<Skills {...props} />);
+
+    fireEvent.click(screen.getByRole("button", { name: /contact me/i }));
+    expect(props.scroll).toHaveBeenCalledWith("#contact");
+  });
+});
+
+describe("Skills data", () => {
+  // Only cyan/red at 80/85/90/95 have bar styles; anything else renders an
+  // invisible bar, which is silent and easy to miss when editing the JSON.
+  it("only uses skill bars that have a matching CSS class", () => {
+    const allowed = new Set(["cyan", "red"]);
+    const levels = new Set([80, 85, 90, 95]);
+
+    skillsData.categories.forEach((category) => {
+      category.skills.forEach((skill) => {
+        expect(allowed.has(skill.color)).toBe(true);
+        expect(levels.has(skill.level)).toBe(true);
+      });
+    });
   });
 });

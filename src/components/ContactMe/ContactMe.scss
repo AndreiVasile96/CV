@@ -386,3 +386,13 @@
 .contactMe--textarea:nth-child(3).input-visible {
   transition-delay: 0.3s;
 }
+
+// The section title was an <h1> and is now an <h2> so the page has a single
+// top-level heading and a valid heading order. Browser default sizing differs
+// between the two levels, so pin the previous <h1> defaults to keep the
+// rendering identical.
+.contactMe--title > h2 {
+  font-size: 2em;
+  margin: 0.67em 0;
+  font-weight: bold;
+}

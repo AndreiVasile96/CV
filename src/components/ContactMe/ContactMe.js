@@ -17,13 +17,6 @@ import "./ContactMe.scss";
 
 const inputTresHold = 5;
 
-// Updated environment variable names for EmailJS v3+
-const {
-  REACT_APP_EMAILJS_TEMPLATE_ID,
-  REACT_APP_EMAILJS_SERVICE_ID,
-  REACT_APP_EMAILJS_PUBLIC_KEY
-} = process.env;
-
 class ContactMe extends React.Component {
   constructor() {
     super();
@@ -65,9 +58,8 @@ class ContactMe extends React.Component {
     const { target } = event;
     const { value, name } = target;
 
-    this.checkValidation();
-
-    // Since form field names now match state properties, no mapping needed
+    // Field names match state properties, so no mapping is needed. Validation
+    // classes are recomputed from state during render.
     this.setState({
       [name]: value
     });
@@ -130,7 +122,14 @@ class ContactMe extends React.Component {
   }
 
   async sendEmail(event) {
-    // Check if environment variables are set
+    // EmailJS credentials. The public key is safe to ship; never add the
+    // private key here, since CRA inlines REACT_APP_* into the public bundle.
+    const {
+      REACT_APP_EMAILJS_TEMPLATE_ID,
+      REACT_APP_EMAILJS_SERVICE_ID,
+      REACT_APP_EMAILJS_PUBLIC_KEY
+    } = process.env;
+
     if (
       !REACT_APP_EMAILJS_TEMPLATE_ID ||
       !REACT_APP_EMAILJS_SERVICE_ID ||
@@ -150,13 +149,7 @@ class ContactMe extends React.Component {
       );
 
       this.setState({ isLoading: false });
-      let returnValue = true;
-      if (result.status === 200) {
-        // Email sent successfully
-      } else {
-        returnValue = false;
-      }
-      return returnValue;
+      return result.status === 200;
     } catch (error) {
       this.setState({ isLoading: false });
       return false;
@@ -235,9 +228,10 @@ class ContactMe extends React.Component {
                   <textarea
                     key={name}
                     name={name}
-                    type="textarea"
                     placeholder={placeholder}
                     value={fieldValue}
+                    aria-label={placeholder.replace(" *", "")}
+                    aria-required={field.required}
                     className={`contactMe--input ${renderAnimation ? comeFromBelowDelayed : "input-loading"} ${className || ""} ${
                       !this.checkValidation(name)
                         ? "input-form-started"
@@ -254,6 +248,8 @@ class ContactMe extends React.Component {
                   type={type}
                   placeholder={placeholder}
                   value={fieldValue}
+                  aria-label={placeholder.replace(" *", "")}
+                  aria-required={field.required}
                   className={`contactMe--input ${renderAnimation ? comeFromBelowDelayed : "input-loading"} ${
                     !this.checkValidation(name)
                       ? "input-form-started"

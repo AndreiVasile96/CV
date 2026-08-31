@@ -81,14 +81,14 @@ export default function LandingPageTitle(props) {
         <span className="text-wrapper">
           <span className="letters">Hello, I am</span>
           &nbsp;
-          <div className="landingPage--name-popin">
+          <span className="landingPage--name-popin landingPage--name-popin--block">
             <img
               className="landingPage--ATriangle"
               src={ATriangle}
               alt="A triangle"
             />
             ndrei
-          </div>
+          </span>
         </span>
       </h1>
     );

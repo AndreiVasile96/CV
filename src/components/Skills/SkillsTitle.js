@@ -14,6 +14,7 @@ class SkillsTitle extends React.Component {
       isTitleVisible: false
     };
     this.bouncyList = null;
+    this.hoverHandlers = [];
   }
 
   componentDidMount() {
@@ -40,7 +41,20 @@ class SkillsTitle extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.teardownBouncyAnimation();
+  }
+
+  teardownBouncyAnimation = () => {
+    this.hoverHandlers.forEach(([element, handler]) => {
+      element.removeEventListener("mouseover", handler);
+    });
+    this.hoverHandlers = [];
+  };
+
   initializeBouncyAnimation = () => {
+    this.teardownBouncyAnimation();
+
     // Animate letters on load - faster animation
     anime.timeline({ loop: false }).add({
       targets: ".skillsPageBouncy",
@@ -53,17 +67,22 @@ class SkillsTitle extends React.Component {
     // Add hover effects to each letter
     this.bouncyList = document.querySelectorAll(".skillsPageBouncy");
     this.bouncyList.forEach((letter, index) => {
-      letter.addEventListener("mouseover", () => this.toggleRubberBand(index));
+      const handleHover = () => this.toggleRubberBand(index);
+      this.hoverHandlers.push([letter, handleHover]);
+      letter.addEventListener("mouseover", handleHover);
     });
   };
 
   toggleRubberBand = (id) => {
-    if (this.bouncyList && this.bouncyList[id]) {
-      this.bouncyList[id].classList.add("bouncing");
-      this.bouncyList[id].addEventListener("animationend", () => {
-        this.bouncyList[id].classList.remove("bouncing");
-      });
-    }
+    const letter = this.bouncyList && this.bouncyList[id];
+    if (!letter) return;
+
+    letter.classList.add("bouncing");
+    const handleEnd = () => {
+      letter.classList.remove("bouncing");
+      letter.removeEventListener("animationend", handleEnd);
+    };
+    letter.addEventListener("animationend", handleEnd);
   };
 
   render() {
@@ -73,16 +92,16 @@ class SkillsTitle extends React.Component {
     if (mode === "mobile") {
       return (
         <div className={`skillsPage--title ${comeFromBelow} ${visible}`} id="skills-title">
-          <h1 ref={headerTextHighlightRef}>
-            <div className="text-wrapper">
+          <h2 ref={headerTextHighlightRef}>
+            <span className="text-wrapper">
               <span className="letter skillsPageBouncy">S</span>
               <span className="letter skillsPageBouncy">k</span>
               <span className="letter skillsPageBouncy">i</span>
               <span className="letter skillsPageBouncy">l</span>
               <span className="letter skillsPageBouncy">l</span>
               <span className="letter skillsPageBouncy">s</span>
-            </div>
-          </h1>
+            </span>
+          </h2>
         </div>
       );
     }
@@ -90,17 +109,17 @@ class SkillsTitle extends React.Component {
     // Desktop mode
     return (
       <div className={`skillsPage--title ${comeFromBelow} ${visible}`} id="skills-title">
-        <h1 ref={headerTextHighlightRef}>
+        <h2 ref={headerTextHighlightRef}>
           &nbsp;
-          <div className="text-wrapper">
+          <span className="text-wrapper">
             <span className="letter skillsPageBouncy">S</span>
             <span className="letter skillsPageBouncy">k</span>
             <span className="letter skillsPageBouncy">i</span>
             <span className="letter skillsPageBouncy">l</span>
             <span className="letter skillsPageBouncy">l</span>
             <span className="letter skillsPageBouncy">s</span>
-          </div>
-        </h1>
+          </span>
+        </h2>
       </div>
     );
   }

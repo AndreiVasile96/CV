@@ -1,16 +1,30 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
-import Header from '../components/Header/Header';
+import React from "react";
+import { render } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
+import Header from "../components/Header/Header";
+import { setViewportWidth, resetViewportWidth, MOBILE_WIDTH } from "./viewport";
 
 expect.extend(toHaveNoViolations);
 
-describe('Header accessibility', () => {
-  it('should have no accessibility violations', async () => {
-    const { container } = render(
-      <Header refinview="header" scroll={() => {}} headerTextHighlightRef={React.createRef()} />
-    );
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+const renderComponent = () => render(
+  <Header
+    scroll={() => {}}
+    refinview="landingPage"
+  />
+);
+
+describe("Header accessibility", () => {
+  afterEach(resetViewportWidth);
+
+  it("has no violations on desktop", async () => {
+    resetViewportWidth();
+    const { container } = renderComponent();
+    expect(await axe(container)).toHaveNoViolations();
+  });
+
+  it("has no violations on mobile", async () => {
+    setViewportWidth(MOBILE_WIDTH);
+    const { container } = renderComponent();
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

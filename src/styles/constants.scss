@@ -463,6 +463,10 @@ $z-index-modal: 5;
 // ANIMATIONS -- LANDINGPAGE --
 ///////////////////////////////////
 
+.landingPage--name-popin--block {
+  display: block;
+}
+
 .landingPage--name-popin {
   opacity: 0;
   animation-name: title-fadein;

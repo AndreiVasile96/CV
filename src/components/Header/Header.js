@@ -96,7 +96,7 @@ export default function Header(props) {
           <div className={`header--modal-body ${isClosing ? "header--modal-body--closing" : ""}`}>
             <section className="header--modal-menu">
               <div className="header--modal-title">
-                <h1>
+                <h2>
                   <img
                     className="header--triangle"
                     src={ATriangle}
@@ -107,10 +107,10 @@ export default function Header(props) {
                   <img
                     className="header--triangle header--triangle--v"
                     src={VTriangle}
-                    alt="A triangle"
+                    alt="V triangle"
                   />
                   asile
-                </h1>
+                </h2>
               </div>
               <div className="header--modal-bar" />
               <button
@@ -168,34 +168,6 @@ export default function Header(props) {
                 </h3>
               </button>
               <div className="header--modal-bar" />
-              {/* <div className="header--modal-social">
-                <a
-                  href="https://github.com/AndreiVasile96/CV"
-                  className="header--modal-social-link"
-                  aria-label="Visit GitHub profile"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={githubLogo}
-                    alt="GitHub"
-                    className="header--modal-social-logo"
-                  />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/andrei-vasile/"
-                  className="header--modal-social-link"
-                  aria-label="Visit LinkedIn profile"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={linkedinLogo}
-                    alt="LinkedIn"
-                    className="header--modal-social-logo"
-                  />
-                </a>
-              </div> */}
             </section>
           </div>
         ) : null}
@@ -208,7 +180,7 @@ export default function Header(props) {
               className="header--burger-menu-btn"
               onClick={() => scroll("#landingPage")}
             >
-              <h1 className="header--name-logo">
+              <h2 className="header--name-logo">
                 <img
                   className="header--triangle-element"
                   src={ATriangle}
@@ -221,15 +193,15 @@ export default function Header(props) {
                   alt="V triangle"
                 />
                 asile
-              </h1>
+              </h2>
             </button>
           </div>
           <div className="header--links-group" style={{ marginRight: "2rem" }}>
             <div className="header--group-item">
               <button
                 type="button"
-                className={`invisible--buton header--group-item-text " ${
-                  refinview === "aboutMe" ? "cyan-text" : null
+                className={`invisible--buton header--group-item-text ${
+                  refinview === "aboutMe" ? "cyan-text" : ""
                 }`}
                 onClick={() => scroll("#about-title")}
               >
@@ -239,8 +211,8 @@ export default function Header(props) {
             <div className="header--group-item">
               <button
                 type="button"
-                className={`invisible--buton header--group-item-text " ${
-                  refinview === "skills" ? "cyan-text" : null
+                className={`invisible--buton header--group-item-text ${
+                  refinview === "skills" ? "cyan-text" : ""
                 }`}
                 onClick={() => scroll("#skills-title")}
               >
@@ -250,8 +222,8 @@ export default function Header(props) {
             <div className="header--group-item">
               <button
                 type="button"
-                className={`invisible--buton header--group-item-text " ${
-                  refinview === "experience" ? "cyan-text" : null
+                className={`invisible--buton header--group-item-text ${
+                  refinview === "experience" ? "cyan-text" : ""
                 }`}
                 onClick={() => scroll("#experience-title")}
               >
@@ -261,8 +233,8 @@ export default function Header(props) {
             <div className="header--group-item">
               <button
                 type="button"
-                className={`invisible--buton header--group-item-text " ${
-                  refinview === "contactMe" ? "cyan-text" : null
+                className={`invisible--buton header--group-item-text ${
+                  refinview === "contactMe" ? "cyan-text" : ""
                 }`}
                 onClick={() => scroll("#contact-title")}
               >

@@ -14,6 +14,7 @@ class ContactMeTitle extends React.Component {
       isTitleVisible: false
     };
     this.bouncyList = null;
+    this.hoverHandlers = [];
   }
 
   componentDidMount() {
@@ -40,7 +41,20 @@ class ContactMeTitle extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.teardownBouncyAnimation();
+  }
+
+  teardownBouncyAnimation = () => {
+    this.hoverHandlers.forEach(([element, handler]) => {
+      element.removeEventListener("mouseover", handler);
+    });
+    this.hoverHandlers = [];
+  };
+
   initializeBouncyAnimation = () => {
+    this.teardownBouncyAnimation();
+
     // Animate letters on load - faster animation
     anime.timeline({ loop: false }).add({
       targets: ".contactMeBouncy",
@@ -53,17 +67,22 @@ class ContactMeTitle extends React.Component {
     // Add hover effects to each letter
     this.bouncyList = document.querySelectorAll(".contactMeBouncy");
     this.bouncyList.forEach((letter, index) => {
-      letter.addEventListener("mouseover", () => this.toggleRubberBand(index));
+      const handleHover = () => this.toggleRubberBand(index);
+      this.hoverHandlers.push([letter, handleHover]);
+      letter.addEventListener("mouseover", handleHover);
     });
   };
 
   toggleRubberBand = (id) => {
-    if (this.bouncyList && this.bouncyList[id]) {
-      this.bouncyList[id].classList.add("bouncing");
-      this.bouncyList[id].addEventListener("animationend", () => {
-        this.bouncyList[id].classList.remove("bouncing");
-      });
-    }
+    const letter = this.bouncyList && this.bouncyList[id];
+    if (!letter) return;
+
+    letter.classList.add("bouncing");
+    const handleEnd = () => {
+      letter.classList.remove("bouncing");
+      letter.removeEventListener("animationend", handleEnd);
+    };
+    letter.addEventListener("animationend", handleEnd);
   };
 
   render() {
@@ -73,8 +92,8 @@ class ContactMeTitle extends React.Component {
     if (mode === "mobile") {
       return (
         <div className={`contactMe--title ${comeFromBelow} ${visible}`} id="contact-title">
-          <h1 ref={headerTextHighlightRef}>
-            <div className="text-wrapper">
+          <h2 ref={headerTextHighlightRef}>
+            <span className="text-wrapper">
               <span className="letter contactMeBouncy">C</span>
               <span className="letter contactMeBouncy">o</span>
               <span className="letter contactMeBouncy">n</span>
@@ -85,8 +104,8 @@ class ContactMeTitle extends React.Component {
               <span className="letter contactMeBouncy">&nbsp;</span>
               <span className="letter contactMeBouncy">m</span>
               <span className="letter contactMeBouncy">e</span>
-            </div>
-          </h1>
+            </span>
+          </h2>
         </div>
       );
     }
@@ -94,9 +113,9 @@ class ContactMeTitle extends React.Component {
     // Desktop mode
     return (
       <div className={`contactMe--title ${comeFromBelow} ${visible}`} id="contact-title">
-        <h1 ref={headerTextHighlightRef}>
+        <h2 ref={headerTextHighlightRef}>
           &nbsp;
-          <div className="text-wrapper">
+          <span className="text-wrapper">
             <span className="letter contactMeBouncy">C</span>
             <span className="letter contactMeBouncy">o</span>
             <span className="letter contactMeBouncy">n</span>
@@ -107,8 +126,8 @@ class ContactMeTitle extends React.Component {
             <span className="letter contactMeBouncy">&nbsp;</span>
             <span className="letter contactMeBouncy">m</span>
             <span className="letter contactMeBouncy">e</span>
-          </div>
-        </h1>
+          </span>
+        </h2>
       </div>
     );
   }

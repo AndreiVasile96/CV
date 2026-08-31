@@ -16,6 +16,7 @@ class AboutMeTitle extends React.Component {
       isTitleVisible: false
     };
     this.bouncyList = null;
+    this.hoverHandlers = [];
   }
 
   componentDidMount() {
@@ -43,7 +44,20 @@ class AboutMeTitle extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.teardownBouncyAnimation();
+  }
+
+  teardownBouncyAnimation = () => {
+    this.hoverHandlers.forEach(([element, handler]) => {
+      element.removeEventListener("mouseover", handler);
+    });
+    this.hoverHandlers = [];
+  };
+
   initializeBouncyAnimation = () => {
+    this.teardownBouncyAnimation();
+
     // Animate letters on load - faster animation
     anime.timeline({ loop: false }).add({
       targets: ".aboutMeBouncy",
@@ -63,7 +77,9 @@ class AboutMeTitle extends React.Component {
     // Add hover effects to each letter
     this.bouncyList = document.querySelectorAll(".aboutMeBouncy");
     this.bouncyList.forEach((letter, index) => {
-      letter.addEventListener("mouseover", () => this.toggleRubberBand(index));
+      const handleHover = () => this.toggleRubberBand(index);
+      this.hoverHandlers.push([letter, handleHover]);
+      letter.addEventListener("mouseover", handleHover);
     });
 
     // Add hover effect to triangle
@@ -74,12 +90,15 @@ class AboutMeTitle extends React.Component {
   };
 
   toggleRubberBand = (id) => {
-    if (this.bouncyList && this.bouncyList[id]) {
-      this.bouncyList[id].classList.add("bouncing");
-      this.bouncyList[id].addEventListener("animationend", () => {
-        this.bouncyList[id].classList.remove("bouncing");
-      });
-    }
+    const letter = this.bouncyList && this.bouncyList[id];
+    if (!letter) return;
+
+    letter.classList.add("bouncing");
+    const handleEnd = () => {
+      letter.classList.remove("bouncing");
+      letter.removeEventListener("animationend", handleEnd);
+    };
+    letter.addEventListener("animationend", handleEnd);
   };
 
   toggleTriangleRubberBand = () => {
@@ -98,13 +117,13 @@ class AboutMeTitle extends React.Component {
     if (mode === "mobile") {
       return (
         <div className={`aboutMe--title ${comeFromBelow} ${visible}`} id="about-title">
-          <h1 ref={aboutMeRef}>
+          <h2 ref={aboutMeRef}>
             <img
               className="aboutMe--ATriangle aboutMe--ATriangle-mobile"
               src={ATriangle}
               alt="A triangle"
             />
-            <div className="text-wrapper">
+            <span className="text-wrapper">
               <span className="letter aboutMeBouncy">b</span>
               <span className="letter aboutMeBouncy">o</span>
               <span className="letter aboutMeBouncy">u</span>
@@ -112,8 +131,8 @@ class AboutMeTitle extends React.Component {
               <span className="letter aboutMeBouncy">&nbsp;</span>
               <span className="letter aboutMeBouncy">m</span>
               <span className="letter aboutMeBouncy">e</span>
-            </div>
-          </h1>
+            </span>
+          </h2>
         </div>
       );
     }
@@ -121,14 +140,14 @@ class AboutMeTitle extends React.Component {
     // Desktop mode
     return (
       <div className={`aboutMe--title ${comeFromBelow} ${visible}`} id="about-title">
-        <h1 ref={aboutMeRef}>
+        <h2 ref={aboutMeRef}>
           <img
             className="aboutMe--ATriangle"
             src={ATriangle}
             alt="A triangle"
           />
           &nbsp;
-          <div className="text-wrapper">
+          <span className="text-wrapper">
             <span className="letter aboutMeBouncy">b</span>
             <span className="letter aboutMeBouncy">o</span>
             <span className="letter aboutMeBouncy">u</span>
@@ -136,8 +155,8 @@ class AboutMeTitle extends React.Component {
             <span className="letter aboutMeBouncy">&nbsp;</span>
             <span className="letter aboutMeBouncy">m</span>
             <span className="letter aboutMeBouncy">e</span>
-          </div>
-        </h1>
+          </span>
+        </h2>
       </div>
     );
   }

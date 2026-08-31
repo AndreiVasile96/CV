@@ -1,6 +1,3 @@
-/* eslint-disable jsx-a11y/interactive-supports-focus */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable operator-linebreak */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable react/jsx-one-expression-per-line */
@@ -13,7 +10,7 @@ import SkillsTitle from "./SkillsTitle";
 // Import JSON data
 import skillsData from "../../data/skills.json";
 
-import downArrow from "../../assets/icons/V-Small-Triangle.svg";
+import arrowIcon from "../../assets/icons/V-Small-Triangle.svg";
 import "./Skills.scss";
 
 class Skills extends React.Component {
@@ -92,19 +89,19 @@ class Skills extends React.Component {
     } = this.state;
     const { headerTextHighlightRef, refinview, scroll } = this.props;
 
-    const downArrowDiv = (
+    const expandedArrow = (
       <img
         className="skillsPage--skill-img rotate-img"
-        src={downArrow}
-        alt="Down arrow"
+        src={arrowIcon}
+        alt=""
       />
     );
 
-    const upArrowDiv = (
+    const collapsedArrow = (
       <img
         className="skillsPage--skill-img"
-        src={downArrow}
-        alt="Up arrow"
+        src={arrowIcon}
+        alt=""
       />
     );
 
@@ -123,13 +120,13 @@ class Skills extends React.Component {
                   {index === skillsData.descriptions.length - 1 ? (
                     <>
                       {desc.split("contact me")[0]}
-                      <a
-                        role="button"
+                      <button
+                        type="button"
                         className="cyan-text invisible--buton"
                         onClick={() => scroll("#contact")}
                       >
                         &nbsp;Contact me.
-                      </a>
+                      </button>
                     </>
                   ) : (
                     desc
@@ -151,19 +148,15 @@ class Skills extends React.Component {
                       // Ensure touch events work on mobile
                       e.stopPropagation();
                     }}
+                    aria-expanded={expand === category.id}
                     className={`skillsPage--skill remove-btn-style ${
-                      expand === category.id ? "cyan-btn-selected" : null
+                      expand === category.id ? "cyan-btn-selected" : ""
                     }`}
-                    style={{
-                      pointerEvents: "auto",
-                      touchAction: "manipulation",
-                      cursor: "pointer"
-                    }}
                   >
                     <div className="skillsPage-skill-btn">
                       <p className="skillsPage--skill-name">{category.title}</p>
                     </div>
-                    {expand === category.id ? downArrowDiv : upArrowDiv}
+                    {expand === category.id ? expandedArrow : collapsedArrow}
                   </button>
                 </div>
               ))}
@@ -192,18 +185,15 @@ class Skills extends React.Component {
                           e.stopPropagation();
                           this.expandSkills(category.id);
                         }}
+                        aria-expanded={expand === category.id}
                         className={`skillsPage--skill remove-btn-style ${
-                          expand === category.id ? "cyan-btn-selected" : null
+                          expand === category.id ? "cyan-btn-selected" : ""
                         }`}
-                        style={{
-                          pointerEvents: "auto",
-                          cursor: "pointer"
-                        }}
                       >
                         <div className="skillsPage-skill-btn">
                           <p className="skillsPage--skill-name">{category.title}</p>
                         </div>
-                        {expand === category.id ? downArrowDiv : upArrowDiv}
+                        {expand === category.id ? expandedArrow : collapsedArrow}
                       </button>
                     ))}
                   </div>
@@ -215,13 +205,13 @@ class Skills extends React.Component {
                         {index === skillsData.descriptions.length - 1 ? (
                           <>
                             {desc.split("contact me")[0]}
-                            <a
-                              role="button"
+                            <button
+                              type="button"
                               className="cyan-text invisible--buton"
                               onClick={() => scroll("#contact")}
                             >
                               &nbsp;Contact me.
-                            </a>
+                            </button>
                           </>
                         ) : (
                           desc

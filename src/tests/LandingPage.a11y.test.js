@@ -1,20 +1,20 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
-import Skills from "../components/Skills/Skills";
+import LandingPage from "../components/LandingPage/LandingPage";
 import { setViewportWidth, resetViewportWidth, MOBILE_WIDTH } from "./viewport";
 
 expect.extend(toHaveNoViolations);
 
 const renderComponent = () => render(
-  <Skills
+  <LandingPage
     headerTextHighlightRef={React.createRef()}
     scroll={() => {}}
-    refinview="skills"
+    refinview="landingPage"
   />
 );
 
-describe("Skills accessibility", () => {
+describe("LandingPage accessibility", () => {
   afterEach(resetViewportWidth);
 
   it("has no violations on desktop", async () => {

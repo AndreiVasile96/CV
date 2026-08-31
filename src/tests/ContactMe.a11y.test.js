@@ -1,16 +1,30 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
-import ContactMe from '../components/ContactMe/ContactMe';
+import React from "react";
+import { render } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
+import ContactMe from "../components/ContactMe/ContactMe";
+import { setViewportWidth, resetViewportWidth, MOBILE_WIDTH } from "./viewport";
 
 expect.extend(toHaveNoViolations);
 
-describe('ContactMe accessibility', () => {
-  it('should have no accessibility violations', async () => {
-    const { container } = render(
-      <ContactMe refinview="contactMe" headerTextHighlightRef={React.createRef()} />
-    );
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+const renderComponent = () => render(
+  <ContactMe
+    headerTextHighlightRef={React.createRef()}
+    refinview="contactMe"
+  />
+);
+
+describe("ContactMe accessibility", () => {
+  afterEach(resetViewportWidth);
+
+  it("has no violations on desktop", async () => {
+    resetViewportWidth();
+    const { container } = renderComponent();
+    expect(await axe(container)).toHaveNoViolations();
+  });
+
+  it("has no violations on mobile", async () => {
+    setViewportWidth(MOBILE_WIDTH);
+    const { container } = renderComponent();
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

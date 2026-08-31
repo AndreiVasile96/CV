@@ -44,8 +44,12 @@ Create a `.env` file in the root directory with your EmailJS credentials:
 REACT_APP_EMAILJS_TEMPLATE_ID=your_template_id
 REACT_APP_EMAILJS_SERVICE_ID=your_service_id
 REACT_APP_EMAILJS_PUBLIC_KEY=your_public_key
-REACT_APP_EMAILJS_PRIVATE_KEY=your_private_key
 ```
+
+> **Never put a secret in a `REACT_APP_*` variable.** CRA inlines these into the
+> production bundle at build time, so anything here is public. EmailJS's *public*
+> key is designed for exactly this; its private key must never reach the client.
+> Lock the service down with EmailJS's allowed-origins setting instead.
 
 ### 🔧 Development Commands
 
@@ -77,6 +81,12 @@ Tests are located in the `src/tests/` directory and use Jest with React Testing 
 npm test -- src/tests/*.a11y.test.js
 ```
 Accessibility tests use `jest-axe` to check for WCAG compliance violations.
+
+#### Lint
+```bash
+npm run lint       # report
+npm run lint:fix   # auto-fix what can be fixed
+```
 
 #### Run Storybook (Visual & Responsive Testing)
 ```bash
@@ -110,6 +120,7 @@ src/
 ├── data/              # JSON data files
 ├── styles/            # Global SCSS constants
 └── tests/             # Test suites
+```
 
 ## 🎨 Key Features Implemented
 
@@ -135,7 +146,7 @@ MIT License - see [LICENSE](LICENSE) file for details
 - **LinkedIn**: [andrei-vasile](https://www.linkedin.com/in/andrei-vasile/)
 - **GitHub**: [AndreiVasile96](https://github.com/AndreiVasile96)
 - **Email**: andreisvasile@gmail.com
-- **Live Site**: [Deployed on Firebase](https://your-firebase-url.web.app)
+- **Live Site**: [andrei-vasile.com](https://andrei-vasile.com/)
 
 ---
 

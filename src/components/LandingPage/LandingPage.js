@@ -41,7 +41,7 @@ export default function LandingPage(props) {
         <div className="landingPage--description landingPage--item-popin">
           <p>
             <MediaQuery maxWidth={912}>
-              <span>Dev-Ops</span>
+              <span>Platform Ops</span>
               &nbsp;/&nbsp;
               <span>SRE</span>
               &nbsp;/&nbsp;
@@ -54,7 +54,7 @@ export default function LandingPage(props) {
                 className="landingPageBouncy"
                 onMouseEnter={toggleRubberBand}
               >
-                Dev-Ops
+                Platform Ops
               </span>
               &nbsp;/&nbsp;
               <span
@@ -82,7 +82,7 @@ export default function LandingPage(props) {
         </div>
         <div>
           <button
-            onClick={() => scroll("#contact", "bot")}
+            onClick={() => scroll("#contact")}
             className="main-btn-style landingPage--item-popin"
             type="button"
           >
@@ -92,7 +92,7 @@ export default function LandingPage(props) {
         <div className="landingPage--scroll-group">
           <div className="landingPage--scroll landingPage--scroll--left">
             <button
-              onClick={() => scroll("#about", "bot")}
+              onClick={() => scroll("#about")}
               className="landingPage--scroll-btn come-from-below-delayed-more"
               type="button"
             >
@@ -104,7 +104,7 @@ export default function LandingPage(props) {
           </div>
           <div className="landingPage--scroll landingPage--scroll--right">
             <button
-              onClick={() => scroll("#about", "bot")}
+              onClick={() => scroll("#about")}
               className="landingPage--scroll-btn come-from-below-delayed-more"
               type="button"
             >

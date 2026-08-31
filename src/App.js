@@ -14,25 +14,21 @@ import Footer from "./components/Footer/Footer"; // Add this import
 import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
 
+// Roughly the header height (10rem), so a section does not land underneath it.
+const HEADER_OFFSET = 160;
+
 function scroll(target) {
   const element = document.querySelector(target);
-  if (element) {
-    // First scroll to the element
-    element.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
+  if (!element) return;
 
-    // Then adjust for header offset after a short delay
-    setTimeout(() => {
-      const topOffset = 160; // Increased to match header height (e.g., 10rem)
-      const currentScroll = window.pageYOffset;
-      window.scrollTo({
-        middle: Math.max(0, currentScroll - topOffset),
-        behavior: "smooth"
-      });
-    }, 100);
-  }
+  // Resolve the element's absolute position and subtract the header in one go,
+  // rather than scrolling twice and racing a timeout against the smooth scroll.
+  const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
+
+  window.scrollTo({
+    top: Math.max(0, elementTop - HEADER_OFFSET),
+    behavior: "smooth"
+  });
 }
 
 export default function App() {

@@ -98,6 +98,7 @@
   // Ensure proper positioning and pointer events for mobile
   position: relative;
   pointer-events: auto; // Ensure clickability
+  touch-action: manipulation; // Suppress the 300ms tap delay on mobile
   
   &:hover:not(.cyan-btn-selected) {
     background-color: $cyan-transparent;
@@ -105,9 +106,15 @@
     transform: translateY(-2px);
   }
   
-  // Prevent flashing during state changes
+  // Prevent flashing during state changes on click, but keep a visible
+  // indicator for keyboard focus (WCAG 2.4.7).
   &:focus {
     outline: none;
+  }
+
+  &:focus-visible {
+    outline: 0.15rem solid $cyan;
+    outline-offset: 0.2rem;
   }
   
   &:active {
@@ -821,4 +828,14 @@
     backface-visibility: hidden; // Prevent flickering
     transform: translateZ(0); // Force hardware acceleration
   }
+}
+
+// The section title was an <h1> and is now an <h2> so the page has a single
+// top-level heading and a valid heading order. Browser default sizing differs
+// between the two levels, so pin the previous <h1> defaults to keep the
+// rendering identical.
+.skillsPage--title > h2 {
+  font-size: 2em;
+  margin: 0.67em 0;
+  font-weight: bold;
 }

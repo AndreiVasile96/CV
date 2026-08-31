@@ -12,6 +12,7 @@ class ExperienceTitle extends React.Component {
       isTitleVisible: false
     };
     this.bouncyList = null;
+    this.hoverHandlers = [];
   }
 
   componentDidMount() {
@@ -38,7 +39,20 @@ class ExperienceTitle extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.teardownBouncyAnimation();
+  }
+
+  teardownBouncyAnimation = () => {
+    this.hoverHandlers.forEach(([element, handler]) => {
+      element.removeEventListener("mouseover", handler);
+    });
+    this.hoverHandlers = [];
+  };
+
   initializeBouncyAnimation = () => {
+    this.teardownBouncyAnimation();
+
     // Animate letters on load - faster animation
     anime.timeline({ loop: false }).add({
       targets: ".experienceBouncy",
@@ -51,17 +65,22 @@ class ExperienceTitle extends React.Component {
     // Add hover effects to each letter
     this.bouncyList = document.querySelectorAll(".experienceBouncy");
     this.bouncyList.forEach((letter, index) => {
-      letter.addEventListener("mouseover", () => this.toggleRubberBand(index));
+      const handleHover = () => this.toggleRubberBand(index);
+      this.hoverHandlers.push([letter, handleHover]);
+      letter.addEventListener("mouseover", handleHover);
     });
   };
 
   toggleRubberBand = (id) => {
-    if (this.bouncyList && this.bouncyList[id]) {
-      this.bouncyList[id].classList.add("bouncing");
-      this.bouncyList[id].addEventListener("animationend", () => {
-        this.bouncyList[id].classList.remove("bouncing");
-      });
-    }
+    const letter = this.bouncyList && this.bouncyList[id];
+    if (!letter) return;
+
+    letter.classList.add("bouncing");
+    const handleEnd = () => {
+      letter.classList.remove("bouncing");
+      letter.removeEventListener("animationend", handleEnd);
+    };
+    letter.addEventListener("animationend", handleEnd);
   };
 
   render() {
@@ -71,8 +90,8 @@ class ExperienceTitle extends React.Component {
     if (mode === "mobile") {
       return (
         <div className={`experience--title ${comeFromBelow} ${visible}`} id="experience-title">
-          <h1 ref={headerTextHighlightRef}>
-            <div className="text-wrapper">
+          <h2 ref={headerTextHighlightRef}>
+            <span className="text-wrapper">
               <span className="letter experienceBouncy">E</span>
               <span className="letter experienceBouncy">x</span>
               <span className="letter experienceBouncy">p</span>
@@ -83,8 +102,8 @@ class ExperienceTitle extends React.Component {
               <span className="letter experienceBouncy">n</span>
               <span className="letter experienceBouncy">c</span>
               <span className="letter experienceBouncy">e</span>
-            </div>
-          </h1>
+            </span>
+          </h2>
         </div>
       );
     }
@@ -92,9 +111,9 @@ class ExperienceTitle extends React.Component {
     // Desktop mode
     return (
       <div className={`experience--title ${comeFromBelow} ${visible}`} id="experience-title">
-        <h1 ref={headerTextHighlightRef}>
+        <h2 ref={headerTextHighlightRef}>
           &nbsp;
-          <div className="text-wrapper">
+          <span className="text-wrapper">
             <span className="letter experienceBouncy">E</span>
             <span className="letter experienceBouncy">x</span>
             <span className="letter experienceBouncy">p</span>
@@ -105,8 +124,8 @@ class ExperienceTitle extends React.Component {
             <span className="letter experienceBouncy">n</span>
             <span className="letter experienceBouncy">c</span>
             <span className="letter experienceBouncy">e</span>
-          </div>
-        </h1>
+          </span>
+        </h2>
       </div>
     );
   }

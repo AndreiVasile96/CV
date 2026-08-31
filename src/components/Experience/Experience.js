@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable object-curly-newline */
 /* eslint-disable operator-linebreak */
 /* eslint-disable react/jsx-one-expression-per-line */
@@ -29,6 +30,7 @@ class Experience extends React.Component {
     };
 
     this.selectTab = this.selectTab.bind(this);
+    this.tabTimeouts = [];
   }
 
   componentDidUpdate() {
@@ -43,6 +45,11 @@ class Experience extends React.Component {
         visible: "visible"
       });
     }
+  }
+
+  componentWillUnmount() {
+    this.tabTimeouts.forEach(clearTimeout);
+    this.tabTimeouts = [];
   }
 
   // Handle card click - only expand, don"t collapse
@@ -108,7 +115,7 @@ class Experience extends React.Component {
     });
 
     // After switch-out animation completes, change tab and start switch-in
-    setTimeout(() => {
+    this.tabTimeouts.push(setTimeout(() => {
       this.setState({
         selectedTab: target,
         renderGridAnimation: "come-from-below-fast",
@@ -117,13 +124,13 @@ class Experience extends React.Component {
       });
 
       // Complete the transition
-      setTimeout(() => {
+      this.tabTimeouts.push(setTimeout(() => {
         this.setState({
           isTabSwitching: false,
           tabSwitchDirection: null
         });
-      }, 400); // Match animation duration
-    }, 400); // Match switch-out animation duration
+      }, 400)); // Match animation duration
+    }, 400)); // Match switch-out animation duration
   }
 
   // Stable helper method to render experience items
@@ -141,16 +148,20 @@ class Experience extends React.Component {
       <div
         key={`item-${item.id}`}
         className={`experience--item-general-box experience--tab-content ${transitionClass} ${isExpanded ? "expanded" : ""} ${!isExpanded ? "clickable" : ""}`}
-        onClick={(event) => this.handleCardClick(item.id, event)}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            this.handleCardClick(item.id, event);
-          }
-        }}
-        aria-label={isExpanded ? "Experience details expanded" : "Click to expand experience details"}
+        {...(isExpanded
+          ? {}
+          : {
+            onClick: (event) => this.handleCardClick(item.id, event),
+            role: "button",
+            tabIndex: 0,
+            onKeyDown: (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                this.handleCardClick(item.id, event);
+              }
+            },
+            "aria-label": `Expand details for ${item.title}`
+          })}
       >
         <p className="experience--item-general-box-title">
           {item.title}
@@ -196,7 +207,7 @@ class Experience extends React.Component {
               className="experience--item-box-see-more"
               onClick={(event) => this.handleSeeLessClick(item.id, event)}
               disabled={isTabSwitching}
-              aria-label="Collapse experience details"
+              aria-label={`Collapse details for ${item.title}`}
             >
               <div className="experience--item-box-see-more-bar" />
               <div className="experience--item-box-see-more-text">
@@ -235,7 +246,7 @@ class Experience extends React.Component {
             <div className={`experience--btn-group ${comeFromBelow} `}>
               <button
                 className={`main-btn-style experience--btn-tab ${
-                  selectedTab === "work" ? "cyan-btn-selected" : null
+                  selectedTab === "work" ? "cyan-btn-selected" : ""
                 }`}
                 type="button"
                 onClick={() => this.selectTab("work")}
@@ -246,7 +257,7 @@ class Experience extends React.Component {
 
               <button
                 className={`main-btn-style experience--btn-tab ${
-                  selectedTab === "education" ? "cyan-btn-selected" : null
+                  selectedTab === "education" ? "cyan-btn-selected" : ""
                 }`}
                 type="button"
                 onClick={() => this.selectTab("education")}
@@ -282,7 +293,7 @@ class Experience extends React.Component {
                 <div className="experience--btn-group">
                   <button
                     className={`main-btn-style experience--btn-tab ${
-                      selectedTab === "work" ? "cyan-btn-selected" : null
+                      selectedTab === "work" ? "cyan-btn-selected" : ""
                     }`}
                     type="button"
                     onClick={() => this.selectTab("work")}
@@ -293,7 +304,7 @@ class Experience extends React.Component {
 
                   <button
                     className={`main-btn-style experience--btn-tab ${
-                      selectedTab === "education" ? "cyan-btn-selected" : null
+                      selectedTab === "education" ? "cyan-btn-selected" : ""
                     }`}
                     type="button"
                     onClick={() => this.selectTab("education")}

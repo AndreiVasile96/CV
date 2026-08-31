@@ -1,64 +1,114 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import ContactMe from '../components/ContactMe/ContactMe';
+import React from "react";
+import {
+  render, screen, fireEvent, waitFor
+} from "@testing-library/react";
+import { toast } from "react-toastify";
+import emailjs from "@emailjs/browser";
+import ContactMe from "../components/ContactMe/ContactMe";
+import { resetViewportWidth } from "./viewport";
 
-// Mock toast and emailjs
-jest.mock('react-toastify', () => ({ toast: { success: jest.fn(), error: jest.fn(), warn: jest.fn() }, ToastContainer: () => null }));
-jest.mock('@emailjs/browser', () => ({ sendForm: jest.fn() }));
+jest.mock("react-toastify", () => ({
+  toast: { success: jest.fn(), error: jest.fn(), warn: jest.fn() },
+  ToastContainer: () => null
+}));
+jest.mock("@emailjs/browser", () => ({ sendForm: jest.fn() }));
 
-const mockSendForm = require('@emailjs/browser').sendForm;
+const props = { refinview: "contactMe", headerTextHighlightRef: React.createRef() };
 
-describe('ContactMe', () => {
+const fillForm = ({ name = "Test User", email = "test@example.com", message = "Hello there!" } = {}) => {
+  fireEvent.change(screen.getByLabelText("Name"), { target: { value: name } });
+  fireEvent.change(screen.getByLabelText("Email"), { target: { value: email } });
+  fireEvent.change(screen.getByLabelText("Message"), { target: { value: message } });
+};
+
+const submit = () => fireEvent.click(screen.getByRole("button", { name: /send/i }));
+
+describe("ContactMe", () => {
+  const originalEnv = process.env;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    resetViewportWidth();
+    process.env = {
+      ...originalEnv,
+      REACT_APP_EMAILJS_SERVICE_ID: "service_test",
+      REACT_APP_EMAILJS_TEMPLATE_ID: "template_test",
+      REACT_APP_EMAILJS_PUBLIC_KEY: "public_test"
+    };
   });
 
-  it('renders all form fields', () => {
-    render(<ContactMe refinview="contactMe" headerTextHighlightRef={React.createRef()} />);
-    expect(screen.getByPlaceholderText(/Name/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/Email/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/Message/i)).toBeInTheDocument();
+  afterEach(() => {
+    process.env = originalEnv;
   });
 
-  it('shows warning for empty fields', async () => {
-    render(<ContactMe refinview="contactMe" headerTextHighlightRef={React.createRef()} />);
-    fireEvent.click(screen.getByDisplayValue(/Send message!/i));
-    await waitFor(() => {
-      expect(require('react-toastify').toast.warn).toHaveBeenCalled();
-    });
+  it("renders every field declared in contactMe.json", () => {
+    render(<ContactMe {...props} />);
+    expect(screen.getByLabelText("Name")).toBeInTheDocument();
+    expect(screen.getByLabelText("Email")).toBeInTheDocument();
+    expect(screen.getByLabelText("Message")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /send/i })).toBeInTheDocument();
   });
 
-  it('validates email format', async () => {
-    render(<ContactMe refinview="contactMe" headerTextHighlightRef={React.createRef()} />);
-    fireEvent.change(screen.getByPlaceholderText(/Email/i), { target: { value: 'invalidemail' } });
-    fireEvent.click(screen.getByDisplayValue(/Send message!/i));
-    await waitFor(() => {
-      expect(require('react-toastify').toast.warn).toHaveBeenCalled();
-    });
+  it("warns and does not send when the form is empty", async () => {
+    render(<ContactMe {...props} />);
+    submit();
+
+    await waitFor(() => expect(toast.warn).toHaveBeenCalled());
+    expect(emailjs.sendForm).not.toHaveBeenCalled();
   });
 
-  it('calls sendEmail and shows success on valid submit', async () => {
-    mockSendForm.mockResolvedValue({ status: 200 });
-    render(<ContactMe refinview="contactMe" headerTextHighlightRef={React.createRef()} />);
-    fireEvent.change(screen.getByPlaceholderText(/Name/i), { target: { value: 'Test User' } });
-    fireEvent.change(screen.getByPlaceholderText(/Email/i), { target: { value: 'test@example.com' } });
-    fireEvent.change(screen.getByPlaceholderText(/Message/i), { target: { value: 'Hello!' } });
-    fireEvent.click(screen.getByDisplayValue(/Send message!/i));
-    await waitFor(() => {
-      expect(mockSendForm).toHaveBeenCalled();
-      expect(require('react-toastify').toast.success).toHaveBeenCalled();
-    });
+  it("warns and does not send when the email is malformed", async () => {
+    render(<ContactMe {...props} />);
+    fillForm({ email: "invalidemail" });
+    submit();
+
+    await waitFor(() => expect(toast.warn).toHaveBeenCalled());
+    expect(emailjs.sendForm).not.toHaveBeenCalled();
   });
 
-  it('shows error toast on failed email send', async () => {
-    mockSendForm.mockResolvedValue({ status: 500 });
-    render(<ContactMe refinview="contactMe" headerTextHighlightRef={React.createRef()} />);
-    fireEvent.change(screen.getByPlaceholderText(/Name/i), { target: { value: 'Test User' } });
-    fireEvent.change(screen.getByPlaceholderText(/Email/i), { target: { value: 'test@example.com' } });
-    fireEvent.change(screen.getByPlaceholderText(/Message/i), { target: { value: 'Hello!' } });
-    fireEvent.click(screen.getByDisplayValue(/Send message!/i));
-    await waitFor(() => {
-      expect(require('react-toastify').toast.error).toHaveBeenCalled();
-    });
+  it("sends and clears the form on success", async () => {
+    emailjs.sendForm.mockResolvedValue({ status: 200 });
+    render(<ContactMe {...props} />);
+    fillForm();
+    submit();
+
+    await waitFor(() => expect(toast.success).toHaveBeenCalled());
+    expect(emailjs.sendForm).toHaveBeenCalledWith(
+      "service_test",
+      "template_test",
+      expect.anything(),
+      "public_test"
+    );
+    expect(screen.getByLabelText("Name")).toHaveValue("");
+    expect(screen.getByLabelText("Message")).toHaveValue("");
+  });
+
+  it("shows an error toast on a non-200 response", async () => {
+    emailjs.sendForm.mockResolvedValue({ status: 500 });
+    render(<ContactMe {...props} />);
+    fillForm();
+    submit();
+
+    await waitFor(() => expect(toast.error).toHaveBeenCalled());
+    expect(toast.success).not.toHaveBeenCalled();
+  });
+
+  it("shows an error toast when EmailJS rejects", async () => {
+    emailjs.sendForm.mockRejectedValue(new Error("network down"));
+    render(<ContactMe {...props} />);
+    fillForm();
+    submit();
+
+    await waitFor(() => expect(toast.error).toHaveBeenCalled());
+  });
+
+  it("does not attempt a send when the EmailJS credentials are missing", async () => {
+    delete process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
+    render(<ContactMe {...props} />);
+    fillForm();
+    submit();
+
+    await waitFor(() => expect(toast.error).toHaveBeenCalled());
+    expect(emailjs.sendForm).not.toHaveBeenCalled();
   });
 });
