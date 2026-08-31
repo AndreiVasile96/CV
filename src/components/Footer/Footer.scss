@@ -233,7 +233,8 @@
 }
 
 .footer--built-with {
-  font-size: 0.8rem;
+  // Matches the size the print hint used before it was removed.
+  font-size: 0.75rem;
   color: rgba($color: white, $alpha: 0.4);
   font-weight: 300;
   font-style: italic;
@@ -244,7 +245,6 @@
   align-items: center;
   justify-content: center; // Center the button
   gap: 2rem; // Double the gap from 1.5rem to 3rem
-  order: 1; // Put back-to-top button before copyright
 }
 
 .footer--linkedin {
@@ -341,27 +341,6 @@
   }
 }
 
-.footer--back-to-top {
-  background: rgba($color: $cyan, $alpha: 0.1);
-  border: 1px solid rgba($color: $cyan, $alpha: 1);
-  color: $cyan;
-  width: 3.75rem; // 50% bigger: 2.5rem * 1.5 = 3.75rem
-  height: 3.75rem; // 50% bigger: 2.5rem * 1.5 = 3.75rem
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem; // 50% bigger: 1.2rem * 1.5 = 1.8rem
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  
-  &:hover {
-    background: rgba($color: $cyan, $alpha: 0.2);
-    border-color: $cyan;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 255, 255, 0.2);
-  }
-}
 
 .footer--decoration {
   position: absolute;
@@ -723,25 +702,9 @@
   
   // Adjust social section spacing for both icons
   .footer--social {
-    gap: 2rem; // Proper gap between GitHub, back-to-top, and LinkedIn
+    gap: 2rem;
   }
   
-  // Enhanced back-to-top button for desktop
-  .footer--back-to-top {
-    width: 3rem;
-    height: 3rem;
-    font-size: 1.3rem;
-    box-shadow: 
-      0 2px 12px rgba(0, 255, 255, 0.1),
-      0 0 20px rgba($color: $cyan, $alpha: 0.1);
-    
-    &:hover {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 
-        0 6px 20px rgba(0, 255, 255, 0.25),
-        0 0 30px rgba($color: $cyan, $alpha: 0.3);
-    }
-  }
 }
 
 @media only screen and (min-width: 1200px) {
@@ -917,5 +880,98 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+.footer--download {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.footer--download-btn {
+  cursor: pointer;
+}
+
+.footer--download-hint {
+  color: $white-gray;
+  font-size: 0.75rem;
+}
+
+// ===========================================================================
+// Footer layout
+//
+// The footer previously nested cta inside signature inside top, with the
+// back-to-top control sitting between the two social icons and 2rem margins
+// stacked at several levels - the result read as unrelated blocks dropped into
+// a large empty space. This lays it out as one centred column with a single
+// consistent rhythm, in the order: invitation, CV, social, small print.
+// ===========================================================================
+
+.footer--container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+  padding: 2.5rem 1rem 2rem;
+  text-align: center;
+}
+
+.footer--divider {
+  width: min(100%, 260px);
+  height: 1px;
+  margin: 0;
+  background: linear-gradient(90deg, transparent, rgba($cyan, 0.45), transparent);
+}
+
+.footer--cta {
+  margin: 0;
+  max-width: 34rem;
+
+  h3 {
+    margin: 0 0 0.5rem;
+  }
+
+  p {
+    margin: 0;
+    color: $white-gray;
+  }
+}
+
+.footer--social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin: 0;
+}
+
+.footer--github-logo,
+.footer--linkedin-logo {
+  width: 40px;
+  height: 40px;
+}
+
+// The closing line: copyright only, separated from the content above.
+.footer--info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 1.5rem;
+  margin: 0;
+  padding-top: 0.5rem;
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+@media only screen and (max-width: 912px) {
+  .footer--container {
+    gap: 1.4rem;
+    padding: 2rem 1rem 1.5rem;
   }
 }

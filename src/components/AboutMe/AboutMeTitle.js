@@ -12,39 +12,80 @@ class AboutMeTitle extends React.Component {
     this.state = {
       renderAnimation: false,
       comeFromBelow: "",
-      visible: "invisible",
-      isTitleVisible: false
+      visible: "invisible"
     };
     this.bouncyList = null;
     this.hoverHandlers = [];
+    this.titleObserver = null;
+    this.observerDriven = false;
   }
 
   componentDidMount() {
-    // Initialize bouncy list after component mounts
     this.bouncyList = document.querySelectorAll(".aboutMeBouncy");
     this.triangleElement = document.querySelector(".aboutMe--ATriangle");
+
+    // Collapse the letters up front. anime.js applies the `scale: [0, 1]`
+    // start value on its first animation frame, which is one paint after the
+    // title becomes visible - so the title appeared fully formed, vanished,
+    // then animated in. Setting the start state here happens in the same
+    // commit, so that frame never renders.
+    this.bouncyList.forEach((letter) => {
+      // eslint-disable-next-line no-param-reassign
+      letter.style.transform = "scale(0)";
+    });
+    if (this.triangleElement) this.triangleElement.style.transform = "scale(0)";
+
+    // Trigger on the title entering the viewport rather than on the section.
+    // The section reports in view long before the title is on screen, so on
+    // tall mobile layouts the animation played off-screen and was over by the
+    // time the title arrived.
+    const title = document.querySelector("#about-title");
+    if (title && typeof IntersectionObserver !== "undefined") {
+      this.observerDriven = true;
+      this.titleObserver = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          // Reveal and animate together, or the animation plays against a
+          // title that is still hidden.
+          this.setState({
+            comeFromBelow: "come-from-below",
+            renderAnimation: true,
+            visible: "visible"
+          });
+          this.initializeBouncyAnimation();
+          this.titleObserver.disconnect();
+          this.titleObserver = null;
+        }
+      }, {
+        // Fire when the title reaches the middle of the screen, not when it
+        // clips the bottom edge. Measured on a 915px-tall phone, a smaller
+        // margin started the animation with the title 81% of the way down and
+        // it was finished by 72% - all of it happening at the very edge of
+        // vision, so a short title like "Skills" looked like it never animated
+        // at all by the time it was somewhere you would actually read it.
+        rootMargin: "0px 0px -42% 0px",
+        threshold: 0.1
+      });
+      this.titleObserver.observe(title);
+    } else {
+      this.initializeBouncyAnimation();
+    }
   }
 
   componentDidUpdate() {
     const { refinview } = this.props;
-    const { renderAnimation, isTitleVisible } = this.state;
+    const { renderAnimation } = this.state;
 
-    if (refinview === "aboutMe" && !renderAnimation) {
+    if (!this.observerDriven && refinview === "aboutMe" && !renderAnimation) {
       this.setState({
         comeFromBelow: "come-from-below",
         renderAnimation: true,
         visible: "visible"
       });
     }
-
-    // Add bouncy animation when component becomes visible
-    if (refinview === "aboutMe" && !isTitleVisible) {
-      this.initializeBouncyAnimation();
-      this.setState({ isTitleVisible: true });
-    }
   }
 
   componentWillUnmount() {
+    if (this.titleObserver) this.titleObserver.disconnect();
     this.teardownBouncyAnimation();
   }
 
@@ -62,15 +103,15 @@ class AboutMeTitle extends React.Component {
     anime.timeline({ loop: false }).add({
       targets: ".aboutMeBouncy",
       scale: [0, 1],
-      duration: 200, // Reduced from 1500ms to 800ms
-      elasticity: 600,
-      delay: (el, i) => 80 * (i + 1) // Reduced from 150ms to 80ms
+      duration: 520,
+      easing: "easeOutElastic(1, 0.6)",
+      delay: (el, i) => 55 * (i + 1)
     }).add({
       // Animate triangle with the letters
       targets: ".aboutMe--ATriangle",
       scale: [0, 1],
-      duration: 200,
-      elasticity: 600,
+      duration: 520,
+      easing: "easeOutElastic(1, 0.6)",
       delay: 0 // Triangle appears first
     }, 0); // Start at the same time as letters
 
@@ -117,13 +158,13 @@ class AboutMeTitle extends React.Component {
     if (mode === "mobile") {
       return (
         <div className={`aboutMe--title ${comeFromBelow} ${visible}`} id="about-title">
-          <h2 ref={aboutMeRef}>
+          <h2 ref={aboutMeRef} aria-label="About me">
             <img
               className="aboutMe--ATriangle aboutMe--ATriangle-mobile"
               src={ATriangle}
-              alt="A triangle"
+              alt=""
             />
-            <span className="text-wrapper">
+            <span className="text-wrapper" aria-hidden="true">
               <span className="letter aboutMeBouncy">b</span>
               <span className="letter aboutMeBouncy">o</span>
               <span className="letter aboutMeBouncy">u</span>
@@ -140,14 +181,14 @@ class AboutMeTitle extends React.Component {
     // Desktop mode
     return (
       <div className={`aboutMe--title ${comeFromBelow} ${visible}`} id="about-title">
-        <h2 ref={aboutMeRef}>
+        <h2 ref={aboutMeRef} aria-label="About me">
           <img
             className="aboutMe--ATriangle"
             src={ATriangle}
-            alt="A triangle"
+            alt=""
           />
           &nbsp;
-          <span className="text-wrapper">
+          <span className="text-wrapper" aria-hidden="true">
             <span className="letter aboutMeBouncy">b</span>
             <span className="letter aboutMeBouncy">o</span>
             <span className="letter aboutMeBouncy">u</span>

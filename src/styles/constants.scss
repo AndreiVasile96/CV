@@ -303,6 +303,13 @@ $z-index-modal: 5;
   flex-wrap: wrap;
   justify-content: center;
 
+  // Sections are flex items of the wrapping `.appBody`, and size to their
+  // 1200px content cap. Without this they are narrower than a wide viewport
+  // and wrap onto a shared row - past about 1930px, Experience and Contact me
+  // sat side by side. Claiming the full row keeps one section per row at any
+  // width; the inner --center-flex still centres content via content-container.
+  width: 100%;
+
   overflow-y: hidden;
 }
 
@@ -340,6 +347,14 @@ $z-index-modal: 5;
   margin: 0 auto;
   padding: 0 2rem;
   box-sizing: border-box;
+
+  @media only screen and (min-width: 1600px) {
+    max-width: 1400px;
+  }
+
+  @media only screen and (min-width: 2100px) {
+    max-width: 1560px;
+  }
 }
 
 @mixin section-layout {

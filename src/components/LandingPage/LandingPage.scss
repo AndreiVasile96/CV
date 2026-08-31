@@ -79,3 +79,152 @@
   display: inline-block;
   line-height: 1.5rem;
 }
+
+// ===========================================================================
+// Hero composition
+//
+// The hero is the only thing every visitor sees, so it carries the first
+// impression on its own. Previously the greeting and the name rendered at the
+// same size, the role line sat at 50% white, and the composition floated in
+// the middle of the viewport with roughly 250px of dead space above and below.
+// This gives it a hierarchy (kicker -> name -> role -> action), some depth
+// behind the name, and a staggered entrance instead of everything at once.
+// ===========================================================================
+
+.landingPage--center-flex {
+  position: relative;
+  // Anchors the glow below.
+  isolation: isolate;
+  // The glow is wider than the text column; clip it here so it can never widen
+  // the page. `overflow-x: hidden` lives on <html>, but <body> is the actual
+  // scroll container on this page, so html cannot clip a child's overflow -
+  // that combination is what let an earlier version scroll sideways on mobile.
+  overflow: hidden;
+  gap: 0.4rem;
+}
+
+// Depth behind the name. Two offset radial washes, drifting slowly, so the
+// name sits on something rather than on flat black.
+.landingPage--center-flex::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: min(100%, 1100px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -60%);
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 42% 42%, rgba($cyan, 0.13), transparent 58%),
+    radial-gradient(circle at 62% 58%, rgba($red, 0.09), transparent 55%);
+  filter: blur(18px);
+  animation: heroGlowDrift 18s ease-in-out infinite alternate;
+}
+
+@keyframes heroGlowDrift {
+  from {
+    transform: translate(-52%, -62%) scale(1);
+  }
+
+  to {
+    transform: translate(-48%, -58%) scale(1.08);
+  }
+}
+
+// ---- typographic hierarchy ------------------------------------------------
+
+.landingPage--title {
+  line-height: 1.05;
+  margin-top: 0;
+}
+
+// Desktop renders the greeting and the name as two sibling <h1>s; mobile uses
+// one <h1> with a .letters span for the greeting.
+.landingPage--title > h1:first-of-type,
+.landingPage--title .letters {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: normal;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0 0 1.2rem;
+  line-height: 1.4;
+}
+
+.landingPage--title > h1:last-of-type,
+.landingPage--title .landingPage--name-popin {
+  display: block;
+  font-size: clamp(3.2rem, 8.5vw, 6rem);
+  line-height: 1;
+  margin: 0;
+  color: white;
+}
+
+// The fixed 1.5rem line-height cramped the letters once the name grew.
+.landingPage--title .letter,
+.landingPage--title .landingPageBouncy {
+  line-height: 1;
+}
+
+// ---- role line ------------------------------------------------------------
+// This is the first thing a recruiter reads after the name, so it should not
+// be the dimmest text on the page.
+
+.landingPage--description {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  letter-spacing: 0.14em;
+  margin-top: 1.6rem;
+  text-align: center;
+}
+
+.landingPage--description .landingPageBouncy:hover {
+  color: $cyan;
+}
+
+// ---- entrance choreography ------------------------------------------------
+// Staggered rather than simultaneous, so the eye is led name -> role -> action.
+
+.landingPage--description {
+  opacity: 0;
+  animation: title-fadein 1s ease-out 1.1s forwards;
+}
+
+.landingPage--center-flex .main-btn-style {
+  animation-delay: 1.5s;
+  margin-top: 1.8rem;
+}
+
+.landingPage--scroll-group {
+  opacity: 0;
+  animation: title-fadein 1.2s ease-out 2.1s forwards;
+}
+
+// Anyone who asks for reduced motion gets the finished composition immediately.
+@media (prefers-reduced-motion: reduce) {
+  .landingPage--center-flex::before {
+    animation: none;
+  }
+
+  .landingPage--description,
+  .landingPage--scroll-group {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+@media only screen and (max-width: 912px) {
+  .landingPage--title > h1:first-of-type,
+  .landingPage--title .letters {
+    font-size: 0.85rem;
+    letter-spacing: 0.28em;
+    margin-bottom: 0.9rem;
+  }
+
+  .landingPage--description {
+    margin-top: 1.2rem;
+    letter-spacing: 0.08em;
+  }
+}

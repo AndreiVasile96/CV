@@ -1,0 +1,47 @@
+// Print / "Save as PDF".
+//
+// The first attempt restyled the live site for paper. That fought the design at
+// every step - letters are images, sections hide behind scroll reveals, detail
+// text lives in unstyled text nodes that printed white-on-white - and produced
+// an unusable document. So the screen UI is simply hidden, and PrintCV renders
+// a purpose-built CV from the same JSON (see components/PrintCV).
+
+@media print {
+  @page {
+    size: A4;
+    margin: 13mm 12mm;
+  }
+
+  html,
+  body {
+    background: white !important;
+    color: #111 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  // Hide the entire on-screen application. PrintCV re-enables itself.
+  .appBody,
+  .header,
+  .Toastify,
+  .toast-class,
+  .cv-print-hide {
+    display: none !important;
+  }
+
+  // Entrance animations can be caught mid-flight by the print renderer.
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  // The custom cursor image is a screen affordance only.
+  * {
+    cursor: auto !important;
+  }
+}

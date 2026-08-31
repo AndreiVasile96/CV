@@ -9,7 +9,8 @@ import AboutMe from "./components/AboutMe/AboutMe";
 import Skills from "./components/Skills/Skills";
 import Experience from "./components/Experience/Experience";
 import ContactMe from "./components/ContactMe/ContactMe";
-import Footer from "./components/Footer/Footer"; // Add this import
+import Footer from "./components/Footer/Footer";
+import PrintCV from "./components/PrintCV/PrintCV";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
@@ -41,28 +42,32 @@ export default function App() {
   else if (iscontactMeVisible) refinview = "contactMe";
 
   return (
-    <div className="appBody">
-      <Header scroll={scroll} refinview={refinview} />
+    <>
+      <div className="appBody">
+        <Header scroll={scroll} refinview={refinview} />
 
-      <LandingPage
-        scroll={scroll}
-        headerTextHighlightRef={landingRef}
-        refinview={refinview}
-      />
-      <AboutMe aboutMeRef={aboutMeRef} refinview={refinview} />
-      <Skills
-        headerTextHighlightRef={skillsRef}
-        refinview={refinview}
-        scroll={scroll}
-      />
-      <Experience
-        headerTextHighlightRef={experienceRef}
-        refinview={refinview}
-      />
-      <ContactMe headerTextHighlightRef={contactMeRef} refinview={refinview} />
+        <LandingPage
+          scroll={scroll}
+          headerTextHighlightRef={landingRef}
+          refinview={refinview}
+        />
+        <AboutMe aboutMeRef={aboutMeRef} refinview={refinview} />
+        <Skills
+          headerTextHighlightRef={skillsRef}
+          refinview={refinview}
+          scroll={scroll}
+        />
+        <Experience
+          headerTextHighlightRef={experienceRef}
+          refinview={refinview}
+        />
+        <ContactMe headerTextHighlightRef={contactMeRef} refinview={refinview} />
 
-      {/* Add the Footer component */}
-      <Footer scroll={scroll} />
-    </div>
+        <Footer />
+      </div>
+
+      {/* Hidden on screen; the only thing that renders when printing. */}
+      <PrintCV />
+    </>
   );
 }

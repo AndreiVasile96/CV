@@ -36,5 +36,14 @@
     "success": "Thanks! I’ll get back to you soon.",
     "error": "Oops — something went wrong. Try again or reach me via LinkedIn/email.",
     "validation": "Looks like something’s missing or invalid."
+  },
+  "details": {
+    "name": "Andrei Vasile",
+    "title": "Platform Ops Lead / SRE / Full-Stack Developer",
+    "email": "andreisvasile@gmail.com",
+    "location": "Bucharest, Romania",
+    "website": "andrei-vasile.com",
+    "linkedin": "linkedin.com/in/andrei-vasile",
+    "github": "github.com/AndreiVasile96"
   }
 }

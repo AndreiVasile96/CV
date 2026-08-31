@@ -21,6 +21,23 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Nothing below runs if these fail, so a broken build cannot reach
+      # production. Previously the pipeline was build -> deploy, and the test
+      # suite was never executed in CI at all.
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit and accessibility tests
+        run: npm run test:ci
+        env:
+          CI: true
+
+      - name: Cache Puppeteer browser
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/puppeteer
+          key: puppeteer-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
       - name: Build project
         run: npm run build
         env:
@@ -32,6 +49,12 @@ jobs:
           REACT_APP_EMAILJS_SERVICE_ID: ${{ secrets.REACT_APP_EMAILJS_SERVICE_ID }}
           REACT_APP_EMAILJS_TEMPLATE_ID: ${{ secrets.REACT_APP_EMAILJS_TEMPLATE_ID }}
           REACT_APP_EMAILJS_PUBLIC_KEY: ${{ secrets.REACT_APP_EMAILJS_PUBLIC_KEY }}
+
+      # jsdom has no layout engine, so unit tests cannot see that this page
+      # scrolls document.body rather than the document. This drives the real
+      # build in a real browser instead.
+      - name: Smoke test the built site
+        run: npm run test:smoke
 
       - name: Check Firebase Service Account Secret
         run: |

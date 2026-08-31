@@ -836,6 +836,23 @@
 // rendering identical.
 .skillsPage--title > h2 {
   font-size: 2em;
-  margin: 0.67em 0;
+  // The browser default of 0.67em is 68px at this heading size, which
+  // opened a visible hole beneath each title.
+  margin: 0 0 0.2em;
+  // The inherited line-height left ~35px of empty leading below the glyphs,
+  // so the box was 143px tall for a 102px font.
+  line-height: 1.05;
   font-weight: bold;
+}
+
+// The heading's own bottom margin collapses out of this box, leaving the
+// title flush against whatever follows it. Reserve the space here instead.
+.skillsPage--title {
+  margin-bottom: 1.25rem;
+}
+
+@media only screen and (max-width: 912px) {
+  .skillsPage--title {
+    margin-bottom: 1rem;
+  }
 }

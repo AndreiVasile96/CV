@@ -47,13 +47,31 @@ body {
 
 @media only screen and (max-width: 912px) {
   html {
-    font-size: 15px;
+    /* 16px is the accessibility floor for body text; at 15px every
+       rem-based style on mobile rendered below the minimum. */
+    font-size: 16px;
   }
 }
 
 @media only screen and (min-width: 913px) {
   html {
-    font-size: 17px;
+    font-size: 18px;
+  }
+}
+
+/* The root size was pinned at 17px for every screen wider than 913px, so a
+   1440px laptop and a 2560px monitor rendered identical type - which reads as
+   small once the viewport is much wider. Almost all sizing here is rem/em
+   based, so lifting the root scales the whole system proportionally. */
+@media only screen and (min-width: 1600px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (min-width: 2100px) {
+  html {
+    font-size: 22px;
   }
 }
 

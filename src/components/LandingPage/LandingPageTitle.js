@@ -77,15 +77,15 @@ export default function LandingPageTitle(props) {
 
   if (mode === "mobile") {
     return (
-      <h1 ref={headerTextHighlightRef} className="landingPage--title">
-        <span className="text-wrapper">
+      <h1 ref={headerTextHighlightRef} className="landingPage--title" aria-label="Hello, I am Andrei">
+        <span className="text-wrapper" aria-hidden="true">
           <span className="letters">Hello, I am</span>
           &nbsp;
           <span className="landingPage--name-popin landingPage--name-popin--block">
             <img
               className="landingPage--ATriangle"
               src={ATriangle}
-              alt="A triangle"
+              alt=""
             />
             ndrei
           </span>
@@ -96,7 +96,7 @@ export default function LandingPageTitle(props) {
 
   return (
     <div className="landingPage--title">
-      <h1 ref={headerTextHighlightRef}>
+      <h1 ref={headerTextHighlightRef} aria-label="Hi, my name is">
         <span
           className="landingPageBouncy"
           onMouseEnter={() => toggleRubberBand(0)}
@@ -167,11 +167,11 @@ export default function LandingPageTitle(props) {
           s
         </span>
       </h1>
-      <h1>
+      <h1 aria-label="Andrei">
         <img
           className="landingPageBouncy landingPage--ATriangle logo-bouncing-character"
           src={ATriangle}
-          alt="A triangle"
+          alt=""
           onMouseEnter={() => toggleTriangleRubberBand()}
         />
         <span

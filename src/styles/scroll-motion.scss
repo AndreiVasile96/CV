@@ -1,0 +1,106 @@
+// ===========================================================================
+// Scroll-driven section motion
+//
+// The sections previously revealed with a trigger-once fade: an
+// IntersectionObserver flipped a class and a fixed-duration animation played,
+// regardless of how fast or slow you were scrolling. These animations are
+// instead *scrubbed* - bound to scroll position through a `view()` timeline -
+// so the motion tracks the wheel or finger and reverses if you scroll back.
+//
+// Everything lives inside @supports. Browsers without scroll-driven animation
+// keep the existing fade untouched, so this is purely additive.
+//
+// Note: `position: sticky` does not work on this page - `.appBody` is 100vh and
+// `body` is the scroll container, so a sticky section scrolls away instead of
+// pinning. That rules out the "hero pins while the next section slides over it"
+// pattern without restructuring the scroll architecture.
+// ===========================================================================
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    // The JS visibility latch would keep a section hidden until `refinview`
+    // matched, which fights a scroll-scrubbed reveal. Inside this block the
+    // scroll timeline is the single source of truth for the reveal.
+    .aboutMe,
+    .skillsPage,
+    .experience,
+    .contactMe {
+      &.invisible,
+      &.visible {
+        visibility: visible !important;
+      }
+    }
+
+    .aboutMe,
+    .skillsPage,
+    .experience,
+    .contactMe {
+      animation: sectionReveal linear both;
+      animation-timeline: view();
+      // Runs across the section's entry into the viewport, finishing a little
+      // early so the content is settled and readable before it is centred.
+      animation-range: entry 5% cover 35%;
+      transform-origin: 50% 20%;
+      will-change: transform, opacity;
+    }
+
+    // The scroll timeline now owns the reveal, so the older JS-triggered
+    // entrance states must stand down. They pin content at opacity 0 until
+    // `refinview` flips, which runs on a different clock from the scroll
+    // timeline: the section would fade in while its contents were still
+    // hidden, then animate in again a moment later. That is the flash /
+    // disappear / re-appear.
+    //
+    // `come-from-below-fast` is deliberately excluded - Experience reuses it
+    // for the Work/Education tab switch, which is an interaction rather than
+    // an entrance and should keep animating.
+    .come-from-below,
+    .come-from-below-delayed,
+    .come-from-below-delayed-more,
+    .contactMe--form.form-loading,
+    .contactMe--input.input-loading,
+    .contactMe--textarea.input-loading {
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+
+    // The hero drifts and dims as it leaves, so the landing page recedes rather
+    // than simply scrolling off - this is the depth between it and About Me.
+    //
+    // Must be applied to `.landingPage`, not to its inner `--center-flex`:
+    // `.landingPage` sets overflow-y: hidden and so is itself a scroll
+    // container, which means a child's view() timeline resolves against it
+    // rather than the page, and never advances.
+    .landingPage {
+      animation: heroExit linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 100%;
+      will-change: transform, opacity;
+    }
+  }
+}
+
+@keyframes sectionReveal {
+  from {
+    opacity: 0;
+    transform: translateY(3.5rem) scale(0.965);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes heroExit {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0.25;
+    transform: translateY(-3rem) scale(0.94);
+  }
+}

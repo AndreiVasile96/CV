@@ -7,7 +7,7 @@ expect.extend(toHaveNoViolations);
 
 describe("Footer accessibility", () => {
   it("has no violations", async () => {
-    const { container } = render(<Footer scroll={() => {}} />);
+    const { container } = render(<Footer />);
     expect(await axe(container)).toHaveNoViolations();
   });
 });

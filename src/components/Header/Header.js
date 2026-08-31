@@ -96,18 +96,18 @@ export default function Header(props) {
           <div className={`header--modal-body ${isClosing ? "header--modal-body--closing" : ""}`}>
             <section className="header--modal-menu">
               <div className="header--modal-title">
-                <h2>
+                <h2 aria-label="Andrei Vasile">
                   <img
                     className="header--triangle"
                     src={ATriangle}
-                    alt="A triangle"
+                    alt=""
                   />
                   ndrei
                   &nbsp;
                   <img
                     className="header--triangle header--triangle--v"
                     src={VTriangle}
-                    alt="V triangle"
+                    alt=""
                   />
                   asile
                 </h2>
@@ -180,17 +180,17 @@ export default function Header(props) {
               className="header--burger-menu-btn"
               onClick={() => scroll("#landingPage")}
             >
-              <h2 className="header--name-logo">
+              <h2 className="header--name-logo" aria-label="Andrei Vasile">
                 <img
                   className="header--triangle-element"
                   src={ATriangle}
-                  alt="A triangle"
+                  alt=""
                 />
                 ndrei &nbsp;
                 <img
                   className="header--triangle-element header--triangle-element--v"
                   src={VTriangle}
-                  alt="V triangle"
+                  alt=""
                 />
                 asile
               </h2>

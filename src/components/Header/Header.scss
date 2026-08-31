@@ -680,6 +680,8 @@
 // rendering identical.
 .header--modal-title > h2 {
   font-size: 2em;
-  margin: 0.67em 0;
+  // The browser default of 0.67em is 68px at this heading size, which
+  // opened a visible hole beneath each title.
+  margin: 0 0 0.25em;
   font-weight: bold;
 }

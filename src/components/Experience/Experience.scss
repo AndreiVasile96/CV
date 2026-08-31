@@ -618,7 +618,9 @@
     gap: 2rem;
     width: 100%;
     max-width: 600px;
-    margin: 2rem auto 3rem auto;
+    // Was 2rem/3rem, which stacked on top of the title's own bottom margin and
+    // left a visible hole between the heading and the Work/Education tabs.
+    margin: 0.5rem auto 1.75rem auto;
     padding: 0;
   }
   
@@ -758,7 +760,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 0.75rem;
   }
   
   .second-row {
@@ -892,6 +894,23 @@
 // rendering identical.
 .experience--title > h2 {
   font-size: 2em;
-  margin: 0.67em 0;
+  // The browser default of 0.67em is 68px at this heading size, which
+  // opened a visible hole beneath each title.
+  margin: 0 0 0.2em;
+  // The inherited line-height left ~35px of empty leading below the glyphs,
+  // so the box was 143px tall for a 102px font.
+  line-height: 1.05;
   font-weight: bold;
+}
+
+// The heading's own bottom margin collapses out of this box, leaving the
+// title flush against whatever follows it. Reserve the space here instead.
+.experience--title {
+  margin-bottom: 1.25rem;
+}
+
+@media only screen and (max-width: 912px) {
+  .experience--title {
+    margin-bottom: 1rem;
+  }
 }

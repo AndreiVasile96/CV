@@ -1,10 +1,10 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Footer from "../components/Footer/Footer";
 
 describe("Footer", () => {
   it("links out to the GitHub and LinkedIn profiles", () => {
-    render(<Footer scroll={() => {}} />);
+    render(<Footer />);
 
     const github = screen.getByRole("link", { name: /GitHub/i });
     expect(github).toHaveAttribute("href", "https://github.com/AndreiVasile96");
@@ -15,16 +15,13 @@ describe("Footer", () => {
     expect(linkedin).toHaveAttribute("rel", "noopener noreferrer");
   });
 
-  it("scrolls back to the top when the arrow is clicked", () => {
-    const scroll = jest.fn();
-    render(<Footer scroll={scroll} />);
-
-    fireEvent.click(screen.getByRole("button", { name: /back to top/i }));
-    expect(scroll).toHaveBeenCalledWith("#landingPage");
+  it("offers the CV download between the two profile links", () => {
+    render(<Footer />);
+    expect(screen.getByRole("button", { name: /download cv/i })).toBeInTheDocument();
   });
 
   it("shows the current year in the copyright line", () => {
-    render(<Footer scroll={() => {}} />);
+    render(<Footer />);
     expect(screen.getByText(new RegExp(`${new Date().getFullYear()}`))).toBeInTheDocument();
   });
 });
