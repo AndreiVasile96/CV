@@ -14,21 +14,16 @@ import Footer from "./components/Footer/Footer"; // Add this import
 import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
 
-// Roughly the header height (10rem), so a section does not land underneath it.
-const HEADER_OFFSET = 160;
-
 function scroll(target) {
   const element = document.querySelector(target);
   if (!element) return;
 
-  // Resolve the element's absolute position and subtract the header in one go,
-  // rather than scrolling twice and racing a timeout against the smooth scroll.
-  const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
-
-  window.scrollTo({
-    top: Math.max(0, elementTop - HEADER_OFFSET),
-    behavior: "smooth"
-  });
+  // The document itself does not scroll: `html` has overflow-x: hidden with a
+  // constrained height, which leaves `body` as the scroll container. That makes
+  // window.scrollTo a no-op here, because it drives document.scrollingElement
+  // (`html`). scrollIntoView resolves the real scroller on its own, and the
+  // header offset comes from scroll-margin-top in index.css.
+  element.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 export default function App() {

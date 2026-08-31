@@ -5,6 +5,21 @@
   --red: #fe004e;
 }
 
+/* Scroll targets sit beneath the fixed header, so keep them clear of it when
+   scrolled to. 10rem tracks the responsive root font size (17px desktop /
+   15px mobile), matching the header height at both breakpoints. */
+#landingPage,
+#about,
+#about-title,
+#skills,
+#skills-title,
+#experience,
+#experience-title,
+#contact,
+#contact-title {
+  scroll-margin-top: 10rem;
+}
+
 html {
   scroll-behavior: smooth;
   overflow-x: hidden !important;
