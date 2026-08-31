@@ -894,3 +894,12 @@
   display: inline-block;
   line-height: 1em;
 }
+
+// On desktop this rendered at 2em of a 3rem container - the same size as the
+// hero name - so the section heading competed with the page title instead of
+// sitting below it. Mobile keeps the larger relative size, where it reads well.
+@media only screen and (min-width: 913px) {
+  .skillsPage--title > h2 {
+    font-size: 1.3em;
+  }
+}

@@ -11,6 +11,7 @@ import Experience from "./components/Experience/Experience";
 import ContactMe from "./components/ContactMe/ContactMe";
 import Footer from "./components/Footer/Footer";
 import PrintCV from "./components/PrintCV/PrintCV";
+import ScrollReveal from "./components/ScrollReveal/ScrollReveal";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
@@ -64,6 +65,7 @@ export default function App() {
         <ContactMe headerTextHighlightRef={contactMeRef} refinview={refinview} />
 
         <Footer />
+        <ScrollReveal />
       </div>
 
       {/* Hidden on screen; the only thing that renders when printing. */}

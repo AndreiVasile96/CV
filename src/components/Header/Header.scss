@@ -409,7 +409,10 @@
 .header--name-logo {
   margin-left: 1em;
   color: white !important;
-  font-size: 2.25em;
+  // Was 2.25em. This sits inside a <button>, whose UA font-size is 13.33px, so
+  // the em resolved against that rather than the page and the logo stayed 30px
+  // at every width while the rest of the header scaled. rem tracks the root.
+  font-size: 1.75rem;
   &:hover {
     transition: 0.5s;
     color: $cyan !important;

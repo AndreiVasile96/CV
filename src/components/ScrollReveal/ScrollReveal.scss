@@ -1,0 +1,38 @@
+// Reveal state for section content. The `data-reveal` attribute is set by JS,
+// so without it nothing is hidden and the page degrades to static content.
+//
+// An attribute rather than a class because several of these elements have a
+// React-managed `className` that is rewritten on re-render, which drops any
+// class added imperatively.
+//
+// `!important` is needed because scroll-motion.scss neutralises the older
+// JS-triggered `come-from-below` entrance on some of these same elements, and
+// uses `!important` to win over its own animation.
+
+[data-reveal] {
+  opacity: 0 !important;
+  transform: translateY(1.75rem) !important;
+  transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+  will-change: opacity, transform;
+}
+
+[data-reveal="in"] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+// Cards sit side by side, so offset alternate ones and the row cascades
+// instead of arriving as a single block.
+.experience--item-description:nth-child(even) .experience--item-general-box[data-reveal],
+.experience--item-description-desktop:nth-child(even) .experience--item-general-box[data-reveal] {
+  transition-delay: 0.12s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal="in"] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
+  }
+}

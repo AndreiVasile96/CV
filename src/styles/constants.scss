@@ -11,7 +11,11 @@ $white-gray: rgba(255, 255, 255, 0.5);
 // Global font settings with futuristic neon sci-fi background
 body, html {
   font-family: 'Inter', 'Roboto', 'Arial', sans-serif;
-  font-size: 16px;
+  // No font-size here. It pinned <body> to 16px, so every em-based size in the
+  // app - the whole header among them - was anchored to 16px and ignored the
+  // responsive root sizes in index.css. The header nav measured 17.6px at both
+  // 1440px and 1920px while the rest of the page scaled around it.
+  // <html> gets its size from index.css; <body> inherits it.
   font-weight: 400;
   color: white;
   margin: 0;
